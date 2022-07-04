@@ -7,18 +7,19 @@
     tools:context=".activities.CadastrarUsuarioActivity">
 
     <EditText
-        android:id="@+id/editText_nome"
+        android:id="@+id/editText_nomeUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:ems="18"
         android:inputType="textPersonName"
         android:text="Nome"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="93dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_sobrenome"
+        android:id="@+id/editText_sobrenomeUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,44 +28,46 @@
         android:inputType="textPersonName"
         android:text="Sobrenome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_nome" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_nomeUsuario" />
 
     <EditText
-        android:id="@+id/editText_cpf"
+        android:id="@+id/editText_cpfUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:ems="9"
+        android:ems="8"
         android:inputType="textPersonName"
         android:text="CPF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_sobrenome" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_sobrenomeUsuario" />
 
     <EditText
-        android:id="@+id/editText_fone"
+        android:id="@+id/editText_foneUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:ems="9"
+        android:ems="8"
         android:inputType="phone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_cpf" />
+        app:layout_constraintStart_toEndOf="@+id/editText_cpfUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/editText_sobrenomeUsuario"
+        tools:text="(99)99999-9999" />
 
     <EditText
-        android:id="@+id/editText_email"
+        android:id="@+id/editText_emailUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:ems="9"
+        android:ems="18"
         android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_fone" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_cpfUsuario"
+        tools:text="exemplo@email.com" />
 
     <Button
-        android:id="@+id/button_salvar"
+        android:id="@+id/button_salvarUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -74,8 +77,8 @@
         android:text="Salvar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_email" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_emailUsuario"
+        app:layout_constraintVertical_bias="0.063" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

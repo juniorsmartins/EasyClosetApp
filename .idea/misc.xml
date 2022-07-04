@@ -5,7 +5,8 @@
       <map>
         <entry key="..\:/Workspace/Android/EasyCloset/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
         <entry key="..\:/Workspace/Android/EasyCloset/app/src/main/res/layout/activity_cadastrar_usuario.xml" value="0.264" />
-        <entry key="..\:/Workspace/Android/EasyCloset/app/src/main/res/layout/activity_main.xml" value="0.6" />
+        <entry key="..\:/Workspace/Android/EasyCloset/app/src/main/res/layout/activity_listar_usuarios.xml" value="0.25416666666666665" />
+        <entry key="..\:/Workspace/Android/EasyCloset/app/src/main/res/layout/activity_main.xml" value="0.264" />
       </map>
     </option>
   </component>
