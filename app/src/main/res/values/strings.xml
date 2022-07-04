@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">EasyCloset</string>
-</resources>
+    <string name="campoNomeCadastroUsuario">Nome</string>
+    <string name="campoSobrenomeCadastroUsuario">Sobrenome</string>
+    <string name="campoCpfCadastroUsuario">CPF</string>
+    <string name="campoCpfFormatoCadastrarUsuario">98165485280</string>
+    <string name="campoFoneCadastroUsuario">Fone</string>
+    <string name="campoFoneFormatoCadastroUsuario">(99)99999-9999</string>
+    <string name="campoEmailCadastroUsuario">exemplo@email.com</string>
+    <string name="botaoSalvarCadastroUsuario">Salvar</string>
+ </resources>
+
