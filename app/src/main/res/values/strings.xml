@@ -3,10 +3,11 @@
     <string name="campoNomeCadastroUsuario">Nome</string>
     <string name="campoSobrenomeCadastroUsuario">Sobrenome</string>
     <string name="campoCpfCadastroUsuario">CPF</string>
-    <string name="campoCpfFormatoCadastrarUsuario">98165485280</string>
     <string name="campoFoneCadastroUsuario">Fone</string>
-    <string name="campoFoneFormatoCadastroUsuario">(99)99999-9999</string>
-    <string name="campoEmailCadastroUsuario">exemplo@email.com</string>
+    <string name="campoEmailCadastroUsuario">E-mail</string>
     <string name="botaoSalvarCadastroUsuario">Salvar</string>
- </resources>
+    <string name="botaoLimparCadastroUsuario">Limpar</string>
+    <string name="nomeObrigatorioCadastroUsuario">Nome - campo de preenchimento obrigatório!</string>
+    <string name="sobrenomeObrigatorioCadastroUsuario">Sobrenome - campo de preenchimento obrigatório!</string>
+</resources>
 
