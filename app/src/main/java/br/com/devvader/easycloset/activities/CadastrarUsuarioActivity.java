@@ -56,6 +56,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
 
                         enderecoNomeUsuario.requestFocus();
+                        return;
                     }
 
                     if(enderecoSobrenomeUsuario.getText().toString() == null ||
@@ -66,6 +67,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
 
                         enderecoSobrenomeUsuario.requestFocus();
+                        return;
                     }
                 }
 
