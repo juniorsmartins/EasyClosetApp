@@ -36,11 +36,15 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setTitle(CADASTRAR_USUARIO);
+        colocarTituloNaTela();
         capturarEnderecosDosBotoes();
         configurarBotaoDeSalvarCadastrarUsuario();
         configurarBotaoDeLimparFormularioDeCadastrarUsuario();
     }
+
+        private void colocarTituloNaTela() {
+            setTitle(CADASTRAR_USUARIO);
+        }
 
         private void capturarEnderecosDosBotoes() {
             botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);

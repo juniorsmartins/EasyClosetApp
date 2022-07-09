@@ -18,4 +18,9 @@ public final class UsuarioRepository implements IUsuarioRepository {
     public List<UsuarioEntity> buscarTodosUsuarios() {
         return listaDeUsuarios;
     }
+
+    @Override
+    public UsuarioEntity consultarUsuarioPorPosicao(int position) {
+        return listaDeUsuarios.get(position);
+    }
 }
