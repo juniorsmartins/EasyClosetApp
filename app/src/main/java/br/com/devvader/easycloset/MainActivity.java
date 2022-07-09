@@ -13,6 +13,9 @@ import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
 
 public final class MainActivity extends AppCompatActivity {
 
+    private Button botaoCadastrarUsuario;
+    private Button botaoListarUsuarios;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,21 +25,39 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        capturarEnderecosDosBotoes();
+        configurarBotaoDeChamarTelaDeCadastrarUsuario();
+        configurarBotaoDeChamarTelaDeListarUsuarios();
+    }
 
-        Button botaoCadastrarUsuario = findViewById(R.id.button_cadastrarUsuario);
-        botaoCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        private void capturarEnderecosDosBotoes() {
+            botaoCadastrarUsuario = findViewById(R.id.button_cadastrarUsuario);
+            botaoListarUsuarios = findViewById(R.id.button_listarUsuarios);
+        }
+
+        private void configurarBotaoDeChamarTelaDeCadastrarUsuario() {
+            botaoCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    abrirTelaDeCadastrarUsuario();
+                }
+            });
+        }
+
+            private void abrirTelaDeCadastrarUsuario() {
                 startActivity(new Intent(MainActivity.this, CadastrarUsuarioActivity.class));
             }
-        });
 
-        Button botaoListarUsuarios = findViewById(R.id.button_listarUsuarios);
-        botaoListarUsuarios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        private void configurarBotaoDeChamarTelaDeListarUsuarios() {
+            botaoListarUsuarios.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    abrirTelaDeListarUsuários();
+                }
+            });
+        }
+
+            private void abrirTelaDeListarUsuários() {
                 startActivity(new Intent(MainActivity.this, ListarUsuariosActivity.class));
             }
-        });
-    }
 }

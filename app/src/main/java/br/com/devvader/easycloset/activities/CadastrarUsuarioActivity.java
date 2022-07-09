@@ -13,14 +13,19 @@ import br.com.devvader.easycloset.recursos.UsuarioRepository;
 
 public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
+    private static final String CADASTRAR_USUARIO = "Cadastrar Usuário";
+
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private UsuarioEntity usuario;
 
-    EditText enderecoNomeUsuario;
-    EditText enderecoSobrenomeUsuario;
-    EditText enderecoCpfUsuario;
-    EditText enderecoFoneUsuario;
-    EditText enderecoEmailUsuario;
+    private Button botaoSalvarUsuario;
+    private Button botaoLimparCamposCadastroUsuario;
+
+    private EditText enderecoNomeUsuario;
+    private EditText enderecoSobrenomeUsuario;
+    private EditText enderecoCpfUsuario;
+    private EditText enderecoFoneUsuario;
+    private EditText enderecoEmailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,106 +36,104 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setTitle(CADASTRAR_USUARIO);
+        capturarEnderecosDosBotoes();
+        configurarBotaoDeSalvarCadastrarUsuario();
+        configurarBotaoDeLimparFormularioDeCadastrarUsuario();
+    }
 
-        Button botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
-        botaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                capturarEnderecosDosCampos();
-                validarCamposObrigatorios();
-                criarUsuario();
-                salvarUsuario();
-                imprimirUsuario();
-                limparCamposCadastroUsuario();
-                finish();
-            }
+        private void capturarEnderecosDosBotoes() {
+            botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
+            botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
+        }
 
-            private void capturarEnderecosDosCampos() {
-                enderecoNomeUsuario = findViewById(R.id.editText_nomeUsuario);
-                enderecoSobrenomeUsuario = findViewById(R.id.editText_sobrenomeUsuario);
-                enderecoCpfUsuario = findViewById(R.id.editText_cpfUsuario);
-                enderecoFoneUsuario = findViewById(R.id.editText_foneUsuario);
-                enderecoEmailUsuario = findViewById(R.id.editText_emailUsuario);
-            }
-
-            private void validarCamposObrigatorios() {
-                if(enderecoNomeUsuario.getText().toString() == null ||
-                        enderecoNomeUsuario.getText().toString().trim().isEmpty()) {
-
-                    Toast.makeText(CadastrarUsuarioActivity.this,
-                            getString(R.string.nomeObrigatorioCadastroUsuario),
-                            Toast.LENGTH_LONG).show();
-
-                    enderecoNomeUsuario.requestFocus();
-                    return;
+        private void configurarBotaoDeSalvarCadastrarUsuario() {
+            botaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    capturarEnderecosDosCampos();
+                    validarCamposObrigatorios();
+                    criarUsuario();
+                    salvarUsuario();
+                    imprimirUsuario();
+                    limparCamposDoFormularioDeCadastrarUsuario();
+                    finish();
                 }
+            });
+        }
 
-                if(enderecoSobrenomeUsuario.getText().toString() == null ||
-                        enderecoSobrenomeUsuario.getText().toString().trim().isEmpty()) {
-
-                    Toast.makeText(CadastrarUsuarioActivity.this,
-                            getString(R.string.sobrenomeObrigatorioCadastroUsuario),
-                            Toast.LENGTH_LONG).show();
-
-                    enderecoSobrenomeUsuario.requestFocus();
-                    return;
+        private void configurarBotaoDeLimparFormularioDeCadastrarUsuario() {
+            botaoLimparCamposCadastroUsuario.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    capturarEnderecosDosCampos();
+                    limparCamposDoFormularioDeCadastrarUsuario();
+                    direcionarFocoDoUsuarioParaCampoNome();
                 }
-            }
+            });
+        }
 
-            private void criarUsuario() {
-                String nomeUsuario = enderecoNomeUsuario.getText().toString();
-                String sobrenomeUsuario = enderecoSobrenomeUsuario.getText().toString();
-                String cpfUsuario = enderecoCpfUsuario.getText().toString();
-                String foneUsuario = enderecoFoneUsuario.getText().toString();
-                String emailUsuario = enderecoEmailUsuario.getText().toString();
-                usuario = new UsuarioEntity(
-                        nomeUsuario, sobrenomeUsuario, cpfUsuario, foneUsuario, emailUsuario);
-            }
+        private void capturarEnderecosDosCampos() {
+            enderecoNomeUsuario = findViewById(R.id.editText_nomeUsuario);
+            enderecoSobrenomeUsuario = findViewById(R.id.editText_sobrenomeUsuario);
+            enderecoCpfUsuario = findViewById(R.id.editText_cpfUsuario);
+            enderecoFoneUsuario = findViewById(R.id.editText_foneUsuario);
+            enderecoEmailUsuario = findViewById(R.id.editText_emailUsuario);
+        }
 
-            private void salvarUsuario() {
-                usuarioRepository.salvarUsuario(usuario);
-            }
+        private void validarCamposObrigatorios() {
+            if(enderecoNomeUsuario.getText().toString() == null ||
+                    enderecoNomeUsuario.getText().toString().trim().isEmpty()) {
 
-            private void imprimirUsuario() {
                 Toast.makeText(CadastrarUsuarioActivity.this,
-                        usuario.getNomeUsuario().trim() + " " + usuario.getSobrenomeUsuario().trim(),
+                        getString(R.string.nomeObrigatorioCadastroUsuario),
                         Toast.LENGTH_LONG).show();
-            }
-
-            private void limparCamposCadastroUsuario() {
-                enderecoNomeUsuario.setText(null);
-                enderecoSobrenomeUsuario.setText(null);
-                enderecoCpfUsuario.setText(null);
-                enderecoFoneUsuario.setText(null);
-                enderecoEmailUsuario.setText(null);
-            }
-        });
-
-        Button botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
-        botaoLimparCamposCadastroUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                capturarEnderecosDosCampos();
-                limparCamposCadastroUsuario();
 
                 enderecoNomeUsuario.requestFocus();
+                return;
             }
 
-            private void capturarEnderecosDosCampos() {
-                enderecoNomeUsuario = findViewById(R.id.editText_nomeUsuario);
-                enderecoSobrenomeUsuario = findViewById(R.id.editText_sobrenomeUsuario);
-                enderecoCpfUsuario = findViewById(R.id.editText_cpfUsuario);
-                enderecoFoneUsuario = findViewById(R.id.editText_foneUsuario);
-                enderecoEmailUsuario = findViewById(R.id.editText_emailUsuario);
-            }
+            if(enderecoSobrenomeUsuario.getText().toString() == null ||
+                    enderecoSobrenomeUsuario.getText().toString().trim().isEmpty()) {
 
-            private void limparCamposCadastroUsuario() {
-                enderecoNomeUsuario.setText(null);
-                enderecoSobrenomeUsuario.setText(null);
-                enderecoCpfUsuario.setText(null);
-                enderecoFoneUsuario.setText(null);
-                enderecoEmailUsuario.setText(null);
+                Toast.makeText(CadastrarUsuarioActivity.this,
+                        getString(R.string.sobrenomeObrigatorioCadastroUsuario),
+                        Toast.LENGTH_LONG).show();
+
+                enderecoSobrenomeUsuario.requestFocus();
+                return;
             }
-        });
-    }
+        }
+
+        private void criarUsuario() {
+            String nomeUsuario = enderecoNomeUsuario.getText().toString();
+            String sobrenomeUsuario = enderecoSobrenomeUsuario.getText().toString();
+            String cpfUsuario = enderecoCpfUsuario.getText().toString();
+            String foneUsuario = enderecoFoneUsuario.getText().toString();
+            String emailUsuario = enderecoEmailUsuario.getText().toString();
+            usuario = new UsuarioEntity(
+                    nomeUsuario, sobrenomeUsuario, cpfUsuario, foneUsuario, emailUsuario);
+        }
+
+        private void salvarUsuario() {
+            usuarioRepository.salvarUsuario(usuario);
+        }
+
+        private void imprimirUsuario() {
+            Toast.makeText(CadastrarUsuarioActivity.this,
+                    usuario.getNomeUsuario().trim() + " " + usuario.getSobrenomeUsuario().trim(),
+                    Toast.LENGTH_LONG).show();
+        }
+
+        private void limparCamposDoFormularioDeCadastrarUsuario() {
+            enderecoNomeUsuario.setText(null);
+            enderecoSobrenomeUsuario.setText(null);
+            enderecoCpfUsuario.setText(null);
+            enderecoFoneUsuario.setText(null);
+            enderecoEmailUsuario.setText(null);
+        }
+
+        private void direcionarFocoDoUsuarioParaCampoNome() {
+            enderecoNomeUsuario.requestFocus();
+        }
 }
