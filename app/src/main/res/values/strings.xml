@@ -9,5 +9,8 @@
     <string name="botaoLimparCadastroUsuario">Limpar</string>
     <string name="nomeObrigatorioCadastroUsuario">Nome - campo de preenchimento obrigatório!</string>
     <string name="sobrenomeObrigatorioCadastroUsuario">Sobrenome - campo de preenchimento obrigatório!</string>
+    <string name="autorizoPublicidade">Autorizo publicidade no meu e-mail.</string>
+    <string name="sexoMasculino">Masculino</string>
+    <string name="sexoFeminino">Feminino</string>
 </resources>
 

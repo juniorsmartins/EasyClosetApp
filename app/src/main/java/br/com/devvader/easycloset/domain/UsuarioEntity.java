@@ -11,15 +11,17 @@ public final class UsuarioEntity implements Serializable {
     private String cpfUsuario;
     private String foneUsuario;
     private String emailUsuario;
+    private Boolean autorizoPublicidade;
 
     public UsuarioEntity(){}
     public UsuarioEntity(String nomeUsuario, String sobrenomeUsuario, String cpfUsuario,
-                         String foneUsuario, String emailUsuario) {
+                         String foneUsuario, String emailUsuario, Boolean autorizoPublicidade) {
         this.nomeUsuario = nomeUsuario;
         this.sobrenomeUsuario = sobrenomeUsuario;
         this.cpfUsuario = cpfUsuario;
         this.foneUsuario = foneUsuario;
         this.emailUsuario = emailUsuario;
+        this.autorizoPublicidade = autorizoPublicidade;
     }
 
     public String getNomeUsuario() {
@@ -42,9 +44,18 @@ public final class UsuarioEntity implements Serializable {
         return emailUsuario;
     }
 
+    public Boolean getAutorizoPublicidade() {
+        return autorizoPublicidade;
+    }
+
     @Override
     public String toString() {
-        return nomeUsuario + " " + sobrenomeUsuario;
+        return
+            "Nome Completo: " + nomeUsuario + " " + sobrenomeUsuario
+            + "\nCPF: " + cpfUsuario
+            + "\nFone: " + foneUsuario
+            + "\nEmail: " + emailUsuario
+            + "\nAutorização de publicidade: " + autorizoPublicidade;
     }
 }
 
