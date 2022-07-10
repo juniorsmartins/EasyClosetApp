@@ -3,15 +3,21 @@ package br.com.devvader.easycloset.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.devvader.easycloset.R;
+import br.com.devvader.easycloset.domain.EGrauEscolaridade;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.recursos.IUsuarioRepository;
 import br.com.devvader.easycloset.recursos.UsuarioRepository;
@@ -24,6 +30,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private UsuarioEntity usuario;
 
     private RadioGroup enderecoSexoUsuario;
+    private Spinner enderecoEscolaridadeUsuario;
+
     private Button botaoSalvarUsuario;
     private Button botaoLimparCamposCadastroUsuario;
 
@@ -35,6 +43,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private CheckBox enderecoAutorizoPublicidade;
 
     private String sexoUsuario;
+    private String escolaridadeUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,6 +54,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario();
     }
 
+        // -------------------- Atualizar ou editar Usuário (contém bugs) --------------------
         private void captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario() {
             Intent receberDadosVindosDaPonteComTelaListarUsuario = getIntent();
             UsuarioEntity usuario = (UsuarioEntity) receberDadosVindosDaPonteComTelaListarUsuario
@@ -52,6 +62,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
             if(usuario != null) {
                 capturarEnderecosDosCampos();
+                capturarEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
+
                 enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
 
                 enderecoNomeUsuario.setText(usuario.getNome());
@@ -70,8 +82,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         colocarTituloNaTela();
-        capturarEnderecosDosBotoes();
+
+        capturarEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
         configurarRadioGroupDeSexoDoUsuario();
+        configurarSpinnerDeEscolaridadeDoUsuario();
+
+        capturarEnderecosDosBotoes();
         configurarBotaoDeSalvarCadastrarUsuario();
         configurarBotaoDeLimparFormularioDeCadastrarUsuario();
     }
@@ -80,13 +96,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             setTitle(CADASTRAR_USUARIO);
         }
 
-        private void capturarEnderecosDosBotoes() {
-            botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
-            botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
+        private void capturarEnderecosDoRadioGroupSexoAndSpinnerEscolaridade() {
+            enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
+            enderecoEscolaridadeUsuario = findViewById(R.id.spinner_escolaridadeUsuario);
         }
 
         private void configurarRadioGroupDeSexoDoUsuario() {
-            enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
             enderecoSexoUsuario.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -100,6 +115,31 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     }
                 }
             });
+        }
+
+        private void configurarSpinnerDeEscolaridadeDoUsuario() {
+            List<String> listaDeGrausDeEscolaridade = new ArrayList<>();
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_MEDIO.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL_INCOMPLETO.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_TECNICO.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.SUPERIOR.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ESPECIALIZACAO_OU_MBA.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.MESTRADO.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.DOUTORADO.getValor());
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_list_item_1,
+                    listaDeGrausDeEscolaridade);
+
+            enderecoEscolaridadeUsuario.setAdapter(adapter);
+
+            escolaridadeUsuario = enderecoEscolaridadeUsuario.getSelectedItem().toString();
+        }
+
+        private void capturarEnderecosDosBotoes() {
+            botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
+            botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
         }
 
         private void configurarBotaoDeSalvarCadastrarUsuario() {
@@ -145,6 +185,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                         enderecoFoneUsuario.getText().toString(),
                         enderecoEmailUsuario.getText().toString(),
                         sexoUsuario,
+                        escolaridadeUsuario,
                         enderecoAutorizoPublicidade.isChecked());
             }
 
