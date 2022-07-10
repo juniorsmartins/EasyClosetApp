@@ -13,7 +13,8 @@ public final class UsuarioEntity implements Serializable {
     private String emailUsuario;
 
     public UsuarioEntity(){}
-    public UsuarioEntity(String nomeUsuario, String sobrenomeUsuario, String cpfUsuario, String foneUsuario, String emailUsuario) {
+    public UsuarioEntity(String nomeUsuario, String sobrenomeUsuario, String cpfUsuario,
+                         String foneUsuario, String emailUsuario) {
         this.nomeUsuario = nomeUsuario;
         this.sobrenomeUsuario = sobrenomeUsuario;
         this.cpfUsuario = cpfUsuario;
@@ -46,3 +47,4 @@ public final class UsuarioEntity implements Serializable {
         return nomeUsuario + " " + sobrenomeUsuario;
     }
 }
+

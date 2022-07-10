@@ -1,11 +1,16 @@
 package br.com.devvader.easycloset.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.Serializable;
+
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.recursos.IUsuarioRepository;
@@ -27,10 +32,36 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private EditText enderecoFoneUsuario;
     private EditText enderecoEmailUsuario;
 
+    private String nomeUsuario;
+    private String sobrenomeUsuario;
+    private String cpfUsuario;
+    private String foneUsuario;
+    private String emailUsuario;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
+
+        Intent receberDadosVindosDaPonteComTelaListarUsuario = getIntent();
+        UsuarioEntity usuario = (UsuarioEntity) receberDadosVindosDaPonteComTelaListarUsuario
+                .getSerializableExtra("usuario");
+
+        if(usuario != null) {
+            String nome = usuario.getNomeUsuario();
+            String sobrenome = usuario.getSobrenomeUsuario();
+            String cpf = usuario.getCpfUsuario();
+            String fone = usuario.getFoneUsuario();
+            String email = usuario.getEmailUsuario();
+
+            capturarEnderecosDosCampos();
+            enderecoNomeUsuario.setText(nome);
+            enderecoSobrenomeUsuario.setText(sobrenome);
+            enderecoCpfUsuario.setText(cpf);
+            enderecoFoneUsuario.setText(fone);
+            enderecoEmailUsuario.setText(email);
+        }
+
     }
 
     @Override
@@ -110,11 +141,11 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         }
 
         private void criarUsuario() {
-            String nomeUsuario = enderecoNomeUsuario.getText().toString();
-            String sobrenomeUsuario = enderecoSobrenomeUsuario.getText().toString();
-            String cpfUsuario = enderecoCpfUsuario.getText().toString();
-            String foneUsuario = enderecoFoneUsuario.getText().toString();
-            String emailUsuario = enderecoEmailUsuario.getText().toString();
+            nomeUsuario = enderecoNomeUsuario.getText().toString();
+            sobrenomeUsuario = enderecoSobrenomeUsuario.getText().toString();
+            cpfUsuario = enderecoCpfUsuario.getText().toString();
+            foneUsuario = enderecoFoneUsuario.getText().toString();
+            emailUsuario = enderecoEmailUsuario.getText().toString();
             usuario = new UsuarioEntity(
                     nomeUsuario, sobrenomeUsuario, cpfUsuario, foneUsuario, emailUsuario);
         }

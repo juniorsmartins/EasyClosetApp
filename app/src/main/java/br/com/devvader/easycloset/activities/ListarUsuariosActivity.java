@@ -89,7 +89,7 @@ public class ListarUsuariosActivity extends AppCompatActivity {
             }
 
             private void guardarUsuarioEscolhidoParaEnviarParaEditarNaTelaCadastrarUsuario() {
-                ponteEntreListarAndCadastrar.putExtra("Usuário: ", usuario);
+                ponteEntreListarAndCadastrar.putExtra("usuario", usuario);
             }
 
             private void abrirTelaDeCadastrarUsuarioParaEditarUsuario() {
