@@ -23,6 +23,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private UsuarioEntity usuario;
 
+    private RadioGroup enderecoSexoUsuario;
     private Button botaoSalvarUsuario;
     private Button botaoLimparCamposCadastroUsuario;
 
@@ -31,16 +32,18 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private EditText enderecoCpfUsuario;
     private EditText enderecoFoneUsuario;
     private EditText enderecoEmailUsuario;
-    private RadioGroup enderecoSexoUsuario;
     private CheckBox enderecoAutorizoPublicidade;
 
+    private String sexoUsuario;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
         captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario();
-        }
+    }
 
         private void captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario() {
             Intent receberDadosVindosDaPonteComTelaListarUsuario = getIntent();
@@ -49,12 +52,17 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
             if(usuario != null) {
                 capturarEnderecosDosCampos();
-                enderecoNomeUsuario.setText(usuario.getNomeUsuario());
-                enderecoSobrenomeUsuario.setText(usuario.getSobrenomeUsuario());
-                enderecoCpfUsuario.setText(usuario.getCpfUsuario());
-                enderecoFoneUsuario.setText(usuario.getFoneUsuario());
-                enderecoEmailUsuario.setText(usuario.getEmailUsuario());
-                enderecoAutorizoPublicidade.setChecked(usuario.getAutorizoPublicidade());
+                enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
+
+                enderecoNomeUsuario.setText(usuario.getNome());
+                enderecoSobrenomeUsuario.setText(usuario.getSobrenome());
+                enderecoCpfUsuario.setText(usuario.getCpf());
+                enderecoFoneUsuario.setText(usuario.getFone());
+                enderecoEmailUsuario.setText(usuario.getEmail());
+                enderecoSexoUsuario.check(
+                        usuario.getSexo().equalsIgnoreCase("Masculino") ?
+                                R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
+                enderecoAutorizoPublicidade.setChecked(usuario.getAutorizo());
             }
         }
 
@@ -63,6 +71,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
         capturarEnderecosDosBotoes();
+        configurarRadioGroupDeSexoDoUsuario();
         configurarBotaoDeSalvarCadastrarUsuario();
         configurarBotaoDeLimparFormularioDeCadastrarUsuario();
     }
@@ -74,6 +83,23 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         private void capturarEnderecosDosBotoes() {
             botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
             botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
+        }
+
+        private void configurarRadioGroupDeSexoDoUsuario() {
+            enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
+            enderecoSexoUsuario.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch (checkedId) {
+                        case R.id.radioButton_sexoMasculino:
+                            sexoUsuario = "M";
+                            break;
+                        case R.id.radioButton_sexoFeminino:
+                            sexoUsuario = "F";
+                            break;
+                    }
+                }
+            });
         }
 
         private void configurarBotaoDeSalvarCadastrarUsuario() {
@@ -108,7 +134,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoCpfUsuario = findViewById(R.id.editText_cpfUsuario);
                 enderecoFoneUsuario = findViewById(R.id.editText_foneUsuario);
                 enderecoEmailUsuario = findViewById(R.id.editText_emailUsuario);
-                enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
                 enderecoAutorizoPublicidade = findViewById(R.id.checkBox_autorizoPublicidade);
             }
 
@@ -119,6 +144,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                         enderecoCpfUsuario.getText().toString(),
                         enderecoFoneUsuario.getText().toString(),
                         enderecoEmailUsuario.getText().toString(),
+                        sexoUsuario,
                         enderecoAutorizoPublicidade.isChecked());
             }
 
@@ -128,7 +154,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
             private void imprimirNomeDoUsuarioNaTela() {
                 Toast.makeText(CadastrarUsuarioActivity.this,
-                        usuario.getNomeUsuario().trim() + " " + usuario.getSobrenomeUsuario().trim(),
+                        usuario.getNome().trim() + " " + usuario.getSobrenome().trim(),
                         Toast.LENGTH_LONG).show();
             }
 
@@ -142,6 +168,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoCpfUsuario.setText(null);
                 enderecoFoneUsuario.setText(null);
                 enderecoEmailUsuario.setText(null);
+                enderecoSexoUsuario.clearCheck();
                 enderecoAutorizoPublicidade.setChecked(false);
             }
 

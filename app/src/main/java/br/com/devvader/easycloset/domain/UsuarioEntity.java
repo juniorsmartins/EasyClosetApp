@@ -6,56 +6,92 @@ public final class UsuarioEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
-    private String nomeUsuario;
-    private String sobrenomeUsuario;
-    private String cpfUsuario;
-    private String foneUsuario;
-    private String emailUsuario;
-    private Boolean autorizoPublicidade;
+    private String nome;
+    private String sobrenome;
+    private String cpf;
+    private String fone;
+    private String email;
+    private String sexo;
+    private Boolean autorizo;
 
     public UsuarioEntity(){}
     public UsuarioEntity(String nomeUsuario, String sobrenomeUsuario, String cpfUsuario,
-                         String foneUsuario, String emailUsuario, Boolean autorizoPublicidade) {
-        this.nomeUsuario = nomeUsuario;
-        this.sobrenomeUsuario = sobrenomeUsuario;
-        this.cpfUsuario = cpfUsuario;
-        this.foneUsuario = foneUsuario;
-        this.emailUsuario = emailUsuario;
-        this.autorizoPublicidade = autorizoPublicidade;
-    }
-
-    public String getNomeUsuario() {
-        return nomeUsuario;
-    }
-
-    public String getSobrenomeUsuario() {
-        return sobrenomeUsuario;
-    }
-
-    public String getCpfUsuario() {
-        return cpfUsuario;
-    }
-
-    public String getFoneUsuario() {
-        return foneUsuario;
-    }
-
-    public String getEmailUsuario() {
-        return emailUsuario;
-    }
-
-    public Boolean getAutorizoPublicidade() {
-        return autorizoPublicidade;
+                         String foneUsuario, String emailUsuario, String sexo,
+                         Boolean autorizoPublicidade) {
+        this.nome = nomeUsuario;
+        this.sobrenome = sobrenomeUsuario;
+        this.cpf = cpfUsuario;
+        this.fone = foneUsuario;
+        this.email = emailUsuario;
+        this.sexo = sexo;
+        this.autorizo = autorizoPublicidade;
     }
 
     @Override
     public String toString() {
         return
-            "Nome Completo: " + nomeUsuario + " " + sobrenomeUsuario
-            + "\nCPF: " + cpfUsuario
-            + "\nFone: " + foneUsuario
-            + "\nEmail: " + emailUsuario
-            + "\nAutorização de publicidade: " + autorizoPublicidade;
+            "Nome Completo: " + nome + " " + sobrenome
+            + "\nCPF: " + cpf
+            + "\nFone: " + fone
+            + "\nEmail: " + email
+            + "\nSexo: " + sexo
+            + "\nAutorização de publicidade: " + autorizo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getFone() {
+        return fone;
+    }
+
+    public void setFone(String fone) {
+        this.fone = fone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public Boolean getAutorizo() {
+        return autorizo;
+    }
+
+    public void setAutorizo(Boolean autorizo) {
+        this.autorizo = autorizo;
     }
 }
 
