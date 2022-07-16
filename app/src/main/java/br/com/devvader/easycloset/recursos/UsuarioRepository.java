@@ -12,25 +12,25 @@ public final class UsuarioRepository implements IUsuarioRepository {
 
     @Override
     public void salvarOuEditar(UsuarioEntity usuario) {
-        if(usuario.getId() > 0)
+        if(listaDeUsuarios.contains(usuario))
             editarUsuario(usuario);
         salvarUsuario(usuario);
     }
 
-    private void salvarUsuario(UsuarioEntity usuario) {
-        usuario.setId(contadorDeIds);
-        listaDeUsuarios.add(usuario);
-        contadorDeIds++;
-    }
+        private void salvarUsuario(UsuarioEntity usuario) {
+            usuario.setId(contadorDeIds);
+            listaDeUsuarios.add(usuario);
+            contadorDeIds++;
+        }
 
-    private void editarUsuario(UsuarioEntity novoUsuario) {
-        for (UsuarioEntity usuario : listaDeUsuarios) {
-            if(usuario.getId() == novoUsuario.getId()) {
-                int posicaoDoUsuario = listaDeUsuarios.indexOf(novoUsuario);
-                listaDeUsuarios.set(posicaoDoUsuario, novoUsuario);
+        private void editarUsuario(UsuarioEntity novoUsuario) {
+            for (UsuarioEntity usuario : listaDeUsuarios) {
+                if(usuario.getId() == novoUsuario.getId()) {
+                    int posicaoDoUsuario = listaDeUsuarios.indexOf(usuario);
+                    listaDeUsuarios.set(posicaoDoUsuario, novoUsuario);
+                }
             }
         }
-    }
 
     @Override
     public List<UsuarioEntity> buscarTodosUsuarios() {

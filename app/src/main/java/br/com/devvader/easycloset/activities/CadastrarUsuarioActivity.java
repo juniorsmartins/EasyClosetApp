@@ -55,30 +55,31 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
-        // captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario();
+        capturarIntentVindoDaTelaDeListarUsuariosParaEditarUsuario();
     }
 
         // -------------------- Atualizar ou editar Usuário (contém bugs) --------------------
-        private void captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario() {
+        private void capturarIntentVindoDaTelaDeListarUsuariosParaEditarUsuario() {
             Intent receberDadosVindosDaPonteComTelaListarUsuario = getIntent();
-            UsuarioEntity usuario = (UsuarioEntity) receberDadosVindosDaPonteComTelaListarUsuario
-                    .getSerializableExtra("usuario");
 
-            if(usuario != null) {
-                capturarEnderecosDosCampos();
-                capturarEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
+            if(receberDadosVindosDaPonteComTelaListarUsuario != null) {
+                UsuarioEntity usuario = (UsuarioEntity) receberDadosVindosDaPonteComTelaListarUsuario
+                        .getSerializableExtra("usuario");
 
-                enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
+                if(usuario != null) {
+                    capturarEnderecosDosCampos();
+                    capturarEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
 
-                enderecoNomeUsuario.setText(usuario.getNome());
-                enderecoSobrenomeUsuario.setText(usuario.getSobrenome());
-                enderecoCpfUsuario.setText(usuario.getCpf());
-                enderecoFoneUsuario.setText(usuario.getFone());
-                enderecoEmailUsuario.setText(usuario.getEmail());
-                enderecoSexoUsuario.check(
-                        usuario.getSexo().equalsIgnoreCase("Masculino") ?
-                                R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
-                enderecoAutorizoPublicidade.setChecked(usuario.getAutorizo());
+                    enderecoNomeUsuario.setText(usuario.getNome());
+                    enderecoSobrenomeUsuario.setText(usuario.getSobrenome());
+                    enderecoCpfUsuario.setText(usuario.getCpf());
+                    enderecoFoneUsuario.setText(usuario.getFone());
+                    enderecoEmailUsuario.setText(usuario.getEmail());
+                    enderecoSexoUsuario.check(
+                            usuario.getSexo().equalsIgnoreCase("Masculino") ?
+                                    R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
+                    enderecoAutorizoPublicidade.setChecked(usuario.getAutorizo());
+                }
             }
         }
 
@@ -140,7 +141,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_dropdown_item,
                     listaSpinnerDeGrausDeEscolaridade);
-
             enderecoEscolaridadeUsuario.setAdapter(adapter);
 
             enderecoEscolaridadeUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -231,9 +231,13 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoFoneUsuario.setText(null);
                 enderecoEmailUsuario.setText(null);
                 enderecoSexoUsuario.clearCheck();
-                // enderecoEscolaridadeUsuario.
-
+                enderecoEscolaridadeUsuario.setSelection(0);
                 enderecoAutorizoPublicidade.setChecked(false);
+
+                Toast.makeText(CadastrarUsuarioActivity.this,
+                        "Formulário Limpo!",
+                        Toast.LENGTH_LONG)
+                        .show();
             }
 
             private void direcionarFocoDoUsuarioParaCampoNome() {
