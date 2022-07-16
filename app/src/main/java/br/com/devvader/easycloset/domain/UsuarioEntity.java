@@ -26,6 +26,7 @@ public final class UsuarioEntity implements Serializable {
         this.fone = foneUsuario;
         this.email = emailUsuario;
         this.sexo = sexo;
+        this.escolaridade = escolaridade;
         this.autorizo = autorizoPublicidade;
     }
 

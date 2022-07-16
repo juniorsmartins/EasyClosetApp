@@ -34,6 +34,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private RadioGroup enderecoSexoUsuario;
     private Spinner enderecoEscolaridadeUsuario;
 
+    private ArrayList<String> listaSpinnerDeGrausDeEscolaridade = new ArrayList<>();
+
     private Button botaoSalvarUsuario;
     private Button botaoLimparCamposCadastroUsuario;
 
@@ -53,7 +55,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
-        captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario();
+        // captarIntentDeRetornoDaTelaDeListarUsuariosParaEditarUsuario();
     }
 
         // -------------------- Atualizar ou editar Usuário (contém bugs) --------------------
@@ -85,8 +87,11 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
 
+        capturarEnderecosDosCampos();
         capturarEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
         capturarEnderecosDosBotoes();
+
+        popularSpinner();
 
         ativarRadioGroupDeSexoDoUsuario();
         ativarSpinnerDeEscolaridadeDoUsuario();
@@ -119,42 +124,39 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             });
         }
 
-        private void ativarSpinnerDeEscolaridadeDoUsuario() {
-            List<String> listaDeGrausDeEscolaridade = new ArrayList<>();
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ESCOLHER_ESCOLARIDADE.getValor()); // position 0
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.DOUTORADO.getValor()); // position 1
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.MESTRADO.getValor()); // position 2
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ESPECIALIZACAO_OU_MBA.getValor()); // position 3
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.SUPERIOR.getValor()); // position 4
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_TECNICO.getValor()); // position 5
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_MEDIO.getValor()); // position 6
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL.getValor()); // position 7
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL_INCOMPLETO.getValor()); // position 8
+        private void popularSpinner() {
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.ESCOLHER_ESCOLARIDADE.getValor()); // position 0
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.DOUTORADO.getValor()); // position 1
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.MESTRADO.getValor()); // position 2
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.ESPECIALIZACAO_OU_MBA.getValor()); // position 3
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.SUPERIOR.getValor()); // position 4
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_TECNICO.getValor()); // position 5
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_MEDIO.getValor()); // position 6
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL.getValor()); // position 7
+            listaSpinnerDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL_INCOMPLETO.getValor()); // position 8
+        }
 
+        private void ativarSpinnerDeEscolaridadeDoUsuario() {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_dropdown_item,
-                    listaDeGrausDeEscolaridade);
+                    listaSpinnerDeGrausDeEscolaridade);
 
             enderecoEscolaridadeUsuario.setAdapter(adapter);
-/*            enderecoEscolaridadeUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            enderecoEscolaridadeUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    escolaridadeUsuario = listaDeGrausDeEscolaridade.get(position);
+                    escolaridadeUsuario = (String) parent.getItemAtPosition(position);
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {}
-            });*/
-
-            enderecoEscolaridadeUsuario.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    escolaridadeUsuario = listaDeGrausDeEscolaridade.get(enderecoEscolaridadeUsuario.getSelectedItemPosition());
-                }
             });
-
-//            escolaridadeUsuario = enderecoEscolaridadeUsuario.getSelectedItem().toString();
         }
+
+            private void pegarEscolaridadeDoUsuarioNoSpinner(View view) {
+                escolaridadeUsuario = (String) enderecoEscolaridadeUsuario.getSelectedItem();
+            }
 
         private void capturarEnderecosDosBotoes() {
             botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
@@ -165,7 +167,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             botaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    capturarEnderecosDosCampos();
+                    pegarEscolaridadeDoUsuarioNoSpinner(view);
                     criarUsuario();
                     salvarOuEditarUsuario();
                     imprimirNomeDoUsuarioNaTela();
@@ -230,6 +232,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoEmailUsuario.setText(null);
                 enderecoSexoUsuario.clearCheck();
                 // enderecoEscolaridadeUsuario.
+
                 enderecoAutorizoPublicidade.setChecked(false);
             }
 
