@@ -2,6 +2,7 @@ package br.com.devvader.easycloset.domain;
 
 public enum EGrauEscolaridade {
 
+    ESCOLHER_ESCOLARIDADE("Escolher escolaridade"),
     DOUTORADO("Doutorado"),
     MESTRADO("Mestrado"),
     ESPECIALIZACAO_OU_MBA("Especialização ou MBA"),

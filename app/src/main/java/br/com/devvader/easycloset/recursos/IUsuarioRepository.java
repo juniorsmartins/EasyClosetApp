@@ -6,7 +6,7 @@ import br.com.devvader.easycloset.domain.UsuarioEntity;
 
 public interface IUsuarioRepository {
 
-    void salvarUsuario(UsuarioEntity usuario);
+    void salvarOuEditar(UsuarioEntity usuario);
     List<UsuarioEntity> buscarTodosUsuarios();
     UsuarioEntity consultarUsuarioPorPosicao(int position);
 }

@@ -6,6 +6,7 @@ public final class UsuarioEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
+    private int id = 0;
     private String nome;
     private String sobrenome;
     private String cpf;
@@ -38,6 +39,14 @@ public final class UsuarioEntity implements Serializable {
             + "\nSexo: " + sexo
             + "\nEscolaridade: " + escolaridade
             + "\nAutorização de publicidade: " + autorizo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -88,20 +97,20 @@ public final class UsuarioEntity implements Serializable {
         this.sexo = sexo;
     }
 
-    public Boolean getAutorizo() {
-        return autorizo;
-    }
-
-    public void setAutorizo(Boolean autorizo) {
-        this.autorizo = autorizo;
-    }
-
     public String getEscolaridade() {
         return escolaridade;
     }
 
     public void setEscolaridade(String escolaridade) {
         this.escolaridade = escolaridade;
+    }
+
+    public Boolean getAutorizo() {
+        return autorizo;
+    }
+
+    public void setAutorizo(Boolean autorizo) {
+        this.autorizo = autorizo;
     }
 }
 

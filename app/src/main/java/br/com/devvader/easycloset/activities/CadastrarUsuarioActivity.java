@@ -3,6 +3,7 @@ package br.com.devvader.easycloset.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,6 +26,7 @@ import br.com.devvader.easycloset.recursos.UsuarioRepository;
 public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
     private static final String CADASTRAR_USUARIO = "Cadastrar Usuário";
+    private static final List<String> LISTA_ENUM_ESCOLARIDADE = new ArrayList<>();
 
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private UsuarioEntity usuario;
@@ -84,12 +86,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         colocarTituloNaTela();
 
         capturarEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
-        configurarRadioGroupDeSexoDoUsuario();
-        configurarSpinnerDeEscolaridadeDoUsuario();
-
         capturarEnderecosDosBotoes();
-        configurarBotaoDeSalvarCadastrarUsuario();
-        configurarBotaoDeLimparFormularioDeCadastrarUsuario();
+
+        ativarRadioGroupDeSexoDoUsuario();
+        ativarSpinnerDeEscolaridadeDoUsuario();
+        ativarBotaoDeSalvarCadastrarUsuario();
+        ativarBotaoDeLimparFormularioDeCadastrarUsuario();
     }
 
         private void colocarTituloNaTela() {
@@ -101,7 +103,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             enderecoEscolaridadeUsuario = findViewById(R.id.spinner_escolaridadeUsuario);
         }
 
-        private void configurarRadioGroupDeSexoDoUsuario() {
+        private void ativarRadioGroupDeSexoDoUsuario() {
             enderecoSexoUsuario.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -117,24 +119,41 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             });
         }
 
-        private void configurarSpinnerDeEscolaridadeDoUsuario() {
+        private void ativarSpinnerDeEscolaridadeDoUsuario() {
             List<String> listaDeGrausDeEscolaridade = new ArrayList<>();
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_MEDIO.getValor());
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL_INCOMPLETO.getValor());
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL.getValor());
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_TECNICO.getValor());
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.SUPERIOR.getValor());
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ESPECIALIZACAO_OU_MBA.getValor());
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.MESTRADO.getValor());
-            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.DOUTORADO.getValor());
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ESCOLHER_ESCOLARIDADE.getValor()); // position 0
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.DOUTORADO.getValor()); // position 1
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.MESTRADO.getValor()); // position 2
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ESPECIALIZACAO_OU_MBA.getValor()); // position 3
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.SUPERIOR.getValor()); // position 4
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_TECNICO.getValor()); // position 5
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_MEDIO.getValor()); // position 6
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL.getValor()); // position 7
+            listaDeGrausDeEscolaridade.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL_INCOMPLETO.getValor()); // position 8
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_list_item_1,
+                    android.R.layout.simple_spinner_dropdown_item,
                     listaDeGrausDeEscolaridade);
 
             enderecoEscolaridadeUsuario.setAdapter(adapter);
+/*            enderecoEscolaridadeUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    escolaridadeUsuario = listaDeGrausDeEscolaridade.get(position);
+                }
 
-            escolaridadeUsuario = enderecoEscolaridadeUsuario.getSelectedItem().toString();
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });*/
+
+            enderecoEscolaridadeUsuario.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    escolaridadeUsuario = listaDeGrausDeEscolaridade.get(enderecoEscolaridadeUsuario.getSelectedItemPosition());
+                }
+            });
+
+//            escolaridadeUsuario = enderecoEscolaridadeUsuario.getSelectedItem().toString();
         }
 
         private void capturarEnderecosDosBotoes() {
@@ -142,13 +161,13 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
         }
 
-        private void configurarBotaoDeSalvarCadastrarUsuario() {
+        private void ativarBotaoDeSalvarCadastrarUsuario() {
             botaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     capturarEnderecosDosCampos();
                     criarUsuario();
-                    salvarUsuario();
+                    salvarOuEditarUsuario();
                     imprimirNomeDoUsuarioNaTela();
                     imprimirUsuarioCompletoNoTerminal();
                     limparCamposDoFormularioDeCadastrarUsuario();
@@ -157,7 +176,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             });
         }
 
-        private void configurarBotaoDeLimparFormularioDeCadastrarUsuario() {
+        private void ativarBotaoDeLimparFormularioDeCadastrarUsuario() {
             botaoLimparCamposCadastroUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -189,8 +208,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                         enderecoAutorizoPublicidade.isChecked());
             }
 
-            private void salvarUsuario() {
-                usuarioRepository.salvarUsuario(usuario);
+            private void salvarOuEditarUsuario() {
+                usuarioRepository.salvarOuEditar(usuario);
             }
 
             private void imprimirNomeDoUsuarioNaTela() {
@@ -210,6 +229,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoFoneUsuario.setText(null);
                 enderecoEmailUsuario.setText(null);
                 enderecoSexoUsuario.clearCheck();
+                // enderecoEscolaridadeUsuario.
                 enderecoAutorizoPublicidade.setChecked(false);
             }
 
