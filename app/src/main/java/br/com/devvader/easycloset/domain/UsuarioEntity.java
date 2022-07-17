@@ -33,7 +33,7 @@ public final class UsuarioEntity implements Serializable {
     @Override
     public String toString() {
         return
-            "Nome: " + nome + " " + sobrenome
+            "Nome Completo: " + nome + " " + sobrenome
             + "\nCPF: " + cpf
             + "\nFone: " + fone
             + "\nEmail: " + email
