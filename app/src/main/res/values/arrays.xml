@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cadastrarUsuario_spinnerEscolaridade">
+        <item>@string/Definir_Escolaridade</item>
+        <item>@string/Doutorado</item>
+        <item>@string/Mestrado</item>
+        <item>@string/Especializações_e_MBAs</item>
+        <item>@string/Superior</item>
+        <item>@string/Técnico</item>
+        <item>@string/Ensino_Médio</item>
+        <item>@string/Ensino_Fundamental</item>
+        <item>@string/Ensino_Fundamental_Incompleto</item>
+    </string-array>
+</resources>

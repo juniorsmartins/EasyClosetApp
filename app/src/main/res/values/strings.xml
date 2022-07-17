@@ -12,5 +12,16 @@
     <string name="autorizoPublicidade">Autorizo publicidade no meu e-mail.</string>
     <string name="sexoMasculino">Masculino</string>
     <string name="sexoFeminino">Feminino</string>
+
+    <string name="Definir_Escolaridade">Selecionar</string>
+    <string name="Doutorado">Doutorado</string>
+    <string name="Mestrado">Mestrado</string>
+    <string name="Especializações_e_MBAs">Especializações e MBAs</string>
+    <string name="Superior">Superior</string>
+    <string name="Técnico">Técnico</string>
+    <string name="Ensino_Médio">Ensino Médio</string>
+    <string name="Ensino_Fundamental">Ensino Fundamental</string>
+    <string name="Ensino_Fundamental_Incompleto">Ensino Fundamental Incompleto</string>
+    <string name="formulario_incompleto">Formulário Incompleto!</string>
 </resources>
 

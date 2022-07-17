@@ -180,6 +180,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:entries="@array/cadastrarUsuario_spinnerEscolaridade"
             android:spinnerMode="dialog"
             app:layout_constraintEnd_toEndOf="@+id/editText_emailUsuario"
             app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"

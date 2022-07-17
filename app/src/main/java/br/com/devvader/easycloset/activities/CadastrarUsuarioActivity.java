@@ -2,9 +2,9 @@ package br.com.devvader.easycloset.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,10 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 import br.com.devvader.easycloset.R;
-import br.com.devvader.easycloset.domain.EGrauEscolaridade;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.recursos.IUsuarioRepository;
 import br.com.devvader.easycloset.recursos.UsuarioRepository;
@@ -25,7 +22,6 @@ import br.com.devvader.easycloset.recursos.UsuarioRepository;
 public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
     private static final String CADASTRAR_USUARIO = "Cadastrar Usuário";
-    private static final ArrayList<String> LISTA_SPINNER_ESCOLARIDADE = new ArrayList<>();
 
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private UsuarioEntity usuario = null;
@@ -46,6 +42,9 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private String sexoUsuario;
     private String escolaridadeUsuario;
 
+    private boolean camposValidados = false;
+
+    // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -55,7 +54,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         capturarIntentVindoDaTelaDeListarUsuariosParaEditarUsuario();
     }
 
-        // -------------------- Atualizar ou editar Usuário (contém bugs) --------------------
         private void capturarIntentVindoDaTelaDeListarUsuariosParaEditarUsuario() {
             Intent receberDadosVindosDaPonteComTelaListarUsuario = getIntent();
 
@@ -69,8 +67,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 if(usuario != null) {
                     mapearEnderecosDosCampos();
                     mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
-                    popularSpinner();
-                    ativarSpinnerDeEscolaridadeDoUsuario();
 
                     enderecoNomeUsuario.setText(usuario.getNome());
                     enderecoSobrenomeUsuario.setText(usuario.getSobrenome());
@@ -79,21 +75,13 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     enderecoEmailUsuario.setText(usuario.getEmail());
                     enderecoSexoUsuario.check(usuario.getSexo().equalsIgnoreCase("Masculino") ?
                             R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
-                    enderecoEscolaridadeUsuario.setSelection(verificarPosicaoDaEscolaridadeNaListaDeGraus());
+                    enderecoEscolaridadeUsuario.setSelection(0);
                     enderecoAutorizoPublicidade.setChecked(usuario.getAutorizo());
                 }
             }
 
-            private int verificarPosicaoDaEscolaridadeNaListaDeGraus() {
-                int posicao = 0;
-                for (String grau : LISTA_SPINNER_ESCOLARIDADE) {
-                    if(grau.equalsIgnoreCase(usuario.getEscolaridade()))
-                        System.out.println("aqui");
-                        posicao = LISTA_SPINNER_ESCOLARIDADE.indexOf(grau);
-                }
-                return posicao;
-            }
 
+    // ------------------------------ OnResume ------------------------------
     @Override
     protected void onResume() {
         super.onResume();
@@ -102,8 +90,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         mapearEnderecosDosCampos();
         mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
         mapearEnderecosDosBotoes();
-
-        popularSpinner();
 
         ativarRadioGroupDeSexoDoUsuario();
         ativarSpinnerDeEscolaridadeDoUsuario();
@@ -115,9 +101,23 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             setTitle(CADASTRAR_USUARIO);
         }
 
+        private void mapearEnderecosDosCampos() {
+            enderecoNomeUsuario = findViewById(R.id.editText_nomeUsuario);
+            enderecoSobrenomeUsuario = findViewById(R.id.editText_sobrenomeUsuario);
+            enderecoCpfUsuario = findViewById(R.id.editText_cpfUsuario);
+            enderecoFoneUsuario = findViewById(R.id.editText_foneUsuario);
+            enderecoEmailUsuario = findViewById(R.id.editText_emailUsuario);
+            enderecoAutorizoPublicidade = findViewById(R.id.checkBox_autorizoPublicidade);
+        }
+
         private void mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade() {
             enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
             enderecoEscolaridadeUsuario = findViewById(R.id.spinner_escolaridadeUsuario);
+        }
+
+        private void mapearEnderecosDosBotoes() {
+            botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
+            botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
         }
 
         private void ativarRadioGroupDeSexoDoUsuario() {
@@ -136,26 +136,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             });
         }
 
-        private void popularSpinner() {
-            if(LISTA_SPINNER_ESCOLARIDADE.isEmpty()) {
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.ESCOLHER_ESCOLARIDADE.getValor()); // position 0
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.DOUTORADO.getValor()); // position 1
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.MESTRADO.getValor()); // position 2
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.ESPECIALIZACAO_OU_MBA.getValor()); // position 3
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.SUPERIOR.getValor()); // position 4
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.ENSINO_TECNICO.getValor()); // position 5
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.ENSINO_MEDIO.getValor()); // position 6
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL.getValor()); // position 7
-                LISTA_SPINNER_ESCOLARIDADE.add(EGrauEscolaridade.ENSINO_FUNDAMENTAL_INCOMPLETO.getValor()); // position 8
-            }
-        }
-
         private void ativarSpinnerDeEscolaridadeDoUsuario() {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_dropdown_item,
-                    LISTA_SPINNER_ESCOLARIDADE);
-            enderecoEscolaridadeUsuario.setAdapter(adapter);
-
             enderecoEscolaridadeUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -167,73 +148,111 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             });
         }
 
-            private void pegarEscolaridadeDoUsuarioNoSpinner() {
-                escolaridadeUsuario = (String) enderecoEscolaridadeUsuario.getSelectedItem();
-            }
-
-        private void mapearEnderecosDosBotoes() {
-            botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
-            botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
-        }
-
         private void ativarBotaoDeSalvarCadastrarUsuario() {
             botaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    pegarEscolaridadeDoUsuarioNoSpinner();
-                    salvarOuEditarUsuario();
-                    imprimirNomeDoUsuarioNaTela();
-                    imprimirUsuarioCompletoNoTerminal();
-                    limparCamposDoFormularioDeCadastrarUsuario();
-                    finish();
+
+                    validarFormulario();
+
+                    if(camposValidados) {
+                        pegarEscolaridadeDoUsuarioNoSpinner();
+                        salvarOuEditarUsuario();
+                        imprimirNomeDoUsuarioNaTela();
+                        imprimirUsuarioCompletoNoTerminal();
+                        limparCamposDoFormularioDeCadastrarUsuario();
+                        finish();
+                    } else {
+                        Toast.makeText(CadastrarUsuarioActivity.this, R.string.formulario_incompleto, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
 
-            private void salvarOuEditarUsuario() {
-                if(usuario != null && usuario.getId() > 0) {
-                    editarUsuario();
-                    usuarioRepository.editarUsuario(usuario);
+            private void validarFormulario() {
+                if(TextUtils.isEmpty(enderecoNomeUsuario.getText().toString())) {
+                    enderecoNomeUsuario.setError("*");
+                    enderecoNomeUsuario.requestFocus();
+                    return;
                 }
-                salvarUsuario();
+                if(TextUtils.isEmpty(enderecoSobrenomeUsuario.getText().toString())) {
+                    enderecoSobrenomeUsuario.setError("*");
+                    enderecoSobrenomeUsuario.requestFocus();
+                    return;
+                }
+                if(TextUtils.isEmpty(enderecoCpfUsuario.getText().toString())) {
+                    enderecoCpfUsuario.setError("*");
+                    enderecoCpfUsuario.requestFocus();
+                    return;
+                }
+                if(TextUtils.isEmpty(enderecoFoneUsuario.getText().toString())) {
+                    enderecoFoneUsuario.setError("*");
+                    enderecoFoneUsuario.requestFocus();
+                    return;
+                }
+                if(TextUtils.isEmpty(enderecoEmailUsuario.getText().toString())) {
+                    enderecoEmailUsuario.setError("*");
+                    enderecoEmailUsuario.requestFocus();
+                    return;
+                }
+                if(enderecoSexoUsuario.getCheckedRadioButtonId() == -1) {
+                    enderecoSexoUsuario.requestFocus();
+                    return;
+                }
+                if(enderecoEscolaridadeUsuario.getSelectedItemPosition() == 0) {
+                    enderecoEscolaridadeUsuario.requestFocus();
+                    return;
+                }
+                if(!enderecoAutorizoPublicidade.isChecked()) {
+                    enderecoAutorizoPublicidade.setError("*");
+                    enderecoAutorizoPublicidade.requestFocus();
+                    return;
+                }
+                camposValidados = true;
             }
 
-                private void salvarUsuario() {
+            private void pegarEscolaridadeDoUsuarioNoSpinner() {
+                escolaridadeUsuario = (String) enderecoEscolaridadeUsuario.getSelectedItem();
+            }
+
+            private void salvarOuEditarUsuario() {
+
+
+                if(usuario != null && usuario.getId() > 0) {
+                    preencherUsuario();
+                    usuarioRepository.editarUsuario(usuario);
+                } else {
                     criarUsuario();
                     usuarioRepository.salvarUsuario(usuario);
                 }
+            }
 
-                    private void criarUsuario() {
-                        usuario = new UsuarioEntity(
-                                enderecoNomeUsuario.getText().toString(),
-                                enderecoSobrenomeUsuario.getText().toString(),
-                                enderecoCpfUsuario.getText().toString(),
-                                enderecoFoneUsuario.getText().toString(),
-                                enderecoEmailUsuario.getText().toString(),
-                                sexoUsuario,
-                                escolaridadeUsuario,
-                                enderecoAutorizoPublicidade.isChecked());
-                    }
+                private void preencherUsuario() {
+                    mapearEnderecosDosCampos();
+                    mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
+                    pegarEscolaridadeDoUsuarioNoSpinner();
 
-                private void editarUsuario() {
-                    preencherUsuario();
-                    usuarioRepository.editarUsuario(usuario);
+                    usuario.setNome(enderecoNomeUsuario.getText().toString());
+                    usuario.setSobrenome(enderecoSobrenomeUsuario.getText().toString());
+                    usuario.setCpf(enderecoCpfUsuario.getText().toString());
+                    usuario.setFone(enderecoFoneUsuario.getText().toString());
+                    usuario.setEmail(enderecoEmailUsuario.getText().toString());
+                    usuario.setSexo(sexoUsuario);
+                    usuario.setEscolaridade(escolaridadeUsuario);
+                    usuario.setAutorizo(enderecoAutorizoPublicidade.isChecked());
                 }
 
-                    private void preencherUsuario() {
-                        mapearEnderecosDosCampos();
-                        mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
-                        pegarEscolaridadeDoUsuarioNoSpinner();
-
-                        usuario.setNome(enderecoNomeUsuario.getText().toString());
-                        usuario.setSobrenome(enderecoSobrenomeUsuario.getText().toString());
-                        usuario.setCpf(enderecoCpfUsuario.getText().toString());
-                        usuario.setFone(enderecoFoneUsuario.getText().toString());
-                        usuario.setEmail(enderecoEmailUsuario.getText().toString());
-                        usuario.setSexo(sexoUsuario);
-                        usuario.setEscolaridade(escolaridadeUsuario);
-                        usuario.setAutorizo(enderecoAutorizoPublicidade.isChecked());
-                    }
+                private void criarUsuario() {
+                    usuario = new UsuarioEntity(
+                            enderecoNomeUsuario.getText().toString(),
+                            enderecoSobrenomeUsuario.getText().toString(),
+                            enderecoCpfUsuario.getText().toString(),
+                            enderecoFoneUsuario.getText().toString(),
+                            enderecoEmailUsuario.getText().toString(),
+                            sexoUsuario,
+                            escolaridadeUsuario,
+                            enderecoAutorizoPublicidade.isChecked());
+                }
 
             private void imprimirNomeDoUsuarioNaTela() {
                 Toast.makeText(CadastrarUsuarioActivity.this,
@@ -255,15 +274,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 }
             });
         }
-
-            private void mapearEnderecosDosCampos() {
-                enderecoNomeUsuario = findViewById(R.id.editText_nomeUsuario);
-                enderecoSobrenomeUsuario = findViewById(R.id.editText_sobrenomeUsuario);
-                enderecoCpfUsuario = findViewById(R.id.editText_cpfUsuario);
-                enderecoFoneUsuario = findViewById(R.id.editText_foneUsuario);
-                enderecoEmailUsuario = findViewById(R.id.editText_emailUsuario);
-                enderecoAutorizoPublicidade = findViewById(R.id.checkBox_autorizoPublicidade);
-            }
 
             private void limparCamposDoFormularioDeCadastrarUsuario() {
                 enderecoNomeUsuario.setText(null);
