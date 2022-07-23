@@ -64,4 +64,12 @@ public final class RoupaEntity implements Serializable {
     public void setTecido(String tecido) {
         this.tecido = tecido;
     }
+
+    @Override
+    public String toString() {
+        return "Tipo = " + tipo +
+                "\nTamanho = " + tamanho +
+                "\nCor Principal = " + corPrincipal +
+                "\nTecido = " + tecido;
+    }
 }
