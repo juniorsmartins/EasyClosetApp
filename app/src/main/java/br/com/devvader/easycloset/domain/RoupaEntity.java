@@ -11,18 +11,18 @@ public final class RoupaEntity implements Serializable {
     private String tipo;
     private String tamanho;
     private String corPrincipal;
-    private String marca;
-    private LocalDate dataCompra;
+    private String tecido;
 
     public RoupaEntity() {}
-    public RoupaEntity(Long idRoupa, String tipo, String tamanho,
-                       String corPrincipal, String marca, LocalDate dataCompra) {
+    public RoupaEntity(String tipo,
+                       String tamanho,
+                       String corPrincipal,
+                       String tecido) {
         this.idRoupa = idRoupa;
         this.tipo = tipo;
         this.tamanho = tamanho;
         this.corPrincipal = corPrincipal;
-        this.marca = marca;
-        this.dataCompra = dataCompra;
+        this.tecido = tecido;
     }
 
     public Long getIdRoupa() {
@@ -57,19 +57,11 @@ public final class RoupaEntity implements Serializable {
         this.corPrincipal = corPrincipal;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getTecido() {
+        return tecido;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public LocalDate getDataCompra() {
-        return dataCompra;
-    }
-
-    public void setDataCompra(LocalDate dataCompra) {
-        this.dataCompra = dataCompra;
+    public void setTecido(String tecido) {
+        this.tecido = tecido;
     }
 }

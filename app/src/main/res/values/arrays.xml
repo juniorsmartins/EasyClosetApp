@@ -11,4 +11,57 @@
         <item>@string/Ensino_Fundamental</item>
         <item>@string/Ensino_Fundamental_Incompleto</item>
     </string-array>
+
+    <string-array name="listaDeTiposDeRoupas">
+        <item>@string/chapeu</item>
+        <item>@string/bone</item>
+        <item>@string/camisa</item>
+        <item>@string/camisa</item>
+        <item>@string/calca</item>
+        <item>@string/bermuda</item>
+        <item>@string/cueca</item>
+        <item>@string/meia</item>
+        <item>@string/sapato</item>
+        <item>@string/tenis</item>
+    </string-array>
+
+    <string-array name="listaDeCores">
+        <item>@string/azul</item>
+        <item>@string/verde</item>
+        <item>@string/branco</item>
+        <item>@string/preto</item>
+        <item>@string/amarelo</item>
+        <item>@string/marrom</item>
+        <item>@string/laranja</item>
+        <item>@string/roxo</item>
+        <item>@string/rosa</item>
+        <item>@string/vermelho</item>
+    </string-array>
+
+    <string-array name="listaDeTamanhosDeRoupa">
+        <item>@string/ppp</item>
+        <item>@string/pp</item>
+        <item>@string/p</item>
+        <item>@string/m</item>
+        <item>@string/g</item>
+        <item>@string/gg</item>
+        <item>@string/ggg</item>
+        <item>@string/xg</item>
+        <item>@string/xgg</item>
+        <item>@string/xggg</item>
+    </string-array>
+
+    <string-array name="listaDeTecidos">
+        <item>@string/tricoline</item>
+        <item>@string/malha</item>
+        <item>@string/cetim</item>
+        <item>@string/canvas</item>
+        <item>@string/cordoba</item>
+        <item>@string/microfibra</item>
+        <item>@string/algodao</item>
+        <item>@string/la</item>
+        <item>@string/seda</item>
+        <item>@string/linho</item>
+    </string-array>
+
 </resources>

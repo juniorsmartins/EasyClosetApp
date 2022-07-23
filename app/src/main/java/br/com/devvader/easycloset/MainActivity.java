@@ -25,9 +25,10 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         capturarEnderecosDosBotoes();
-        configurarBotaoDeChamarTelaDeCadastrarUsuario();
-        configurarBotaoDeChamarTelaDeListarUsuarios();
+        ativarBotaoDeChamarTelaDeCadastrarUsuario();
+        ativarBotaoDeChamarTelaDeListarUsuarios();
     }
 
         private void capturarEnderecosDosBotoes() {
@@ -35,7 +36,7 @@ public final class MainActivity extends AppCompatActivity {
             botaoListarUsuarios = findViewById(R.id.button_listarUsuarios);
         }
 
-        private void configurarBotaoDeChamarTelaDeCadastrarUsuario() {
+        private void ativarBotaoDeChamarTelaDeCadastrarUsuario() {
             botaoCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -48,7 +49,7 @@ public final class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CadastrarUsuarioActivity.class));
             }
 
-        private void configurarBotaoDeChamarTelaDeListarUsuarios() {
+        private void ativarBotaoDeChamarTelaDeListarUsuarios() {
             botaoListarUsuarios.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
