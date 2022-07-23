@@ -218,7 +218,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             private void salvarOuEditarUsuario() {
 
 
-                if(usuario != null && usuario.getId() > 0) {
+                if(usuario != null && usuario.getIdUsuario() > 0) {
                     preencherUsuario();
                     usuarioRepository.editarUsuario(usuario);
                 } else {

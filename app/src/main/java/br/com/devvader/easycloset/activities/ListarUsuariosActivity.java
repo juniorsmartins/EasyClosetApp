@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -67,6 +68,7 @@ public class ListarUsuariosActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     buscarUsuarioNoRepositoryPorPosicao(position);
+                    gerarMensagemDoUsuarioEscolhido();
                     gerarLogDoUsuarioEscolhido(position);
                     criarPonteDaTelaListarUsuarioParaTelaCadastrarUsuario();
                     guardarUsuarioEscolhidoParaEnviarParaEditarNaTelaCadastrarUsuario();
@@ -77,6 +79,13 @@ public class ListarUsuariosActivity extends AppCompatActivity {
 
             private void buscarUsuarioNoRepositoryPorPosicao(int position) {
                 usuario = usuarioRepository.consultarUsuarioPorPosicao(position);
+            }
+
+            private void gerarMensagemDoUsuarioEscolhido() {
+                Toast.makeText(getApplicationContext(),
+                        usuario.getNome().concat(" ").concat(usuario.getSobrenome()),
+                        Toast.LENGTH_LONG)
+                        .show();
             }
 
             private void gerarLogDoUsuarioEscolhido(int position) {

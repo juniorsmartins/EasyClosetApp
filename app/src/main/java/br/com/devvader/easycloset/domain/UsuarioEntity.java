@@ -6,7 +6,7 @@ public final class UsuarioEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
-    private int id = 0;
+    private Long idUsuario;
     private String nome;
     private String sobrenome;
     private String cpf;
@@ -42,12 +42,12 @@ public final class UsuarioEntity implements Serializable {
             + "\nAutorização de publicidade: " + autorizo;
     }
 
-    public int getId() {
-        return id;
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {

@@ -8,20 +8,19 @@ import br.com.devvader.easycloset.domain.UsuarioEntity;
 public final class UsuarioRepository implements IUsuarioRepository {
 
     private static List<UsuarioEntity> listaDeUsuarios = new ArrayList<>();
-    private static int contadorDeIds = 1;
-
+    private static Long contadorDeIdsDeUsuarios = 1L;
 
     @Override
     public void salvarUsuario(UsuarioEntity usuario) {
-        usuario.setId(contadorDeIds);
+        usuario.setIdUsuario(contadorDeIdsDeUsuarios);
         listaDeUsuarios.add(usuario);
-        contadorDeIds++;
+        contadorDeIdsDeUsuarios++;
     }
 
     @Override
     public void editarUsuario(UsuarioEntity novoUsuario) {
-        for (UsuarioEntity usuario : listaDeUsuarios) {
-            if(usuario.getId() == novoUsuario.getId()) {
+        for(UsuarioEntity usuario : listaDeUsuarios) {
+            if(usuario.getIdUsuario() == novoUsuario.getIdUsuario()) {
                 int posicaoDoUsuario = listaDeUsuarios.indexOf(usuario);
                 listaDeUsuarios.set(posicaoDoUsuario, novoUsuario);
             }
