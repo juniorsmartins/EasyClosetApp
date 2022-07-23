@@ -40,7 +40,7 @@ public class ListarUsuariosActivity extends AppCompatActivity {
         colocarTituloNaTela();
         mapearEnderecoDaListaDeUsuarios();
         mostrarListaDeUsuariosNaTela();
-        configurarCliqueNaListaParaEditarUsuario();
+        ativarCliqueNaListaParaEditarUsuario();
     }
 
         private void colocarTituloNaTela() {
@@ -63,7 +63,7 @@ public class ListarUsuariosActivity extends AppCompatActivity {
                 return usuarioRepository.buscarTodosUsuarios();
             }
 
-        private void configurarCliqueNaListaParaEditarUsuario() {
+        private void ativarCliqueNaListaParaEditarUsuario() {
             enderecoDaListaDeUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

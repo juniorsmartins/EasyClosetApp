@@ -3,8 +3,11 @@ package br.com.devvader.easycloset.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,8 @@ public class ListarRoupasActivity extends AppCompatActivity {
 
     private IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
+    private List<RoupaEntity> listaDeRoupas;
+    private RoupaEntity roupa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,9 @@ public class ListarRoupasActivity extends AppCompatActivity {
 
         colocarTituloNaTela();
         mapearEnderecoDaListaDeRoupas();
+        popularListaDeRoupas();
         mostrarListaDeRoupasNaTela();
+        ativarCliqueNosItensDalistaParaEnviarMensagem();
     }
 
         private void colocarTituloNaTela() {
@@ -44,23 +51,24 @@ public class ListarRoupasActivity extends AppCompatActivity {
             enderecoDaListaDeRoupas = findViewById(R.id.listView_listaDeRoupas);
         }
 
-        private void mostrarListaDeRoupasNaTela() {
-
+        private void popularListaDeRoupas() {
             String[] listaDeTipos = getResources().getStringArray(R.array.listaDeTiposDeRoupas);
             String[] listaDeCores = getResources().getStringArray(R.array.listaDeCores);
             String[] listaDeTamanhos = getResources().getStringArray(R.array.listaDeTamanhosDeRoupa);
             String[] listaDeTecidos = getResources().getStringArray(R.array.listaDeTecidos);
 
-            List<RoupaEntity> listaDeRoupas = new ArrayList<>();
+            listaDeRoupas = new ArrayList<>();
 
             for(int contador = 0; contador < 10; contador++) {
                 listaDeRoupas.add(new RoupaEntity(
                         listaDeTipos[contador],
-                        listaDeCores[contador],
                         listaDeTamanhos[contador],
+                        listaDeCores[contador],
                         listaDeTecidos[contador]));
             }
+        }
 
+        private void mostrarListaDeRoupasNaTela() {
             enderecoDaListaDeRoupas.setAdapter(new ArrayAdapter<>(
                     this,
                     android.R.layout.simple_list_item_1,
@@ -68,7 +76,18 @@ public class ListarRoupasActivity extends AppCompatActivity {
             );
         }
 
-            private List<RoupaEntity> buscarListaDeRoupasNoRepository() {
-                return roupaRepository.buscarTodasPecasDeRoupa();
-            }
+        private void ativarCliqueNosItensDalistaParaEnviarMensagem() {
+            enderecoDaListaDeRoupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    roupa = (RoupaEntity) parent.getItemAtPosition(position);
+
+                    Toast.makeText(getApplicationContext(),
+                                roupa.getTipo().concat(" ").concat(roupa.getCorPrincipal()),
+                                Toast.LENGTH_LONG)
+                                .show();
+                }
+            });
+        }
+
 }

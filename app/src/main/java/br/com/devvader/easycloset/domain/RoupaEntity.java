@@ -18,7 +18,6 @@ public final class RoupaEntity implements Serializable {
                        String tamanho,
                        String corPrincipal,
                        String tecido) {
-        this.idRoupa = idRoupa;
         this.tipo = tipo;
         this.tamanho = tamanho;
         this.corPrincipal = corPrincipal;

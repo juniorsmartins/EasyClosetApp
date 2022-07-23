@@ -13,11 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyCloset"
         tools:targetApi="31">
+
         <activity
             android:name=".activities.ListarRoupasActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,8 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CadastrarUsuarioActivity" />
-        <activity android:name=".activities.ListarUsuariosActivity" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".activities.CadastrarUsuarioActivity" />
+
+        <activity
+            android:name=".activities.ListarUsuariosActivity" />
+
     </application>
 
 </manifest>
