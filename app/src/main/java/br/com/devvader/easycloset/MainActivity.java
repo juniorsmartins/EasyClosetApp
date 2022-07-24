@@ -9,12 +9,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.devvader.easycloset.activities.CadastrarUsuarioActivity;
+import br.com.devvader.easycloset.activities.ListarRoupasActivity;
 import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
 
 public final class MainActivity extends AppCompatActivity {
 
-    private Button botaoCadastrarUsuario;
-    private Button botaoListarUsuarios;
+    private Button enderecoBotaoCadastrarUsuario;
+    private Button enderecoBotaoListarUsuarios;
+    private Button enderecoBotaoListarRoupas;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,15 +31,17 @@ public final class MainActivity extends AppCompatActivity {
         capturarEnderecosDosBotoes();
         ativarBotaoDeChamarTelaDeCadastrarUsuario();
         ativarBotaoDeChamarTelaDeListarUsuarios();
+        ativarBotaoDeChamarTelaDeListarRoupas();
     }
 
         private void capturarEnderecosDosBotoes() {
-            botaoCadastrarUsuario = findViewById(R.id.button_cadastrarUsuario);
-            botaoListarUsuarios = findViewById(R.id.button_listarUsuarios);
+            enderecoBotaoCadastrarUsuario = findViewById(R.id.button_cadastrarUsuario);
+            enderecoBotaoListarUsuarios = findViewById(R.id.button_listarUsuarios);
+            enderecoBotaoListarRoupas = findViewById(R.id.button_listarRoupas);
         }
 
         private void ativarBotaoDeChamarTelaDeCadastrarUsuario() {
-            botaoCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
+            enderecoBotaoCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     abrirTelaDeCadastrarUsuario();
@@ -50,15 +54,28 @@ public final class MainActivity extends AppCompatActivity {
             }
 
         private void ativarBotaoDeChamarTelaDeListarUsuarios() {
-            botaoListarUsuarios.setOnClickListener(new View.OnClickListener() {
+            enderecoBotaoListarUsuarios.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    abrirTelaDeListarUsuários();
+                    abrirTelaDeListarUsuarios();
                 }
             });
         }
 
-            private void abrirTelaDeListarUsuários() {
+            private void abrirTelaDeListarUsuarios() {
                 startActivity(new Intent(MainActivity.this, ListarUsuariosActivity.class));
+            }
+
+        private void ativarBotaoDeChamarTelaDeListarRoupas() {
+            enderecoBotaoListarRoupas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    abrirTelaDeListarRoupas();
+                }
+            });
+        }
+
+            private void abrirTelaDeListarRoupas() {
+                startActivity(new Intent(MainActivity.this, ListarRoupasActivity.class));
             }
 }

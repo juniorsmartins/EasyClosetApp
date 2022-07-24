@@ -14,7 +14,7 @@ import br.com.devvader.easycloset.domain.adapters.RoupaAdapter;
 import br.com.devvader.easycloset.recursos.IRoupaRepository;
 import br.com.devvader.easycloset.recursos.RoupaRepository;
 
-public class ListarRoupasActivity extends AppCompatActivity {
+public final class ListarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_ROUPAS = "Listar Roupas";
 
@@ -83,5 +83,4 @@ public class ListarRoupasActivity extends AppCompatActivity {
                 }
             });
         }
-
 }
