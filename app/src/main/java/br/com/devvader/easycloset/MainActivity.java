@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import br.com.devvader.easycloset.activities.CadastrarRoupasActivity;
 import br.com.devvader.easycloset.activities.CadastrarUsuarioActivity;
 import br.com.devvader.easycloset.activities.InfoAppActivity;
 import br.com.devvader.easycloset.activities.ListarRoupasActivity;
@@ -17,6 +18,7 @@ public final class MainActivity extends AppCompatActivity {
 
     private Button enderecoBotaoCadastrarUsuario;
     private Button enderecoBotaoListarUsuarios;
+    private Button enderecoBotaoCadastrarRoupas;
     private Button enderecoBotaoListarRoupas;
     private Button enderecoBotaoInfosApp;
 
@@ -33,6 +35,7 @@ public final class MainActivity extends AppCompatActivity {
         capturarEnderecosDosBotoes();
         ativarBotaoDeChamarTelaDeCadastrarUsuario();
         ativarBotaoDeChamarTelaDeListarUsuarios();
+        ativarBotaoDeChamarTelaDeCadastrarRoupas();
         ativarBotaoDeChamarTelaDeListarRoupas();
         ativarBotaoDeChamarTelaDeInfosDoApp();
     }
@@ -40,6 +43,7 @@ public final class MainActivity extends AppCompatActivity {
         private void capturarEnderecosDosBotoes() {
             enderecoBotaoCadastrarUsuario = findViewById(R.id.button_cadastrarUsuario);
             enderecoBotaoListarUsuarios = findViewById(R.id.button_listarUsuarios);
+            enderecoBotaoCadastrarRoupas = findViewById(R.id.button_cadastrarRoupas);
             enderecoBotaoListarRoupas = findViewById(R.id.button_listarRoupas);
             enderecoBotaoInfosApp = findViewById(R.id.button_infosApp);
         }
@@ -94,5 +98,18 @@ public final class MainActivity extends AppCompatActivity {
 
             private void abrirTelaDeInfosDoApp() {
                 startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
+            }
+
+        private void ativarBotaoDeChamarTelaDeCadastrarRoupas() {
+            enderecoBotaoCadastrarRoupas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirTelaDeCadastrarRoupas();
+                }
+            });
+        }
+
+            private void abrirTelaDeCadastrarRoupas() {
+                startActivity(new Intent(MainActivity.this, CadastrarRoupasActivity.class));
             }
 }

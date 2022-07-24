@@ -25,18 +25,29 @@
         </activity>
 
         <activity
+            android:name=".activities.CadastrarUsuarioActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".activities.ListarUsuariosActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".activities.CadastrarRoupasActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
             android:name=".activities.ListarRoupasActivity"
             android:exported="false">
         </activity>
 
         <activity
-            android:name=".activities.CadastrarUsuarioActivity" />
-
-        <activity
-            android:name=".activities.ListarUsuariosActivity" />
-
-        <activity
-            android:name=".activities.InfoAppActivity" />
+            android:name=".activities.InfoAppActivity"
+            android:exported="false">
+        </activity>
 
     </application>
 

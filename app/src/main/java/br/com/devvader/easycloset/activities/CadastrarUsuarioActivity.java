@@ -11,9 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.recursos.IUsuarioRepository;
@@ -21,7 +19,7 @@ import br.com.devvader.easycloset.recursos.UsuarioRepository;
 
 public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
-    private static final String CADASTRAR_USUARIO = "Cadastrar Usuário";
+    private static final String TITULO_DE_TELA_CADASTRAR_USUARIO = "Cadastrar Usuário";
 
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private UsuarioEntity usuario = null;
@@ -98,7 +96,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     }
 
         private void colocarTituloNaTela() {
-            setTitle(CADASTRAR_USUARIO);
+            setTitle(TITULO_DE_TELA_CADASTRAR_USUARIO);
         }
 
         private void mapearEnderecosDosCampos() {
@@ -216,7 +214,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             }
 
             private void salvarOuEditarUsuario() {
-
 
                 if(usuario != null && usuario.getIdUsuario() > 0) {
                     preencherUsuario();
