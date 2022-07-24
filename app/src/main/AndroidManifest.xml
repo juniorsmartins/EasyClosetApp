@@ -35,6 +35,9 @@
         <activity
             android:name=".activities.ListarUsuariosActivity" />
 
+        <activity
+            android:name=".activities.InfoAppActivity" />
+
     </application>
 
 </manifest>
