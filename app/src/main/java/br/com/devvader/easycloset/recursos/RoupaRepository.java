@@ -2,10 +2,9 @@ package br.com.devvader.easycloset.recursos;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.devvader.easycloset.domain.RoupaEntity;
 
-public class RoupaRepository implements IRoupaRepository {
+public final class RoupaRepository implements IRoupaRepository {
 
     private static List<RoupaEntity> listaDeRoupas = new ArrayList<>();
     private static Long contadorDeIdsDeRoupas = 1L;

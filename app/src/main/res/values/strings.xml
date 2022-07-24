@@ -13,7 +13,7 @@
     <string name="sexoMasculino">Masculino</string>
     <string name="sexoFeminino">Feminino</string>
 
-    <string name="Definir_Escolaridade">Selecionar</string>
+    <string name="Selecionar">Selecionar</string>
     <string name="Doutorado">Doutorado</string>
     <string name="Mestrado">Mestrado</string>
     <string name="Especializações_e_MBAs">Especializações e MBAs</string>
@@ -23,6 +23,11 @@
     <string name="Ensino_Fundamental">Ensino Fundamental</string>
     <string name="Ensino_Fundamental_Incompleto">Ensino Fundamental Incompleto</string>
     <string name="formulario_incompleto">Formulário Incompleto!</string>
+
+    <string name="tipo_de_roupa">Tipo de roupa:</string>
+    <string name="tecido">Tecido:</string>
+    <string name="cor_principal">Cor principal:</string>
+    <string name="tamanho">Tamanho:</string>
 
     <string name="chapeu">Chapéu</string>
     <string name="bone">Boné</string>
@@ -67,6 +72,7 @@
     <string name="la">Lã</string>
     <string name="seda">Seda</string>
     <string name="linho">Linho</string>
+    <string name="salvar">Salvar</string>
 
 </resources>
 

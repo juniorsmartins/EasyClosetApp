@@ -1,9 +1,7 @@
 package br.com.devvader.easycloset.recursos;
 
 import java.util.List;
-
 import br.com.devvader.easycloset.domain.RoupaEntity;
-import br.com.devvader.easycloset.domain.UsuarioEntity;
 
 public interface IRoupaRepository {
 

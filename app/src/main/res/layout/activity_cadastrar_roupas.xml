@@ -1,6 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView_cadastrar_tipo_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/tipo_de_roupa"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_cadastrar_tipo_de_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:entries="@array/listaDeTiposDeRoupas"
+        android:spinnerMode="dialog"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tipo_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tipo_roupa" />
+
+    <TextView
+        android:id="@+id/textView_cadastrar_tecido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/tecido"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/spinner_cadastrar_tipo_de_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tipo_de_roupa" />
+
+    <Spinner
+        android:id="@+id/spinner_cadastrar_tecido_de_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:entries="@array/listaDeTecidos"
+        android:spinnerMode="dialog"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tecido"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tecido" />
+
+    <TextView
+        android:id="@+id/textView_cadastrar_corPrincipal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/cor_principal"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/spinner_cadastrar_tecido_de_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tecido_de_roupa" />
+
+    <Spinner
+        android:id="@+id/spinner_cadastrar_cor_principal_de_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:entries="@array/listaDeCores"
+        android:spinnerMode="dialog"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_corPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_corPrincipal" />
+
+    <TextView
+        android:id="@+id/textView_cadastrarTamanho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/tamanho"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/spinner_cadastrar_cor_principal_de_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_cor_principal_de_roupa" />
+
+    <Spinner
+        android:id="@+id/spinner_cadastrar_tamanho_de_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:entries="@array/listaDeTamanhosDeRoupa"
+        android:spinnerMode="dialog"
+        app:layout_constraintStart_toStartOf="@+id/textView_cadastrarTamanho"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
+
+    <Button
+        android:id="@+id/button_salvar_cadastrar_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="52dp"
+        android:text="@string/salvar"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tamanho_de_roupa" />
+
+    <Button
+        android:id="@+id/button_limpar_cadastrar_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="32dp"
+        android:text="Limpar"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tamanho_de_roupa" />
 </androidx.constraintlayout.widget.ConstraintLayout>

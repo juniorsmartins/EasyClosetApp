@@ -21,6 +21,7 @@ import br.com.devvader.easycloset.recursos.UsuarioRepository;
 public class ListarUsuariosActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
+    public static final String USUARIO = "Usuario";
 
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private ListView enderecoDaListaDeUsuarios;
@@ -98,7 +99,7 @@ public class ListarUsuariosActivity extends AppCompatActivity {
             }
 
             private void guardarUsuarioEscolhidoParaEnviarParaEditarNaTelaCadastrarUsuario() {
-                ponteEntreListarAndCadastrar.putExtra("usuario", usuario);
+                ponteEntreListarAndCadastrar.putExtra(USUARIO, usuario);
             }
 
             private void abrirTelaDeCadastrarUsuarioParaEditarUsuario() {

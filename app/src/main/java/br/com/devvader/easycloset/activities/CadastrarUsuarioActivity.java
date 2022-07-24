@@ -22,13 +22,13 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private static final String TITULO_DE_TELA_CADASTRAR_USUARIO = "Cadastrar Usuário";
 
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
-    private UsuarioEntity usuario = null;
+    private UsuarioEntity usuarioEntity = null;
 
     private RadioGroup enderecoSexoUsuario;
     private Spinner enderecoEscolaridadeUsuario;
 
-    private Button botaoSalvarUsuario;
-    private Button botaoLimparCamposCadastroUsuario;
+    private Button enderecoBotaoSalvarUsuario;
+    private Button enderecoBotaoLimparCamposCadastroUsuario;
 
     private EditText enderecoNomeUsuario;
     private EditText enderecoSobrenomeUsuario;
@@ -55,26 +55,26 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         private void capturarIntentVindoDaTelaDeListarUsuariosParaEditarUsuario() {
             Intent receberDadosVindosDaPonteComTelaListarUsuario = getIntent();
 
-            usuario = (UsuarioEntity) receberDadosVindosDaPonteComTelaListarUsuario
-                        .getSerializableExtra("usuario");
+            usuarioEntity = (UsuarioEntity) receberDadosVindosDaPonteComTelaListarUsuario
+                        .getSerializableExtra(ListarUsuariosActivity.USUARIO);
 
             carregarDadosDoUsuarioParaEdicaoNoFormulario();
         }
 
             private void carregarDadosDoUsuarioParaEdicaoNoFormulario() {
-                if(usuario != null) {
+                if(usuarioEntity != null) {
                     mapearEnderecosDosCampos();
                     mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
 
-                    enderecoNomeUsuario.setText(usuario.getNome());
-                    enderecoSobrenomeUsuario.setText(usuario.getSobrenome());
-                    enderecoCpfUsuario.setText(usuario.getCpf());
-                    enderecoFoneUsuario.setText(usuario.getFone());
-                    enderecoEmailUsuario.setText(usuario.getEmail());
-                    enderecoSexoUsuario.check(usuario.getSexo().equalsIgnoreCase("Masculino") ?
+                    enderecoNomeUsuario.setText(usuarioEntity.getNome());
+                    enderecoSobrenomeUsuario.setText(usuarioEntity.getSobrenome());
+                    enderecoCpfUsuario.setText(usuarioEntity.getCpf());
+                    enderecoFoneUsuario.setText(usuarioEntity.getFone());
+                    enderecoEmailUsuario.setText(usuarioEntity.getEmail());
+                    enderecoSexoUsuario.check(usuarioEntity.getSexo().equalsIgnoreCase("Masculino") ?
                             R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
                     enderecoEscolaridadeUsuario.setSelection(0);
-                    enderecoAutorizoPublicidade.setChecked(usuario.getAutorizo());
+                    enderecoAutorizoPublicidade.setChecked(usuarioEntity.getAutorizo());
                 }
             }
 
@@ -114,8 +114,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         }
 
         private void mapearEnderecosDosBotoes() {
-            botaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
-            botaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
+            enderecoBotaoSalvarUsuario = findViewById(R.id.button_salvarCadastroUsuario);
+            enderecoBotaoLimparCamposCadastroUsuario = findViewById(R.id.button_limparCadastroUsuario);
         }
 
         private void ativarRadioGroupDeSexoDoUsuario() {
@@ -147,21 +147,21 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         }
 
         private void ativarBotaoDeSalvarCadastrarUsuario() {
-            botaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
+            enderecoBotaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     validarFormulario();
-
                     if(camposValidados) {
                         pegarEscolaridadeDoUsuarioNoSpinner();
                         salvarOuEditarUsuario();
                         imprimirNomeDoUsuarioNaTela();
-                        imprimirUsuarioCompletoNoTerminal();
                         limparCamposDoFormularioDeCadastrarUsuario();
                         finish();
                     } else {
-                        Toast.makeText(CadastrarUsuarioActivity.this, R.string.formulario_incompleto, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastrarUsuarioActivity.this,
+                                R.string.formulario_incompleto,
+                                Toast.LENGTH_SHORT)
+                                .show();
                     }
                 }
             });
@@ -215,12 +215,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
             private void salvarOuEditarUsuario() {
 
-                if(usuario != null && usuario.getIdUsuario() > 0) {
+                if(usuarioEntity != null && usuarioEntity.getIdUsuario() > 0) {
                     preencherUsuario();
-                    usuarioRepository.editarUsuario(usuario);
+                    usuarioRepository.editarUsuario(usuarioEntity);
                 } else {
                     criarUsuario();
-                    usuarioRepository.salvarUsuario(usuario);
+                    usuarioRepository.salvarUsuario(usuarioEntity);
                 }
             }
 
@@ -229,18 +229,18 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
                     pegarEscolaridadeDoUsuarioNoSpinner();
 
-                    usuario.setNome(enderecoNomeUsuario.getText().toString());
-                    usuario.setSobrenome(enderecoSobrenomeUsuario.getText().toString());
-                    usuario.setCpf(enderecoCpfUsuario.getText().toString());
-                    usuario.setFone(enderecoFoneUsuario.getText().toString());
-                    usuario.setEmail(enderecoEmailUsuario.getText().toString());
-                    usuario.setSexo(sexoUsuario);
-                    usuario.setEscolaridade(escolaridadeUsuario);
-                    usuario.setAutorizo(enderecoAutorizoPublicidade.isChecked());
+                    usuarioEntity.setNome(enderecoNomeUsuario.getText().toString());
+                    usuarioEntity.setSobrenome(enderecoSobrenomeUsuario.getText().toString());
+                    usuarioEntity.setCpf(enderecoCpfUsuario.getText().toString());
+                    usuarioEntity.setFone(enderecoFoneUsuario.getText().toString());
+                    usuarioEntity.setEmail(enderecoEmailUsuario.getText().toString());
+                    usuarioEntity.setSexo(sexoUsuario);
+                    usuarioEntity.setEscolaridade(escolaridadeUsuario);
+                    usuarioEntity.setAutorizo(enderecoAutorizoPublicidade.isChecked());
                 }
 
                 private void criarUsuario() {
-                    usuario = new UsuarioEntity(
+                    usuarioEntity = new UsuarioEntity(
                             enderecoNomeUsuario.getText().toString(),
                             enderecoSobrenomeUsuario.getText().toString(),
                             enderecoCpfUsuario.getText().toString(),
@@ -253,16 +253,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
             private void imprimirNomeDoUsuarioNaTela() {
                 Toast.makeText(CadastrarUsuarioActivity.this,
-                        usuario.getNome().trim() + " " + usuario.getSobrenome().trim(),
-                        Toast.LENGTH_LONG).show();
-            }
-
-            private void imprimirUsuarioCompletoNoTerminal() {
-                System.out.println(usuario);
+                        usuarioEntity.getNome().concat(" ").concat(usuarioEntity.getSobrenome()),
+                        Toast.LENGTH_SHORT).show();
             }
 
         private void ativarBotaoDeLimparFormularioDeCadastrarUsuario() {
-            botaoLimparCamposCadastroUsuario.setOnClickListener(new View.OnClickListener() {
+            enderecoBotaoLimparCamposCadastroUsuario.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mapearEnderecosDosCampos();
@@ -281,11 +277,11 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoSexoUsuario.clearCheck();
                 enderecoEscolaridadeUsuario.setSelection(0);
                 enderecoAutorizoPublicidade.setChecked(false);
-                usuario = null;
+                usuarioEntity = null;
 
                 Toast.makeText(CadastrarUsuarioActivity.this,
                         "Formulário Limpo!",
-                        Toast.LENGTH_LONG)
+                        Toast.LENGTH_SHORT)
                         .show();
             }
 
