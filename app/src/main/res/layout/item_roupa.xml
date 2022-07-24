@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    >
+
+    <TextView
+        android:id="@+id/tipo_de_roupa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Roupa"
+        android:textSize="30dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tamanho_de_roupa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tamanho"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/cor_principal_da_roupa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cor Principal"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tecido_da_roupa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tecido"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
