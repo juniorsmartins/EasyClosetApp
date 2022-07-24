@@ -1,19 +1,16 @@
 package br.com.devvader.easycloset.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
+import br.com.devvader.easycloset.domain.adapters.RoupaAdapter;
 import br.com.devvader.easycloset.recursos.IRoupaRepository;
 import br.com.devvader.easycloset.recursos.RoupaRepository;
 
@@ -39,7 +36,7 @@ public class ListarRoupasActivity extends AppCompatActivity {
         colocarTituloNaTela();
         mapearEnderecoDaListaDeRoupas();
         popularListaDeRoupas();
-        mostrarListaDeRoupasNaTela();
+        criarAdapterCustomizado();
         ativarCliqueNosItensDalistaParaEnviarMensagem();
     }
 
@@ -68,12 +65,9 @@ public class ListarRoupasActivity extends AppCompatActivity {
             }
         }
 
-        private void mostrarListaDeRoupasNaTela() {
-            enderecoDaListaDeRoupas.setAdapter(new ArrayAdapter<>(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    listaDeRoupas)
-            );
+        private void criarAdapterCustomizado() {
+            RoupaAdapter roupaAdapter = new RoupaAdapter(this, listaDeRoupas);
+            enderecoDaListaDeRoupas.setAdapter(roupaAdapter);
         }
 
         private void ativarCliqueNosItensDalistaParaEnviarMensagem() {
