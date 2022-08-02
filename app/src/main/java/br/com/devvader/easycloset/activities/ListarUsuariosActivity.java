@@ -28,19 +28,22 @@ public class ListarUsuariosActivity extends AppCompatActivity {
     private UsuarioEntity usuario;
     private Intent ponteEntreListarAndCadastrar;
 
+    // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_usuarios);
     }
 
+    // ------------------------------ OnResume ------------------------------
     @Override
     protected void onResume() {
         super.onResume();
-
         colocarTituloNaTela();
+
         mapearEnderecoDaListaDeUsuarios();
         mostrarListaDeUsuariosNaTela();
+
         ativarCliqueNaListaParaEditarUsuario();
     }
 
@@ -68,7 +71,9 @@ public class ListarUsuariosActivity extends AppCompatActivity {
             enderecoDaListaDeUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    buscarUsuarioNoRepositoryPorPosicao(position);
+                    usuario = (UsuarioEntity) parent.getItemAtPosition(position);
+//                    buscarUsuarioNoRepositoryPorPosicao(position);
+
                     gerarMensagemDoUsuarioEscolhido();
                     gerarLogDoUsuarioEscolhido(position);
                     criarPonteDaTelaListarUsuarioParaTelaCadastrarUsuario();
@@ -78,9 +83,9 @@ public class ListarUsuariosActivity extends AppCompatActivity {
             });
         }
 
-            private void buscarUsuarioNoRepositoryPorPosicao(int position) {
-                usuario = usuarioRepository.consultarUsuarioPorPosicao(position);
-            }
+//            private void buscarUsuarioNoRepositoryPorPosicao(int position) {
+//                usuario = usuarioRepository.consultarUsuarioPorPosicao(position);
+//            }
 
             private void gerarMensagemDoUsuarioEscolhido() {
                 Toast.makeText(getApplicationContext(),
@@ -90,7 +95,7 @@ public class ListarUsuariosActivity extends AppCompatActivity {
             }
 
             private void gerarLogDoUsuarioEscolhido(int position) {
-                Log.i("Usuário:", " " + usuario + " e posição: " + position);
+                Log.i("Usuário:", " " + usuario.getNome() + " e posição: " + position);
             }
 
             private void criarPonteDaTelaListarUsuarioParaTelaCadastrarUsuario() {

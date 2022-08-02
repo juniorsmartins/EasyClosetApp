@@ -23,10 +23,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:entries="@array/listaDeTiposDeRoupas"
+        android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tipo_roupa"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tipo_roupa" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tipo_roupa"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/textView_cadastrar_tecido"
@@ -45,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:entries="@array/listaDeTecidos"
+        android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tecido"
@@ -67,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:entries="@array/listaDeCores"
+        android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_corPrincipal"
@@ -89,6 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:entries="@array/listaDeTamanhosDeRoupa"
+        android:minHeight="48dp"
         android:spinnerMode="dialog"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrarTamanho"
         app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
@@ -97,21 +102,21 @@
         android:id="@+id/button_salvar_cadastrar_roupa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginTop="16dp"
         android:text="@string/salvar"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tamanho_de_roupa" />
+        app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_tamanho_de_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
 
     <Button
         android:id="@+id/button_limpar_cadastrar_roupa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="32dp"
-        android:text="Limpar"
+        android:layout_marginTop="16dp"
+        android:text="@string/limpar"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tamanho_de_roupa" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_cor_principal_de_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_corPrincipal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

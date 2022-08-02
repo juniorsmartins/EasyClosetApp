@@ -1,5 +1,6 @@
 package br.com.devvader.easycloset.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,7 +19,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_CADASTRAR_ROUPAS = "Cadastrar Roupas";
 
-    private RoupaRepository roupaRepository;
+    private RoupaRepository roupaRepository = new RoupaRepository();
     private RoupaEntity roupaEntity;
 
     private Spinner enderecoCadastrarTipoDeRoupa;
@@ -34,14 +35,34 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private Button enderecoBotaoSalvarRoupa;
     private Button enderecoBotaoLimparFormulario;
 
-    private boolean camposValidados = false;
+    private boolean camposValidados;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_roupas);
+
+        capturarIntentVindoDaTelaDeListarRoupasParaEditarRoupas();
     }
+
+        private void capturarIntentVindoDaTelaDeListarRoupasParaEditarRoupas() {
+            Intent receberDadosVindosDaPonteComTelaListarRoupas = getIntent();
+
+            roupaEntity = (RoupaEntity) receberDadosVindosDaPonteComTelaListarRoupas
+                    .getSerializableExtra(ListarRoupasActivity.ROUPA);
+
+            carregarDadosDaRoupaParaEdicaoNoFormulario();
+        }
+
+            private void carregarDadosDaRoupaParaEdicaoNoFormulario() {
+                if(roupaEntity != null) {
+                    mapearEnderecosDosCampos();
+                    ativarSpinnersDoFormularioDeCadastrarRoupas();
+
+
+                }
+            }
 
     // ------------------------------ OnResume ------------------------------
     @Override
@@ -154,6 +175,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
             }
 
                 private void validarFormulario() {
+                    camposValidados = false;
                     if(enderecoCadastrarTipoDeRoupa.getSelectedItemPosition() == 0) {
                         enderecoCadastrarTipoDeRoupa.requestFocus();
                         return;
@@ -196,19 +218,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                             .show();
                 }
 
-                private void limparCamposDoFormularioDeCadastrarRoupas() {
-                    enderecoCadastrarTipoDeRoupa.setSelection(0);
-                    enderecoCadastrarTecidoDaRoupa.setSelection(0);
-                    enderecoCadastrarCorPrincipalDaRoupa.setSelection(0);
-                    enderecoCadastrarTamanhoDaRoupa.setSelection(0);
-                    roupaEntity = null;
-
-                    Toast.makeText(CadastrarRoupasActivity.this,
-                            "Formulário Limpo!",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
-
             private void ativarButtonLimparFormularioCadastrarRoupas() {
                 enderecoBotaoLimparFormulario.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -219,6 +228,19 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     }
                 });
             }
+
+                private void limparCamposDoFormularioDeCadastrarRoupas() {
+                    enderecoCadastrarTipoDeRoupa.setSelection(0);
+                    enderecoCadastrarTecidoDaRoupa.setSelection(0);
+                    enderecoCadastrarCorPrincipalDaRoupa.setSelection(0);
+                    enderecoCadastrarTamanhoDaRoupa.setSelection(0);
+                    roupaEntity = null;
+
+                    Toast.makeText(CadastrarRoupasActivity.this,
+                                    "Formulário Limpo!",
+                                    Toast.LENGTH_SHORT)
+                            .show();
+                }
 
                 private void direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario() {
                     enderecoCadastrarTipoDeRoupa.requestFocus();

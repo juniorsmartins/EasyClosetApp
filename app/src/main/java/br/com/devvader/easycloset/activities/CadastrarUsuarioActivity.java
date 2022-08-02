@@ -40,7 +40,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private String sexoUsuario;
     private String escolaridadeUsuario;
 
-    private boolean camposValidados = false;
+    private boolean camposValidados;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -86,11 +86,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         colocarTituloNaTela();
 
         mapearEnderecosDosCampos();
-        mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
-        mapearEnderecosDosBotoes();
 
+        mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
         ativarRadioGroupDeSexoDoUsuario();
         ativarSpinnerDeEscolaridadeDoUsuario();
+
+        mapearEnderecosDosBotoes();
         ativarBotaoDeSalvarCadastrarUsuario();
         ativarBotaoDeLimparFormularioDeCadastrarUsuario();
     }
@@ -168,6 +169,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         }
 
             private void validarFormulario() {
+                camposValidados = false;
                 if(TextUtils.isEmpty(enderecoNomeUsuario.getText().toString())) {
                     enderecoNomeUsuario.setError("*");
                     enderecoNomeUsuario.requestFocus();
