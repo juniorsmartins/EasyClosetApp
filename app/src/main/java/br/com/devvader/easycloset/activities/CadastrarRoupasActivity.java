@@ -59,10 +59,114 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 if(roupaEntity != null) {
                     mapearEnderecosDosCampos();
                     ativarSpinnersDoFormularioDeCadastrarRoupas();
-
-
+                    enderecoCadastrarTipoDeRoupa.setSelection(verificarPosicaoDoTipoDeRoupa());
+                    enderecoCadastrarTecidoDaRoupa.setSelection(verificarPosicaoDoTecidoDaRoupa());
+                    enderecoCadastrarCorPrincipalDaRoupa.setSelection(verificarPosicaoDaCorPrincipalDaRoupa());
+                    enderecoCadastrarTamanhoDaRoupa.setSelection(verificarPosicaoDoTamanhoDaRoupa());
                 }
             }
+
+                private int verificarPosicaoDoTipoDeRoupa() {
+                    switch(roupaEntity.getTipo()) {
+                        case "Chapéu":
+                            return 1;
+                        case "Boné":
+                            return 2;
+                        case "Camisa":
+                            return 3;
+                        case "Camiseta":
+                            return 4;
+                        case "Calça":
+                            return 5;
+                        case "Bermuda":
+                            return 6;
+                        case "Cueca":
+                            return 7;
+                        case "Meia":
+                            return 8;
+                        case "Sapato":
+                            return 9;
+                        case "Tênis":
+                            return 10;
+                        default:
+                            return 0;
+                    }
+                }
+
+                private int verificarPosicaoDoTecidoDaRoupa() {
+                    switch(roupaEntity.getTecido()) {
+                        case "Tricoline":
+                            return 1;
+                        case "Malha":
+                            return 2;
+                        case "Cetim":
+                            return 3;
+                        case "Canvas":
+                            return 4;
+                        case "Cordoba":
+                            return 5;
+                        case "Microfibra":
+                            return 6;
+                        case "Algodão":
+                            return 7;
+                        case "Lã":
+                            return 8;
+                        case "Seda":
+                            return 9;
+                        case "Linho":
+                            return 10;
+                        default:
+                            return 0;
+                    }
+                }
+
+                private int verificarPosicaoDaCorPrincipalDaRoupa() {
+                    switch(roupaEntity.getCorPrincipal()) {
+                        case "Azul":
+                            return 1;
+                        case "Verde":
+                            return 2;
+                        case "Branco":
+                            return 3;
+                        case "Preto":
+                            return 4;
+                        case "Amarelo":
+                            return 5;
+                        case "Marrom":
+                            return 6;
+                        case "Laranja":
+                            return 7;
+                        case "Roxo":
+                            return 8;
+                        case "Rosa":
+                            return 9;
+                        case "Vermelho":
+                            return 10;
+                        default:
+                            return 0;
+                    }
+                }
+
+                private int verificarPosicaoDoTamanhoDaRoupa() {
+                    switch(roupaEntity.getTamanho()) {
+                        case "PP":
+                            return 1;
+                        case "P":
+                            return 2;
+                        case "M":
+                            return 3;
+                        case "G":
+                            return 4;
+                        case "GG":
+                            return 5;
+                        case "XG":
+                            return 6;
+                        case "XGG":
+                            return 7;
+                        default:
+                            return 0;
+                    }
+                }
 
     // ------------------------------ OnResume ------------------------------
     @Override

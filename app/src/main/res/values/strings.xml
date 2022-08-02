@@ -10,6 +10,11 @@
     <string name="nomeObrigatorioCadastroUsuario">Nome - campo de preenchimento obrigatório!</string>
     <string name="sobrenomeObrigatorioCadastroUsuario">Sobrenome - campo de preenchimento obrigatório!</string>
     <string name="autorizoPublicidade">Autorizo publicidade no meu e-mail.</string>
+    <string name="formulario_incompleto">Formulário Incompleto!</string>
+    <string name="salvar">Salvar</string>
+    <string name="limpar">Limpar</string>
+    <string name="sobre">Sobre</string>
+
     <string name="sexoMasculino">Masculino</string>
     <string name="sexoFeminino">Feminino</string>
 
@@ -22,7 +27,6 @@
     <string name="Ensino_Médio">Ensino Médio</string>
     <string name="Ensino_Fundamental">Ensino Fundamental</string>
     <string name="Ensino_Fundamental_Incompleto">Ensino Fundamental Incompleto</string>
-    <string name="formulario_incompleto">Formulário Incompleto!</string>
 
     <string name="tipo_de_roupa">Tipo de roupa:</string>
     <string name="tecido">Tecido:</string>
@@ -31,8 +35,8 @@
 
     <string name="chapeu">Chapéu</string>
     <string name="bone">Boné</string>
-    <string name="camiseta">Camiseta</string>
-    <string name="camisa">camisa</string>
+    <string name="camisa">Camisa</string>
+    <string name="camiseta">camiseta</string>
     <string name="calca">Calça</string>
     <string name="bermuda">Bermuda</string>
     <string name="cueca">Cueca</string>
@@ -40,16 +44,13 @@
     <string name="sapato">Sapato</string>
     <string name="tenis">Tênis</string>
 
-    <string name="ppp">PPP</string>
     <string name="pp">PP</string>
     <string name="p">P</string>
     <string name="m">M</string>
     <string name="g">G</string>
     <string name="gg">GG</string>
-    <string name="ggg">GGG</string>
     <string name="xg">XG</string>
     <string name="xgg">XGG</string>
-    <string name="xggg">XGGG</string>
 
     <string name="azul">Azul</string>
     <string name="verde">Verde</string>
@@ -72,8 +73,6 @@
     <string name="la">Lã</string>
     <string name="seda">Seda</string>
     <string name="linho">Linho</string>
-    <string name="salvar">Salvar</string>
-    <string name="limpar">Limpar</string>
 
 </resources>
 

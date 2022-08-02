@@ -73,10 +73,33 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     enderecoEmailUsuario.setText(usuarioEntity.getEmail());
                     enderecoSexoUsuario.check(usuarioEntity.getSexo().equalsIgnoreCase("Masculino") ?
                             R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
-                    enderecoEscolaridadeUsuario.setSelection(0);
+                    enderecoEscolaridadeUsuario.setSelection(verificarPosicaoDaEscolaridadeDoUsuario());
                     enderecoAutorizoPublicidade.setChecked(usuarioEntity.getAutorizo());
                 }
             }
+
+                private int verificarPosicaoDaEscolaridadeDoUsuario() {
+                    switch(usuarioEntity.getEscolaridade()) {
+                        case "Doutorado":
+                            return 1;
+                        case "Mestrado":
+                            return 2;
+                        case "Especializações e MBAs":
+                            return 3;
+                        case "Superior":
+                            return 4;
+                        case "Técnico":
+                            return 5;
+                        case "Ensino Médio":
+                            return 6;
+                        case "Ensino Fundamental":
+                            return 7;
+                        case "Ensino Fundamental Incompleto":
+                            return 8;
+                        default:
+                            return 0;
+                    }
+                }
 
 
     // ------------------------------ OnResume ------------------------------
