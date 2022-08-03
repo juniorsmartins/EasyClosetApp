@@ -62,23 +62,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 return roupaRepository.buscarTodasPecasDeRoupa();
             }
 
-//        private void popularListaDeRoupas() {
-//            String[] listaDeTipos = getResources().getStringArray(R.array.listaDeTiposDeRoupas);
-//            String[] listaDeCores = getResources().getStringArray(R.array.listaDeCores);
-//            String[] listaDeTamanhos = getResources().getStringArray(R.array.listaDeTamanhosDeRoupa);
-//            String[] listaDeTecidos = getResources().getStringArray(R.array.listaDeTecidos);
-//
-//            listaDeRoupas = new ArrayList<>();
-//
-//            for(int contador = 0; contador < 10; contador++) {
-//                listaDeRoupas.add(new RoupaEntity(
-//                        listaDeTipos[contador],
-//                        listaDeTamanhos[contador],
-//                        listaDeCores[contador],
-//                        listaDeTecidos[contador]));
-//            }
-//        }
-
         private void ativarCliqueNosItensDalistaParaEnviarMensagem() {
             enderecoDaListaDeRoupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

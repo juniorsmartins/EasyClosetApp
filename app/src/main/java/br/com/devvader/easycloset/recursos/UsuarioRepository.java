@@ -1,7 +1,13 @@
 package br.com.devvader.easycloset.recursos;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 
@@ -12,9 +18,11 @@ public final class UsuarioRepository implements IUsuarioRepository {
 
     @Override
     public void salvarUsuario(UsuarioEntity usuario) {
-        usuario.setIdUsuario(contadorDeIdsDeUsuarios);
-        listaDeUsuarios.add(usuario);
-        contadorDeIdsDeUsuarios++;
+        if(!listaDeUsuarios.contains(usuario)) {
+            usuario.setIdUsuario(contadorDeIdsDeUsuarios);
+            listaDeUsuarios.add(usuario);
+            contadorDeIdsDeUsuarios++;
+        }
     }
 
     @Override
@@ -27,9 +35,13 @@ public final class UsuarioRepository implements IUsuarioRepository {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<UsuarioEntity> buscarTodosUsuarios() {
-        return listaDeUsuarios;
+        return listaDeUsuarios
+                .stream()
+                .sorted(Comparator.comparing(UsuarioEntity::getIdUsuario).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override

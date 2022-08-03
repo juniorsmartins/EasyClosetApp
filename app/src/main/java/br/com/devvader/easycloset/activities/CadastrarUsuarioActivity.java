@@ -241,7 +241,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             private void salvarOuEditarUsuario() {
 
                 if(usuarioEntity != null && usuarioEntity.getIdUsuario() > 0) {
-                    preencherUsuario();
+                    atualizarUsuario();
                     usuarioRepository.editarUsuario(usuarioEntity);
                 } else {
                     criarUsuario();
@@ -249,7 +249,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 }
             }
 
-                private void preencherUsuario() {
+                private void atualizarUsuario() {
                     mapearEnderecosDosCampos();
                     mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
                     pegarEscolaridadeDoUsuarioNoSpinner();

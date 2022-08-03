@@ -20,7 +20,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private static final String TITULO_DE_TELA_CADASTRAR_ROUPAS = "Cadastrar Roupas";
 
     private RoupaRepository roupaRepository = new RoupaRepository();
-    private RoupaEntity roupaEntity;
+    private RoupaEntity roupaEntity = null;
 
     private Spinner enderecoCadastrarTipoDeRoupa;
     private Spinner enderecoCadastrarTecidoDaRoupa;
@@ -36,6 +36,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private Button enderecoBotaoLimparFormulario;
 
     private boolean camposValidados;
+    Intent capturadaIntentDeAtualizarRoupas = null;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -43,22 +44,26 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_roupas);
 
-        capturarIntentVindoDaTelaDeListarRoupasParaEditarRoupas();
+        caminhoDeAtualizarRegistroDeRoupas();
     }
 
-        private void capturarIntentVindoDaTelaDeListarRoupasParaEditarRoupas() {
-            Intent receberDadosVindosDaPonteComTelaListarRoupas = getIntent();
-
-            roupaEntity = (RoupaEntity) receberDadosVindosDaPonteComTelaListarRoupas
-                    .getSerializableExtra(ListarRoupasActivity.ROUPA);
-
-            carregarDadosDaRoupaParaEdicaoNoFormulario();
+        private void caminhoDeAtualizarRegistroDeRoupas() {
+            capturarIntentVindoDaTelaDeListarRoupas();
+            carregarDadosDaRoupaNoFormularioParaAtualizar();
         }
 
-            private void carregarDadosDaRoupaParaEdicaoNoFormulario() {
+            private void capturarIntentVindoDaTelaDeListarRoupas() {
+                capturadaIntentDeAtualizarRoupas = getIntent();
+            }
+
+            private void carregarDadosDaRoupaNoFormularioParaAtualizar() {
+                roupaEntity = (RoupaEntity) capturadaIntentDeAtualizarRoupas
+                        .getSerializableExtra(ListarRoupasActivity.ROUPA);
+
                 if(roupaEntity != null) {
                     mapearEnderecosDosCampos();
                     ativarSpinnersDoFormularioDeCadastrarRoupas();
+
                     enderecoCadastrarTipoDeRoupa.setSelection(verificarPosicaoDoTipoDeRoupa());
                     enderecoCadastrarTecidoDaRoupa.setSelection(verificarPosicaoDoTecidoDaRoupa());
                     enderecoCadastrarCorPrincipalDaRoupa.setSelection(verificarPosicaoDaCorPrincipalDaRoupa());
@@ -264,7 +269,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                         validarFormulario();
                         if(camposValidados) {
                             pegarValoresDosSpinners();
-                            salvarRoupa();
+                            caminhoBifurcaEntreSalvarOuEditarRoupa();
                             imprimirNomeDaRoupaNaTela();
                             limparCamposDoFormularioDeCadastrarRoupas();
                             finish();
@@ -306,14 +311,31 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     tamanhoDeRoupa = (String) enderecoCadastrarTamanhoDaRoupa.getSelectedItem();
                 }
 
-                private void salvarRoupa() {
-                    criarRoupa();
-                    roupaRepository.salvarRoupa(roupaEntity);
+                private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
+                    if(roupaEntity != null && roupaEntity.getIdRoupa() > 0) {
+                        atualizarRoupa();
+                        roupaRepository.editarRoupa(roupaEntity);
+                    } else {
+                        salvarRoupa();
+                        roupaRepository.salvarRoupa(roupaEntity);
+                    }
                 }
 
-                    private void criarRoupa() {
-                        roupaEntity = new RoupaEntity(tipoDeRoupa, tamanhoDeRoupa, corPrincipalDeRoupa, tecidoDeRoupa);
+                    private void atualizarRoupa() {
+                        roupaEntity.setTipo(tipoDeRoupa);
+                        roupaEntity.setTecido(tecidoDeRoupa);
+                        roupaEntity.setCorPrincipal(corPrincipalDeRoupa);
+                        roupaEntity.setTamanho(tamanhoDeRoupa);
                     }
+
+                    private void salvarRoupa() {
+                        criarRoupa();
+                        roupaRepository.salvarRoupa(roupaEntity);
+                    }
+
+                        private void criarRoupa() {
+                            roupaEntity = new RoupaEntity(tipoDeRoupa, tamanhoDeRoupa, corPrincipalDeRoupa, tecidoDeRoupa);
+                        }
 
                 private void imprimirNomeDaRoupaNaTela() {
                     Toast.makeText(CadastrarRoupasActivity.this,

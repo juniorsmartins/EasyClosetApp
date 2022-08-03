@@ -1,7 +1,6 @@
 package br.com.devvader.easycloset.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public final class RoupaEntity implements Serializable {
 
