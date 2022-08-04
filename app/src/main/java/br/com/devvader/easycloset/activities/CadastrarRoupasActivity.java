@@ -62,7 +62,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
                 if(roupaEntity != null) {
                     mapearEnderecosDosCampos();
-                    ativarSpinnersDoFormularioDeCadastrarRoupas();
 
                     enderecoCadastrarTipoDeRoupa.setSelection(verificarPosicaoDoTipoDeRoupa());
                     enderecoCadastrarTecidoDaRoupa.setSelection(verificarPosicaoDoTecidoDaRoupa());
