@@ -2,12 +2,15 @@ package br.com.devvader.easycloset.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
@@ -32,6 +35,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
     private Button enderecoBotaoSalvarRoupa;
     private Button enderecoBotaoLimparFormulario;
+    private Button enderecoBotaoVoltar;
 
     private boolean camposValidados;
     Intent capturarIntentDeListar = null;
@@ -277,15 +281,18 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         private void mapearEnderecosDosBotoes() {
             enderecoBotaoSalvarRoupa = findViewById(R.id.button_salvar_cadastrar_roupa);
             enderecoBotaoLimparFormulario = findViewById(R.id.button_limpar_cadastrar_roupa);
+            enderecoBotaoVoltar = findViewById(R.id.button_voltar_cadastrar_roupa);
         }
 
         private void ativarButtonsDoFormularioDeCadastrarRoupas() {
             ativarButtonSalvarCadastrarRoupas();
             ativarButtonLimparFormularioCadastrarRoupas();
+            ativarButtonVoltarCadastrarRoupas();
         }
 
             private void ativarButtonSalvarCadastrarRoupas() {
                 enderecoBotaoSalvarRoupa.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onClick(View v) {
 
@@ -296,29 +303,25 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                             if(tipoDeCaminho == SALVAR) {
                                 criarRoupa();
 
-                                Intent intent = new Intent();
+                                Intent intent = getIntent();
                                 intent.putExtra(MODO, SALVAR);
-                                System.out.println("DevolverResultadoParaListar - " + roupaEntity);
                                 intent.putExtra(CadastrarRoupasActivity.ROUPA, roupaEntity);
                                 setResult(Activity.RESULT_OK, intent);
                                 finish();
-                            }
-                            if(tipoDeCaminho == ATUALIZAR) {
+                            } else if(tipoDeCaminho == ATUALIZAR) {
                                 alterarRoupa();
 
-                                Intent intent = new Intent();
+                                Intent intent = getIntent();
                                 intent.putExtra(MODO, ATUALIZAR);
-                                System.out.println("DevolverResultadoParaListar - " + roupaEntity);
                                 intent.putExtra(CadastrarRoupasActivity.ROUPA, roupaEntity);
                                 setResult(Activity.RESULT_OK, intent);
                                 finish();
+                            } else if(tipoDeCaminho != SALVAR && tipoDeCaminho != ATUALIZAR) {
+                                caminhoBifurcaEntreSalvarOuEditarRoupa();
+                                imprimirNomeDaRoupaNaTela();
+                                limparCamposDoFormularioDeCadastrarRoupas();
+                                finish();
                             }
-
-                            caminhoBifurcaEntreSalvarOuEditarRoupa();
-                            imprimirNomeDaRoupaNaTela();
-                            limparCamposDoFormularioDeCadastrarRoupas();
-                            finish();
-
                         } else {
                             Toast.makeText(CadastrarRoupasActivity.this,
                                             R.string.formulario_incompleto,
@@ -357,7 +360,9 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     tamanhoDeRoupa = (String) enderecoCadastrarTamanhoDaRoupa.getSelectedItem();
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
+                    System.out.println("\n-------------- CadastrarRoupas - CaminhoBifurcaEntreSalvarOuEditarRoupa --------------");
                     if(roupaEntity != null && roupaEntity.getIdRoupa() > 0) {
                         alterarRoupa();
                         roupaRepository.atualizarRoupa(roupaEntity);
@@ -413,18 +418,18 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     enderecoCadastrarTipoDeRoupa.requestFocus();
                 }
 
+            private void ativarButtonVoltarCadastrarRoupas() {
+                enderecoBotaoVoltar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                    }
+                });
+            }
 
-
-
-
-
-        public void cancelar(View view){
-            onBackPressed();
-        }
-
-        @Override
-        public void onBackPressed() {
-            setResult(Activity.RESULT_CANCELED);
-            finish();
-        }
+                @Override
+                public void onBackPressed() {
+                    setResult(Activity.RESULT_CANCELED);
+                    finish();
+                }
 }

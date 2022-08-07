@@ -106,8 +106,8 @@
         android:text="@string/salvar"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_tamanho_de_roupa"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
+        app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_tecido_de_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tecido" />
 
     <Button
         android:id="@+id/button_limpar_cadastrar_roupa"
@@ -119,4 +119,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_cor_principal_de_roupa"
         app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_corPrincipal" />
+
+    <Button
+        android:id="@+id/button_voltar_cadastrar_roupa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/voltar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_tamanho_de_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
     private boolean camposValidados;
 
+
     // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState)

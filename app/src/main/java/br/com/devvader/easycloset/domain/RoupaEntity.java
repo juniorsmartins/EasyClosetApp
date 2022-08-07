@@ -65,7 +65,8 @@ public final class RoupaEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Tipo = " + tipo +
+        return "\n\nID = " + idRoupa +
+                "\nTipo = " + tipo +
                 "\nTamanho = " + tamanho +
                 "\nCor Principal = " + corPrincipal +
                 "\nTecido = " + tecido;

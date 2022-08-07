@@ -27,7 +27,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
     private IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
-    private List<RoupaEntity> listaDeRoupas;
     private RoupaEntity roupa;
     private Button enderecoBotaoAdicionarRoupa;
     private RoupaAdapter roupaAdapter;
@@ -37,8 +36,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_roupas);
-
-        System.out.println("\n\n\nTESTE - ONCREATE - LISTAR ----------------\n\n\n");
     }
 
 
@@ -47,8 +44,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         colocarTituloNaTela();
-
-        System.out.println("\n\n\nTESTE - ONRESUME - LISTAR ----------------\n\n\n");
 
         mapearEnderecoDaListaDeRoupas();
         mostrarListaDeRoupasNaTelaComAdapterCustomizado();
@@ -74,8 +69,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
 
             private List<RoupaEntity> buscarListaDeRoupasNoRepository() {
-                listaDeRoupas = roupaRepository.listarRoupas();
-                return listaDeRoupas;
+                return roupaRepository.listarRoupas();
             }
 
         private void mapearEnderecoDoBotaoAdicionar() {
@@ -124,29 +118,17 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        mapearEnderecoDaListaDeRoupas();
-        mostrarListaDeRoupasNaTelaComAdapterCustomizado();
-        System.out.println("\n\n\nTESTE - ONACTIVITYRESULT - LISTAR ----------------\n\n\n");
-
         if(resultCode == Activity.RESULT_OK) {
             Bundle bundle = intent.getExtras();
-            roupa = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
-            System.out.println("OnActivityResult - " + roupa);
+            RoupaEntity roupaNova = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
 
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
-                roupaRepository = new RoupaRepository();
-                roupaRepository.atualizarRoupa(roupa);
-                System.out.println("\n\n---------------- ATUALIZAR ---------------------\n\n");
+                roupaRepository.atualizarRoupa(roupaNova);
             }
 
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
-                roupaRepository.salvarRoupa(roupa);
-                System.out.println("\n\n---------------- SALVAR ---------------------\n\n");
+                roupaRepository.salvarRoupa(roupaNova);
             }
-
-            roupaRepository.listarRoupas()
-                    .stream()
-                    .forEach(item -> System.out.println("ForEach - " + item.toString()));
 
             roupaAdapter.notifyDataSetChanged();
         }
