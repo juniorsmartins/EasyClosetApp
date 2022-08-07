@@ -159,20 +159,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="75dp"
             android:text="@string/botaoSalvarCadastroUsuario"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_autorizoPublicidade" />
 
         <Button
             android:id="@+id/button_limparCadastroUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:text="@string/botaoLimparCadastroUsuario"
+            app:layout_constraintEnd_toStartOf="@+id/button_voltar_cadastrar_usuario"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox_autorizoPublicidade" />
+            app:layout_constraintTop_toBottomOf="@+id/button_salvarCadastroUsuario" />
 
         <CheckBox
             android:id="@+id/checkBox_autorizoPublicidade"
@@ -195,6 +197,18 @@
             app:layout_constraintEnd_toEndOf="@+id/editText_emailUsuario"
             app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup_sexo" />
+
+        <Button
+            android:id="@+id/button_voltar_cadastrar_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/voltar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_limparCadastroUsuario"
+            app:layout_constraintTop_toBottomOf="@+id/button_salvarCadastroUsuario" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

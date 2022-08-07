@@ -1,32 +1,33 @@
 package br.com.devvader.easycloset.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.List;
-
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
+import br.com.devvader.easycloset.domain.adapters.UsuarioAdapter;
 import br.com.devvader.easycloset.recursos.IUsuarioRepository;
 import br.com.devvader.easycloset.recursos.UsuarioRepository;
 
-public class ListarUsuariosActivity extends AppCompatActivity {
+public final class ListarUsuariosActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
-    public static final String USUARIO = "Usuario";
 
     private IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private ListView enderecoDaListaDeUsuarios;
     private UsuarioEntity usuario;
-    private Intent ponteEntreListarAndCadastrar;
+    private Button enderecoBotaoAdicionar;
+    private UsuarioAdapter usuarioAdapter;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -41,51 +42,57 @@ public class ListarUsuariosActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
 
-        mapearEnderecoDaListaDeUsuarios();
-        mostrarListaDeUsuariosNaTela();
+        mapearEnderecoDaLista();
+        mostrarListaNaTelaComAdapterCustomizado();
 
-        ativarCliqueNaListaParaEditarUsuario();
+        mapearEnderecoDoBotaoAdicionar();
+        ativarBotaoAdicionar();
+
+        ativarCliqueNosItensDalistaParaEditar();
     }
 
         private void colocarTituloNaTela() {
             setTitle(TITULO_DE_TELA_LISTAR_USUARIOS);
         }
 
-        private void mapearEnderecoDaListaDeUsuarios() {
+        private void mapearEnderecoDaLista() {
             enderecoDaListaDeUsuarios = findViewById(R.id.listView_listaDeUsuarios);
         }
 
-        private void mostrarListaDeUsuariosNaTela() {
-            enderecoDaListaDeUsuarios.setAdapter(new ArrayAdapter<>(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    buscarListaDeUsuariosNoRepository())
-            );
+        private void mostrarListaNaTelaComAdapterCustomizado() {
+            usuarioAdapter = new UsuarioAdapter(this, buscarListaNoRepository());
+            enderecoDaListaDeUsuarios.setAdapter(usuarioAdapter);
         }
 
-            private List<UsuarioEntity> buscarListaDeUsuariosNoRepository() {
-                return usuarioRepository.buscarTodosUsuarios();
+            private List<UsuarioEntity> buscarListaNoRepository() {
+                return usuarioRepository.listar();
             }
 
-        private void ativarCliqueNaListaParaEditarUsuario() {
-            enderecoDaListaDeUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    usuario = (UsuarioEntity) parent.getItemAtPosition(position);
-//                    buscarUsuarioNoRepositoryPorPosicao(position);
+        private void mapearEnderecoDoBotaoAdicionar() {
+            enderecoBotaoAdicionar = findViewById(R.id.button_listar_adicionar_usuario);
+        }
 
-                    gerarMensagemDoUsuarioEscolhido();
-                    gerarLogDoUsuarioEscolhido(position);
-                    criarPonteDaTelaListarUsuarioParaTelaCadastrarUsuario();
-                    guardarUsuarioEscolhidoParaEnviarParaEditarNaTelaCadastrarUsuario();
-                    abrirTelaDeCadastrarUsuarioParaEditarUsuario();
+        private void ativarBotaoAdicionar() {
+            enderecoBotaoAdicionar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CadastrarUsuarioActivity.cadastrarUsuarioComRetorno(ListarUsuariosActivity.this);
                 }
             });
         }
 
-//            private void buscarUsuarioNoRepositoryPorPosicao(int position) {
-//                usuario = usuarioRepository.consultarUsuarioPorPosicao(position);
-//            }
+        private void ativarCliqueNosItensDalistaParaEditar() {
+            enderecoDaListaDeUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    usuario = (UsuarioEntity) parent.getItemAtPosition(position);
+
+                    gerarMensagemDoUsuarioEscolhido();
+                    gerarLogDoUsuarioEscolhido(position);
+                    CadastrarUsuarioActivity.atualizarUsuarioComRetorno(ListarUsuariosActivity.this, usuario);
+                }
+            });
+        }
 
             private void gerarMensagemDoUsuarioEscolhido() {
                 Toast.makeText(getApplicationContext(),
@@ -98,17 +105,26 @@ public class ListarUsuariosActivity extends AppCompatActivity {
                 Log.i("Usuário:", " " + usuario.getNome() + " e posição: " + position);
             }
 
-            private void criarPonteDaTelaListarUsuarioParaTelaCadastrarUsuario() {
-                ponteEntreListarAndCadastrar = new Intent(
-                        ListarUsuariosActivity.this, CadastrarUsuarioActivity.class);
+    // ------------------------------ OnActivityResult ------------------------------
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if(resultCode == Activity.RESULT_OK) {
+            Bundle bundle = intent.getExtras();
+            UsuarioEntity usuarioNovo = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
+
+            if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
+                usuarioRepository.atualizarUsuario(usuarioNovo);
             }
 
-            private void guardarUsuarioEscolhidoParaEnviarParaEditarNaTelaCadastrarUsuario() {
-                ponteEntreListarAndCadastrar.putExtra(USUARIO, usuario);
+            if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.SALVAR) {
+                usuarioRepository.salvarUsuario(usuarioNovo);
             }
 
-            private void abrirTelaDeCadastrarUsuarioParaEditarUsuario() {
-                startActivity(ponteEntreListarAndCadastrar);
-            }
+            usuarioAdapter.notifyDataSetChanged();
+        }
+    }
 }
 

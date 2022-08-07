@@ -28,7 +28,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     private IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
     private RoupaEntity roupa;
-    private Button enderecoBotaoAdicionarRoupa;
+    private Button enderecoBotaoAdicionar;
     private RoupaAdapter roupaAdapter;
 
     // ------------------------------ OnCreate ------------------------------
@@ -45,39 +45,38 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
 
-        mapearEnderecoDaListaDeRoupas();
-        mostrarListaDeRoupasNaTelaComAdapterCustomizado();
+        mapearEnderecoDaLista();
+        mostrarListaNaTelaComAdapterCustomizado();
 
         mapearEnderecoDoBotaoAdicionar();
-        ativarBotaoAdicionarRoupa();
+        ativarBotaoAdicionar();
 
-        ativarCliqueNosItensDalistaParaEditarRoupa();
+        ativarCliqueNosItensDalistaParaEditar();
     }
 
         private void colocarTituloNaTela() {
             setTitle(TITULO_DE_TELA_LISTAR_ROUPAS);
         }
 
-        private void mapearEnderecoDaListaDeRoupas() {
+        private void mapearEnderecoDaLista() {
             enderecoDaListaDeRoupas = findViewById(R.id.listView_listaDeRoupas);
         }
 
-        private void mostrarListaDeRoupasNaTelaComAdapterCustomizado() {
-            roupaAdapter = new RoupaAdapter(this, buscarListaDeRoupasNoRepository());
+        private void mostrarListaNaTelaComAdapterCustomizado() {
+            roupaAdapter = new RoupaAdapter(this, buscarListaNoRepository());
             enderecoDaListaDeRoupas.setAdapter(roupaAdapter);
-            System.out.println("\n\n\n--------------- mostrarListaDeRoupasNaTelaComAdapterCustomizado() ----------------\n\n\n");
         }
 
-            private List<RoupaEntity> buscarListaDeRoupasNoRepository() {
-                return roupaRepository.listarRoupas();
+            private List<RoupaEntity> buscarListaNoRepository() {
+                return roupaRepository.listar();
             }
 
         private void mapearEnderecoDoBotaoAdicionar() {
-            enderecoBotaoAdicionarRoupa = findViewById(R.id.button_listar_adicionar_roupa);
+            enderecoBotaoAdicionar = findViewById(R.id.button_listar_adicionar_roupa);
         }
 
-        private void ativarBotaoAdicionarRoupa() {
-            enderecoBotaoAdicionarRoupa.setOnClickListener(new View.OnClickListener() {
+        private void ativarBotaoAdicionar() {
+            enderecoBotaoAdicionar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CadastrarRoupasActivity.cadastrarRoupaComRetorno(ListarRoupasActivity.this);
@@ -85,7 +84,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             });
         }
 
-        private void ativarCliqueNosItensDalistaParaEditarRoupa() {
+        private void ativarCliqueNosItensDalistaParaEditar() {
             enderecoDaListaDeRoupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,7 +109,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                         roupa.getTipo().concat(" ").concat(roupa.getCorPrincipal()) +
                         " - na posição: " + posicao);
             }
-
 
     // ------------------------------ OnActivityResult ------------------------------
     @RequiresApi(api = Build.VERSION_CODES.N)

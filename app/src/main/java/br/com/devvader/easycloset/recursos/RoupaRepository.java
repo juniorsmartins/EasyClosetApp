@@ -25,7 +25,6 @@ public final class RoupaRepository implements IRoupaRepository {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void atualizarRoupa(RoupaEntity novaRoupa) {
         for(RoupaEntity roupa : listaDeRoupas) {
@@ -34,13 +33,11 @@ public final class RoupaRepository implements IRoupaRepository {
                 listaDeRoupas.set(posicaoDaRoupa, novaRoupa);
             }
         }
-        System.out.println("\n\n-------------- REPOSITORY ---------- ");
-        listaDeRoupas.forEach(item -> System.out.println(item));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public List<RoupaEntity> listarRoupas() {
+    public List<RoupaEntity> listar() {
         return listaDeRoupas
                 .stream()
                 .sorted(Comparator.comparing(RoupaEntity::getIdRoupa).reversed())

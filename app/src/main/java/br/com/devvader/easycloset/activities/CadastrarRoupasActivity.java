@@ -85,7 +85,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
             private void carregarDadosDaRoupaNoFormularioParaAtualizar() {
                 roupaEntity = (RoupaEntity) capturarIntentDeListar.getSerializableExtra(
                         CadastrarRoupasActivity.ROUPA);
-                System.out.println("carregarDadosDaRoupaNoFormularioParaAtualizar - " + roupaEntity);
 
                 if(roupaEntity != null) {
                     mapearEnderecosDosCampos();
@@ -206,10 +205,10 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         colocarTituloNaTela();
 
         mapearEnderecosDosCampos();
-        ativarSpinnersDoFormularioDeCadastrarRoupas();
+        ativarSpinnersDoFormularioDeCadastrar();
 
         mapearEnderecosDosBotoes();
-        ativarButtonsDoFormularioDeCadastrarRoupas();
+        ativarButtonsDoFormularioDeCadastrar();
     }
 
         private void colocarTituloNaTela() {
@@ -223,7 +222,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
             enderecoCadastrarTamanhoDaRoupa = findViewById(R.id.spinner_cadastrar_tamanho_de_roupa);
         }
 
-        private void ativarSpinnersDoFormularioDeCadastrarRoupas() {
+        private void ativarSpinnersDoFormularioDeCadastrar() {
             ativarSpinnerDeTipoDeRoupa();
             ativarSpinnerDeTecidoDeRoupa();
             ativarSpinnerDeCorPrincipalDeRoupa();
@@ -284,10 +283,10 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
             enderecoBotaoVoltar = findViewById(R.id.button_voltar_cadastrar_roupa);
         }
 
-        private void ativarButtonsDoFormularioDeCadastrarRoupas() {
+        private void ativarButtonsDoFormularioDeCadastrar() {
             ativarButtonSalvarCadastrarRoupas();
-            ativarButtonLimparFormularioCadastrarRoupas();
-            ativarButtonVoltarCadastrarRoupas();
+            ativarButtonLimparFormularioCadastrar();
+            ativarButtonVoltarCadastrar();
         }
 
             private void ativarButtonSalvarCadastrarRoupas() {
@@ -295,7 +294,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onClick(View v) {
-
                         validarFormulario();
                         if(camposValidados) {
                             pegarValoresDosSpinners();
@@ -318,7 +316,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                                 finish();
                             } else if(tipoDeCaminho != SALVAR && tipoDeCaminho != ATUALIZAR) {
                                 caminhoBifurcaEntreSalvarOuEditarRoupa();
-                                imprimirNomeDaRoupaNaTela();
+                                imprimirNomeNaTela();
                                 limparCamposDoFormularioDeCadastrarRoupas();
                                 finish();
                             }
@@ -360,9 +358,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     tamanhoDeRoupa = (String) enderecoCadastrarTamanhoDaRoupa.getSelectedItem();
                 }
 
-                @RequiresApi(api = Build.VERSION_CODES.N)
                 private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
-                    System.out.println("\n-------------- CadastrarRoupas - CaminhoBifurcaEntreSalvarOuEditarRoupa --------------");
                     if(roupaEntity != null && roupaEntity.getIdRoupa() > 0) {
                         alterarRoupa();
                         roupaRepository.atualizarRoupa(roupaEntity);
@@ -383,14 +379,14 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                         roupaEntity = new RoupaEntity(tipoDeRoupa, tamanhoDeRoupa, corPrincipalDeRoupa, tecidoDeRoupa);
                     }
 
-                private void imprimirNomeDaRoupaNaTela() {
+                private void imprimirNomeNaTela() {
                     Toast.makeText(CadastrarRoupasActivity.this,
                             roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()),
                             Toast.LENGTH_SHORT)
                             .show();
                 }
 
-            private void ativarButtonLimparFormularioCadastrarRoupas() {
+            private void ativarButtonLimparFormularioCadastrar() {
                 enderecoBotaoLimparFormulario.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -418,7 +414,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     enderecoCadastrarTipoDeRoupa.requestFocus();
                 }
 
-            private void ativarButtonVoltarCadastrarRoupas() {
+            private void ativarButtonVoltarCadastrar() {
                 enderecoBotaoVoltar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

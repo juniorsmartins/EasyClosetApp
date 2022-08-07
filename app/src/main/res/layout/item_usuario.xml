@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    >
+
+    <TextView
+        android:id="@+id/editText_nomeUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:textSize="30dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/editText_sobrenomeUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sobrenome"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/editText_cpfUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CPF"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/editText_foneUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fone"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/editText_emailUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/radioGroup_sexo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sexo"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/spinner_escolaridadeUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Escolaridade"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:id="@+id/checkBox_autorizoPublicidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Autorização"
+        android:textSize="24dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="10dp"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -26,7 +26,7 @@ public final class UsuarioRepository implements IUsuarioRepository {
     }
 
     @Override
-    public void editarUsuario(UsuarioEntity novoUsuario) {
+    public void atualizarUsuario(UsuarioEntity novoUsuario) {
         for(UsuarioEntity usuario : listaDeUsuarios) {
             if(usuario.getIdUsuario() == novoUsuario.getIdUsuario()) {
                 int posicaoDoUsuario = listaDeUsuarios.indexOf(usuario);
@@ -37,7 +37,7 @@ public final class UsuarioRepository implements IUsuarioRepository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public List<UsuarioEntity> buscarTodosUsuarios() {
+    public List<UsuarioEntity> listar() {
         return listaDeUsuarios
                 .stream()
                 .sorted(Comparator.comparing(UsuarioEntity::getIdUsuario).reversed())
