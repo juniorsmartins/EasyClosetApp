@@ -6,7 +6,7 @@ import br.com.devvader.easycloset.domain.RoupaEntity;
 public interface IRoupaRepository {
 
     void salvarRoupa(RoupaEntity roupa);
-    void editarRoupa(RoupaEntity novaRoupa);
-    List<RoupaEntity> buscarTodasPecasDeRoupa();
+    void atualizarRoupa(RoupaEntity novaRoupa);
+    List<RoupaEntity> listarRoupas();
     RoupaEntity consultarPecasDeRoupaPorPosicao(int position);
 }

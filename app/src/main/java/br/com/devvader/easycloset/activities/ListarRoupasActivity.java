@@ -1,12 +1,17 @@
 package br.com.devvader.easycloset.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
@@ -19,19 +24,23 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 public final class ListarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_ROUPAS = "Listar Roupas";
-    public static final String ROUPA = "Roupa";
 
     private IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
+    private List<RoupaEntity> listaDeRoupas;
     private RoupaEntity roupa;
-    private Intent ponteEntreListarAndCadastrar;
+    private Button enderecoBotaoAdicionarRoupa;
+    private RoupaAdapter roupaAdapter;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_roupas);
+
+        System.out.println("\n\n\nTESTE - ONCREATE - LISTAR ----------------\n\n\n");
     }
+
 
     // ------------------------------ OnResume ------------------------------
     @Override
@@ -39,10 +48,15 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
 
+        System.out.println("\n\n\nTESTE - ONRESUME - LISTAR ----------------\n\n\n");
+
         mapearEnderecoDaListaDeRoupas();
         mostrarListaDeRoupasNaTelaComAdapterCustomizado();
 
-        ativarCliqueNosItensDalistaParaEnviarMensagem();
+        mapearEnderecoDoBotaoAdicionar();
+        ativarBotaoAdicionarRoupa();
+
+        ativarCliqueNosItensDalistaParaEditarRoupa();
     }
 
         private void colocarTituloNaTela() {
@@ -54,15 +68,30 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
 
         private void mostrarListaDeRoupasNaTelaComAdapterCustomizado() {
-            RoupaAdapter roupaAdapter = new RoupaAdapter(this, buscarListaDeRoupasNoRepository());
+            roupaAdapter = new RoupaAdapter(this, buscarListaDeRoupasNoRepository());
             enderecoDaListaDeRoupas.setAdapter(roupaAdapter);
+            System.out.println("\n\n\n--------------- mostrarListaDeRoupasNaTelaComAdapterCustomizado() ----------------\n\n\n");
         }
 
             private List<RoupaEntity> buscarListaDeRoupasNoRepository() {
-                return roupaRepository.buscarTodasPecasDeRoupa();
+                listaDeRoupas = roupaRepository.listarRoupas();
+                return listaDeRoupas;
             }
 
-        private void ativarCliqueNosItensDalistaParaEnviarMensagem() {
+        private void mapearEnderecoDoBotaoAdicionar() {
+            enderecoBotaoAdicionarRoupa = findViewById(R.id.button_listar_adicionar_roupa);
+        }
+
+        private void ativarBotaoAdicionarRoupa() {
+            enderecoBotaoAdicionarRoupa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CadastrarRoupasActivity.cadastrarRoupaComRetorno(ListarRoupasActivity.this);
+                }
+            });
+        }
+
+        private void ativarCliqueNosItensDalistaParaEditarRoupa() {
             enderecoDaListaDeRoupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,9 +99,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
                     gerarMensagemDeRoupaEscolhida();
                     gerarLogDaRoupaEscolhida(position);
-                    criarPonteDaTelaListarRoupasParaTelaCadastrarRoupas();
-                    guardarRoupaEscolhidaParaEnviarParaEditarNaTelaCadastrarRoupas();
-                    abrirTelaDeCadastrarRoupasParaEditarRoupas();
+                    CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupa);
                 }
             });
         }
@@ -90,16 +117,38 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                         " - na posição: " + posicao);
             }
 
-            private void criarPonteDaTelaListarRoupasParaTelaCadastrarRoupas() {
-                ponteEntreListarAndCadastrar = new Intent(
-                        ListarRoupasActivity.this, CadastrarRoupasActivity.class);
+
+    // ------------------------------ OnActivityResult ------------------------------
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        mapearEnderecoDaListaDeRoupas();
+        mostrarListaDeRoupasNaTelaComAdapterCustomizado();
+        System.out.println("\n\n\nTESTE - ONACTIVITYRESULT - LISTAR ----------------\n\n\n");
+
+        if(resultCode == Activity.RESULT_OK) {
+            Bundle bundle = intent.getExtras();
+            roupa = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
+            System.out.println("OnActivityResult - " + roupa);
+
+            if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
+                roupaRepository = new RoupaRepository();
+                roupaRepository.atualizarRoupa(roupa);
+                System.out.println("\n\n---------------- ATUALIZAR ---------------------\n\n");
             }
 
-            private void guardarRoupaEscolhidaParaEnviarParaEditarNaTelaCadastrarRoupas() {
-                ponteEntreListarAndCadastrar.putExtra(ROUPA, roupa);
+            if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
+                roupaRepository.salvarRoupa(roupa);
+                System.out.println("\n\n---------------- SALVAR ---------------------\n\n");
             }
 
-            private void abrirTelaDeCadastrarRoupasParaEditarRoupas() {
-                startActivity(ponteEntreListarAndCadastrar);
-            }
+            roupaRepository.listarRoupas()
+                    .stream()
+                    .forEach(item -> System.out.println("ForEach - " + item.toString()));
+
+            roupaAdapter.notifyDataSetChanged();
+        }
+    }
 }

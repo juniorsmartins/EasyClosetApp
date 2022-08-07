@@ -26,7 +26,7 @@ public final class RoupaRepository implements IRoupaRepository {
     }
 
     @Override
-    public void editarRoupa(RoupaEntity novaRoupa) {
+    public void atualizarRoupa(RoupaEntity novaRoupa) {
         for(RoupaEntity roupa : listaDeRoupas) {
             if(roupa.getIdRoupa() == novaRoupa.getIdRoupa()) {
                 int posicaoDaRoupa = listaDeRoupas.indexOf(roupa);
@@ -37,7 +37,7 @@ public final class RoupaRepository implements IRoupaRepository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public List<RoupaEntity> buscarTodasPecasDeRoupa() {
+    public List<RoupaEntity> listarRoupas() {
         return listaDeRoupas
                 .stream()
                 .sorted(Comparator.comparing(RoupaEntity::getIdRoupa).reversed())

@@ -1,16 +1,14 @@
 package br.com.devvader.easycloset.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
 import br.com.devvader.easycloset.recursos.RoupaRepository;
@@ -36,7 +34,28 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private Button enderecoBotaoLimparFormulario;
 
     private boolean camposValidados;
-    Intent capturadaIntentDeAtualizarRoupas = null;
+    Intent capturarIntentDeListar = null;
+    private int tipoDeCaminho = 0;
+    Bundle bundle = null;
+
+    // Padrão estático para salvar roupas - com retorno de resultado
+    public static final String MODO = "MODO";
+    public static final int SALVAR = 1;
+    public static void cadastrarRoupaComRetorno(AppCompatActivity activity) {
+        Intent intent = new Intent(activity, CadastrarRoupasActivity.class);
+        intent.putExtra(MODO, SALVAR);
+        activity.startActivityForResult(intent, SALVAR);
+    }
+
+    // Padrão estático para atualizar roupas - com retorno de resultado
+    public static final String ROUPA = "ROUPA";
+    public static final int ATUALIZAR = 2;
+    public static void atualizarRoupaComRetorno(AppCompatActivity activity, RoupaEntity roupa) {
+        Intent intent = new Intent(activity, CadastrarRoupasActivity.class);
+        intent.putExtra(MODO, ATUALIZAR);
+        intent.putExtra(ROUPA, roupa);
+        activity.startActivityForResult(intent, ATUALIZAR);
+    }
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -44,21 +63,25 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_roupas);
 
-        caminhoDeAtualizarRegistroDeRoupas();
+        caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno();
     }
 
-        private void caminhoDeAtualizarRegistroDeRoupas() {
-            capturarIntentVindoDaTelaDeListarRoupas();
-            carregarDadosDaRoupaNoFormularioParaAtualizar();
+        private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno() {
+            capturarIntentDeListar = getIntent();
+            bundle = capturarIntentDeListar.getExtras();
+
+            if(bundle != null) {
+                tipoDeCaminho = bundle.getInt(MODO);
+                if(tipoDeCaminho == ATUALIZAR) {
+                    carregarDadosDaRoupaNoFormularioParaAtualizar();
+                }
+            }
         }
 
-            private void capturarIntentVindoDaTelaDeListarRoupas() {
-                capturadaIntentDeAtualizarRoupas = getIntent();
-            }
-
             private void carregarDadosDaRoupaNoFormularioParaAtualizar() {
-                roupaEntity = (RoupaEntity) capturadaIntentDeAtualizarRoupas
-                        .getSerializableExtra(ListarRoupasActivity.ROUPA);
+                roupaEntity = (RoupaEntity) capturarIntentDeListar.getSerializableExtra(
+                        CadastrarRoupasActivity.ROUPA);
+                System.out.println("carregarDadosDaRoupaNoFormularioParaAtualizar - " + roupaEntity);
 
                 if(roupaEntity != null) {
                     mapearEnderecosDosCampos();
@@ -70,107 +93,107 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 }
             }
 
-                private int verificarPosicaoDoTipoDeRoupa() {
-                    switch(roupaEntity.getTipo()) {
-                        case "Chapéu":
-                            return 1;
-                        case "Boné":
-                            return 2;
-                        case "Camisa":
-                            return 3;
-                        case "Camiseta":
-                            return 4;
-                        case "Calça":
-                            return 5;
-                        case "Bermuda":
-                            return 6;
-                        case "Cueca":
-                            return 7;
-                        case "Meia":
-                            return 8;
-                        case "Sapato":
-                            return 9;
-                        case "Tênis":
-                            return 10;
-                        default:
-                            return 0;
-                    }
+            private int verificarPosicaoDoTipoDeRoupa() {
+                switch(roupaEntity.getTipo()) {
+                    case "Chapéu":
+                        return 1;
+                    case "Boné":
+                        return 2;
+                    case "Camisa":
+                        return 3;
+                    case "Camiseta":
+                        return 4;
+                    case "Calça":
+                        return 5;
+                    case "Bermuda":
+                        return 6;
+                    case "Cueca":
+                        return 7;
+                    case "Meia":
+                        return 8;
+                    case "Sapato":
+                        return 9;
+                    case "Tênis":
+                        return 10;
+                    default:
+                        return 0;
                 }
+            }
 
-                private int verificarPosicaoDoTecidoDaRoupa() {
-                    switch(roupaEntity.getTecido()) {
-                        case "Tricoline":
-                            return 1;
-                        case "Malha":
-                            return 2;
-                        case "Cetim":
-                            return 3;
-                        case "Canvas":
-                            return 4;
-                        case "Cordoba":
-                            return 5;
-                        case "Microfibra":
-                            return 6;
-                        case "Algodão":
-                            return 7;
-                        case "Lã":
-                            return 8;
-                        case "Seda":
-                            return 9;
-                        case "Linho":
-                            return 10;
-                        default:
-                            return 0;
-                    }
+            private int verificarPosicaoDoTecidoDaRoupa() {
+                switch(roupaEntity.getTecido()) {
+                    case "Tricoline":
+                        return 1;
+                    case "Malha":
+                        return 2;
+                    case "Cetim":
+                        return 3;
+                    case "Canvas":
+                        return 4;
+                    case "Cordoba":
+                        return 5;
+                    case "Microfibra":
+                        return 6;
+                    case "Algodão":
+                        return 7;
+                    case "Lã":
+                        return 8;
+                    case "Seda":
+                        return 9;
+                    case "Linho":
+                        return 10;
+                    default:
+                        return 0;
                 }
+            }
 
-                private int verificarPosicaoDaCorPrincipalDaRoupa() {
-                    switch(roupaEntity.getCorPrincipal()) {
-                        case "Azul":
-                            return 1;
-                        case "Verde":
-                            return 2;
-                        case "Branco":
-                            return 3;
-                        case "Preto":
-                            return 4;
-                        case "Amarelo":
-                            return 5;
-                        case "Marrom":
-                            return 6;
-                        case "Laranja":
-                            return 7;
-                        case "Roxo":
-                            return 8;
-                        case "Rosa":
-                            return 9;
-                        case "Vermelho":
-                            return 10;
-                        default:
-                            return 0;
-                    }
+            private int verificarPosicaoDaCorPrincipalDaRoupa() {
+                switch(roupaEntity.getCorPrincipal()) {
+                    case "Azul":
+                        return 1;
+                    case "Verde":
+                        return 2;
+                    case "Branco":
+                        return 3;
+                    case "Preto":
+                        return 4;
+                    case "Amarelo":
+                        return 5;
+                    case "Marrom":
+                        return 6;
+                    case "Laranja":
+                        return 7;
+                    case "Roxo":
+                        return 8;
+                    case "Rosa":
+                        return 9;
+                    case "Vermelho":
+                        return 10;
+                    default:
+                        return 0;
                 }
+            }
 
-                private int verificarPosicaoDoTamanhoDaRoupa() {
-                    switch(roupaEntity.getTamanho()) {
-                        case "PP":
-                            return 1;
-                        case "P":
-                            return 2;
-                        case "M":
-                            return 3;
-                        case "G":
-                            return 4;
-                        case "GG":
-                            return 5;
-                        case "XG":
-                            return 6;
-                        case "XGG":
-                            return 7;
-                        default:
-                            return 0;
-                    }
+            private int verificarPosicaoDoTamanhoDaRoupa() {
+                switch(roupaEntity.getTamanho()) {
+                    case "PP":
+                        return 1;
+                    case "P":
+                        return 2;
+                    case "M":
+                        return 3;
+                    case "G":
+                        return 4;
+                    case "GG":
+                        return 5;
+                    case "XG":
+                        return 6;
+                    case "XGG":
+                        return 7;
+                    default:
+                        return 0;
                 }
+            }
 
     // ------------------------------ OnResume ------------------------------
     @Override
@@ -265,18 +288,42 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 enderecoBotaoSalvarRoupa.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         validarFormulario();
                         if(camposValidados) {
                             pegarValoresDosSpinners();
+
+                            if(tipoDeCaminho == SALVAR) {
+                                criarRoupa();
+
+                                Intent intent = new Intent();
+                                intent.putExtra(MODO, SALVAR);
+                                System.out.println("DevolverResultadoParaListar - " + roupaEntity);
+                                intent.putExtra(CadastrarRoupasActivity.ROUPA, roupaEntity);
+                                setResult(Activity.RESULT_OK, intent);
+                                finish();
+                            }
+                            if(tipoDeCaminho == ATUALIZAR) {
+                                alterarRoupa();
+
+                                Intent intent = new Intent();
+                                intent.putExtra(MODO, ATUALIZAR);
+                                System.out.println("DevolverResultadoParaListar - " + roupaEntity);
+                                intent.putExtra(CadastrarRoupasActivity.ROUPA, roupaEntity);
+                                setResult(Activity.RESULT_OK, intent);
+                                finish();
+                            }
+
                             caminhoBifurcaEntreSalvarOuEditarRoupa();
                             imprimirNomeDaRoupaNaTela();
                             limparCamposDoFormularioDeCadastrarRoupas();
                             finish();
+
                         } else {
                             Toast.makeText(CadastrarRoupasActivity.this,
                                             R.string.formulario_incompleto,
                                             Toast.LENGTH_SHORT)
-                                    .show();
+                                            .show();
                         }
                     }
                 });
@@ -312,29 +359,24 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
                 private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
                     if(roupaEntity != null && roupaEntity.getIdRoupa() > 0) {
-                        atualizarRoupa();
-                        roupaRepository.editarRoupa(roupaEntity);
+                        alterarRoupa();
+                        roupaRepository.atualizarRoupa(roupaEntity);
                     } else {
-                        salvarRoupa();
+                        criarRoupa();
                         roupaRepository.salvarRoupa(roupaEntity);
                     }
                 }
 
-                    private void atualizarRoupa() {
+                    private void alterarRoupa() {
                         roupaEntity.setTipo(tipoDeRoupa);
                         roupaEntity.setTecido(tecidoDeRoupa);
                         roupaEntity.setCorPrincipal(corPrincipalDeRoupa);
                         roupaEntity.setTamanho(tamanhoDeRoupa);
                     }
 
-                    private void salvarRoupa() {
-                        criarRoupa();
-                        roupaRepository.salvarRoupa(roupaEntity);
+                    private void criarRoupa() {
+                        roupaEntity = new RoupaEntity(tipoDeRoupa, tamanhoDeRoupa, corPrincipalDeRoupa, tecidoDeRoupa);
                     }
-
-                        private void criarRoupa() {
-                            roupaEntity = new RoupaEntity(tipoDeRoupa, tamanhoDeRoupa, corPrincipalDeRoupa, tecidoDeRoupa);
-                        }
 
                 private void imprimirNomeDaRoupaNaTela() {
                     Toast.makeText(CadastrarRoupasActivity.this,
@@ -370,4 +412,19 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 private void direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario() {
                     enderecoCadastrarTipoDeRoupa.requestFocus();
                 }
+
+
+
+
+
+
+        public void cancelar(View view){
+            onBackPressed();
+        }
+
+        @Override
+        public void onBackPressed() {
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        }
 }
