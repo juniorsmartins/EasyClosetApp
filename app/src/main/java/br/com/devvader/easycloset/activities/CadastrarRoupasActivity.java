@@ -359,7 +359,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 }
 
                 private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
-                    if(roupaEntity != null && roupaEntity.getIdRoupa() > 0) {
+                    if(roupaEntity != null && roupaEntity.getId() > 0) {
                         alterarRoupa();
                         roupaRepository.atualizarRoupa(roupaEntity);
                     } else {

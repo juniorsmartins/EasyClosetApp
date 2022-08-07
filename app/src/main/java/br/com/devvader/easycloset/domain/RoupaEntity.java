@@ -6,7 +6,7 @@ public final class RoupaEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
-    private Long idRoupa;
+    private Long id;
     private String tipo;
     private String tamanho;
     private String corPrincipal;
@@ -23,12 +23,12 @@ public final class RoupaEntity implements Serializable {
         this.tecido = tecido;
     }
 
-    public Long getIdRoupa() {
-        return idRoupa;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdRoupa(Long idRoupa) {
-        this.idRoupa = idRoupa;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTipo() {
@@ -65,7 +65,7 @@ public final class RoupaEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "\n\nID = " + idRoupa +
+        return "\n\nID = " + id +
                 "\nTipo = " + tipo +
                 "\nTamanho = " + tamanho +
                 "\nCor Principal = " + corPrincipal +

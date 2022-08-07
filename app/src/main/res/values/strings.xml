@@ -16,6 +16,10 @@
     <string name="adicionar">Adicionar</string>
     <string name="sobre">Sobre</string>
     <string name="voltar">Voltar</string>
+    <string name="cadastrar_usuarios">Cadastrar Usuários</string>
+    <string name="listar_usuarios">Listar Usuários</string>
+    <string name="cadastrar_roupas">Cadastrar Roupas</string>
+    <string name="listar_roupas">Listar Roupas</string>
 
     <string name="sexoMasculino">Masculino</string>
     <string name="sexoFeminino">Feminino</string>

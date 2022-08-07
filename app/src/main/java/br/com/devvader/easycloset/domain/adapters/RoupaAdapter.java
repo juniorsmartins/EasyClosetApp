@@ -59,12 +59,12 @@ public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
 
     @Override
     public long getItemId(int position) {
-        return listaDeRoupas.get(position).getIdRoupa();
+        return listaDeRoupas.get(position).getId();
     }
 
     public int getPosicaoPorId(long id) {
         for(RoupaEntity roupa : listaDeRoupas) {
-            if(roupa.getIdRoupa() == id) {
+            if(roupa.getId() == id) {
                 return listaDeRoupas.indexOf(roupa);
             }
         }

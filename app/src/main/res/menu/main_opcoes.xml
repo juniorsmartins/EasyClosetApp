@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_item_cadastrar_usuarios"
+        android:title="@string/cadastrar_usuarios" />
+    <item
+        android:id="@+id/menu_item_listar_usuarios"
+        android:title="@string/listar_usuarios" />
+    <item
+        android:id="@+id/menu_item_cadastrar_roupas"
+        android:title="@string/cadastrar_roupas" />
+    <item
+        android:id="@+id/menu_item_listar_roupas"
+        android:title="@string/listar_roupas" />
+    <item
+        android:id="@+id/menu_item_sobre"
+        android:title="@string/sobre" />
+</menu>

@@ -118,14 +118,14 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         if(resultCode == Activity.RESULT_OK) {
             Bundle bundle = intent.getExtras();
-            RoupaEntity roupaNova = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
+            roupa = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
 
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
-                roupaRepository.atualizarRoupa(roupaNova);
+                roupaRepository.atualizarRoupa(roupa);
             }
 
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
-                roupaRepository.salvarRoupa(roupaNova);
+                roupaRepository.salvarRoupa(roupa);
             }
 
             roupaAdapter.notifyDataSetChanged();

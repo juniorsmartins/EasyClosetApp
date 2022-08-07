@@ -19,7 +19,7 @@ public final class RoupaRepository implements IRoupaRepository {
     @Override
     public void salvarRoupa(RoupaEntity roupa) {
         if(!listaDeRoupas.contains(roupa)) {
-            roupa.setIdRoupa(contadorDeIdsDeRoupas);
+            roupa.setId(contadorDeIdsDeRoupas);
             listaDeRoupas.add(roupa);
             contadorDeIdsDeRoupas++;
         }
@@ -27,12 +27,19 @@ public final class RoupaRepository implements IRoupaRepository {
 
     @Override
     public void atualizarRoupa(RoupaEntity novaRoupa) {
+        System.out.println(novaRoupa + "\n\n");
+        int posicaoNaLista = -1;
         for(RoupaEntity roupa : listaDeRoupas) {
-            if(roupa.getIdRoupa() == novaRoupa.getIdRoupa()) {
-                int posicaoDaRoupa = listaDeRoupas.indexOf(roupa);
-                listaDeRoupas.set(posicaoDaRoupa, novaRoupa);
+            if(roupa.getId() == novaRoupa.getId()) {
+                int contador = 0;
+                System.out.println("\n\n----- testes -----" + contador++);
+                posicaoNaLista = listaDeRoupas.indexOf(roupa);
+                break;
             }
         }
+        if(posicaoNaLista >= 0)
+            listaDeRoupas.remove(posicaoNaLista);
+        listaDeRoupas.add(novaRoupa);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -40,7 +47,7 @@ public final class RoupaRepository implements IRoupaRepository {
     public List<RoupaEntity> listar() {
         return listaDeRoupas
                 .stream()
-                .sorted(Comparator.comparing(RoupaEntity::getIdRoupa).reversed())
+                .sorted(Comparator.comparing(RoupaEntity::getId).reversed())
                 .collect(Collectors.toList());
     }
 
