@@ -2,7 +2,6 @@ package br.com.devvader.easycloset.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,8 +9,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
 import br.com.devvader.easycloset.recursos.RoupaRepository;
@@ -20,8 +19,8 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_CADASTRAR_ROUPAS = "Cadastrar Roupas";
 
-    private RoupaRepository roupaRepository = new RoupaRepository();
-    private RoupaEntity roupaEntity = null;
+    private final RoupaRepository roupaRepository = new RoupaRepository();
+    private RoupaEntity roupaEntity;
 
     private Spinner enderecoCadastrarTipoDeRoupa;
     private Spinner enderecoCadastrarTecidoDaRoupa;
@@ -38,9 +37,8 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private Button enderecoBotaoVoltar;
 
     private boolean camposValidados;
-    Intent capturarIntentDeListar = null;
-    private int tipoDeCaminho = 0;
-    Bundle bundle = null;
+    private Intent capturarIntentDeListar;
+    private int tipoDeCaminho;
 
     // Padrão estático para salvar roupas - com retorno de resultado
     public static final String MODO = "MODO";
@@ -72,7 +70,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
         private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno() {
             capturarIntentDeListar = getIntent();
-            bundle = capturarIntentDeListar.getExtras();
+            Bundle bundle = capturarIntentDeListar.getExtras();
 
             if(bundle != null) {
                 tipoDeCaminho = bundle.getInt(MODO);
@@ -290,45 +288,39 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         }
 
             private void ativarButtonSalvarCadastrarRoupas() {
-                enderecoBotaoSalvarRoupa.setOnClickListener(new View.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onClick(View v) {
-                        validarFormulario();
-                        if(camposValidados) {
-                            pegarValoresDosSpinners();
+                enderecoBotaoSalvarRoupa.setOnClickListener(view -> {
+                    validarFormulario();
+                    if(camposValidados) {
+                        pegarValoresDosSpinners();
 
-                            if(tipoDeCaminho == SALVAR) {
-                                criarRoupa();
-
-                                Intent intent = getIntent();
-                                intent.putExtra(MODO, SALVAR);
-                                intent.putExtra(CadastrarRoupasActivity.ROUPA, roupaEntity);
-                                setResult(Activity.RESULT_OK, intent);
-                                finish();
-                            } else if(tipoDeCaminho == ATUALIZAR) {
-                                alterarRoupa();
-
-                                Intent intent = getIntent();
-                                intent.putExtra(MODO, ATUALIZAR);
-                                intent.putExtra(CadastrarRoupasActivity.ROUPA, roupaEntity);
-                                setResult(Activity.RESULT_OK, intent);
-                                finish();
-                            } else if(tipoDeCaminho != SALVAR && tipoDeCaminho != ATUALIZAR) {
-                                caminhoBifurcaEntreSalvarOuEditarRoupa();
-                                imprimirNomeNaTela();
-                                limparCamposDoFormularioDeCadastrarRoupas();
-                                finish();
-                            }
+                        if(tipoDeCaminho == SALVAR) {
+                            criarRoupa();
+                            devolucaoDeResultadoParaStartActivityForResult(SALVAR);
+                        } else if(tipoDeCaminho == ATUALIZAR) {
+                            alterarRoupa();
+                            devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                         } else {
-                            Toast.makeText(CadastrarRoupasActivity.this,
-                                            R.string.formulario_incompleto,
-                                            Toast.LENGTH_SHORT)
-                                            .show();
+                            caminhoBifurcaEntreSalvarOuEditarRoupa();
+                            imprimirNomeNaTela();
+                            limparCamposDoFormularioDeCadastrarRoupas();
+                            finish();
                         }
+                    } else {
+                        Toast.makeText(CadastrarRoupasActivity.this,
+                                        R.string.formulario_incompleto,
+                                        Toast.LENGTH_SHORT)
+                                        .show();
                     }
                 });
             }
+
+                private void devolucaoDeResultadoParaStartActivityForResult(int salvarOuAtualizar) {
+                    Intent intent = getIntent();
+                    intent.putExtra(MODO, salvarOuAtualizar);
+                    intent.putExtra(CadastrarRoupasActivity.ROUPA, roupaEntity);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
 
                 private void validarFormulario() {
                     camposValidados = false;
@@ -387,13 +379,10 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 }
 
             private void ativarButtonLimparFormularioCadastrar() {
-                enderecoBotaoLimparFormulario.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mapearEnderecosDosCampos();
-                        limparCamposDoFormularioDeCadastrarRoupas();
-                        direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario();
-                    }
+                enderecoBotaoLimparFormulario.setOnClickListener(view -> {
+                    mapearEnderecosDosCampos();
+                    limparCamposDoFormularioDeCadastrarRoupas();
+                    direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario();
                 });
             }
 
@@ -415,12 +404,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 }
 
             private void ativarButtonVoltarCadastrar() {
-                enderecoBotaoVoltar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                });
+                enderecoBotaoVoltar.setOnClickListener(view -> onBackPressed());
             }
 
                 @Override

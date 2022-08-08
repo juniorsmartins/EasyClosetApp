@@ -11,6 +11,8 @@
     <string name="sobrenomeObrigatorioCadastroUsuario">Sobrenome - campo de preenchimento obrigatório!</string>
     <string name="autorizoPublicidade">Autorizo publicidade no meu e-mail.</string>
     <string name="formulario_incompleto">Formulário Incompleto!</string>
+    <string name="usuarios">Usuários</string>
+    <string name="roupas">Roupas</string>
     <string name="salvar">Salvar</string>
     <string name="limpar">Limpar</string>
     <string name="adicionar">Adicionar</string>

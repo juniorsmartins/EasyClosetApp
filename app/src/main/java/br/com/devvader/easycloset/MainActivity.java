@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import br.com.devvader.easycloset.activities.CadastrarRoupasActivity;
 import br.com.devvader.easycloset.activities.CadastrarUsuarioActivity;
 import br.com.devvader.easycloset.activities.InfoAppActivity;
@@ -19,131 +18,59 @@ import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
 
 public final class MainActivity extends AppCompatActivity {
 
-    private Button enderecoBotaoCadastrarUsuario;
-    private Button enderecoBotaoListarUsuarios;
-    private Button enderecoBotaoCadastrarRoupas;
-    private Button enderecoBotaoListarRoupas;
-    private Button enderecoBotaoInfosApp;
+    final int itemMainCadastrarUsuario = R.id.item_main_cadastrar_usuarios;
+    final int itemMainListarUsuario = R.id.item_main_listar_usuarios;
+    final int itemMainCadastrarRoupas = R.id.item_main_cadastrar_roupas;
+    final int itemMainListarRoupas = R.id.item_main_listar_roupas;
+    final int itemMainInfoApp = R.id.menu_item_sobre;
 
+    // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
+    // ------------------------------ OnResume ------------------------------
     @Override
     protected void onResume() {
         super.onResume();
-
-        capturarEnderecosDosBotoes();
-        ativarBotaoDeChamarTelaDeCadastrarUsuario();
-        ativarBotaoDeChamarTelaDeListarUsuarios();
-        ativarBotaoDeChamarTelaDeCadastrarRoupas();
-        ativarBotaoDeChamarTelaDeListarRoupas();
-        ativarBotaoDeChamarTelaDeInfosDoApp();
     }
 
-        private void capturarEnderecosDosBotoes() {
-            enderecoBotaoCadastrarUsuario = findViewById(R.id.button_cadastrarUsuario);
-            enderecoBotaoListarUsuarios = findViewById(R.id.button_listarUsuarios);
-            enderecoBotaoCadastrarRoupas = findViewById(R.id.button_cadastrarRoupas);
-            enderecoBotaoListarRoupas = findViewById(R.id.button_listarRoupas);
-            enderecoBotaoInfosApp = findViewById(R.id.button_infosApp);
-        }
 
-        private void ativarBotaoDeChamarTelaDeCadastrarUsuario() {
-            enderecoBotaoCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    abrirTelaDeCadastrarUsuario();
-                }
-            });
-        }
-
-            private void abrirTelaDeCadastrarUsuario() {
-                startActivity(new Intent(MainActivity.this, CadastrarUsuarioActivity.class));
-            }
-
-        private void ativarBotaoDeChamarTelaDeListarUsuarios() {
-            enderecoBotaoListarUsuarios.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    abrirTelaDeListarUsuarios();
-                }
-            });
-        }
-
-            private void abrirTelaDeListarUsuarios() {
-                startActivity(new Intent(MainActivity.this, ListarUsuariosActivity.class));
-            }
-
-        private void ativarBotaoDeChamarTelaDeListarRoupas() {
-            enderecoBotaoListarRoupas.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    abrirTelaDeListarRoupas();
-                }
-            });
-        }
-
-            private void abrirTelaDeListarRoupas() {
-                startActivity(new Intent(MainActivity.this, ListarRoupasActivity.class));
-            }
-
-        private void ativarBotaoDeChamarTelaDeInfosDoApp() {
-            enderecoBotaoInfosApp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    abrirTelaDeInfosDoApp();
-                }
-            });
-        }
-
-            private void abrirTelaDeInfosDoApp() {
-                startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
-            }
-
-        private void ativarBotaoDeChamarTelaDeCadastrarRoupas() {
-            enderecoBotaoCadastrarRoupas.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    abrirTelaDeCadastrarRoupas();
-                }
-            });
-        }
-
-            private void abrirTelaDeCadastrarRoupas() {
-                startActivity(new Intent(MainActivity.this, CadastrarRoupasActivity.class));
-            }
-
+    // ------------------------------ MENU DE OPÇÕES ------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_opcoes, menu);
         return true;
     }
 
-    // ----- parei aqui - vídeo de Menu de Opções - aos 13 minutos e 30 segundos ----
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_cadastrar_usuarios:
+            case itemMainCadastrarUsuario:
                 mostrarMensagem("Cadastrar Usuários");
-                break;
-            case R.id.menu_item_listar_usuarios:
+                startActivity(new Intent(MainActivity.this, CadastrarUsuarioActivity.class));
+                return true;
+            case itemMainListarUsuario:
                 mostrarMensagem("Listar Usuários");
-                break;
-            case R.id.menu_item_cadastrar_roupas:
+                startActivity(new Intent(MainActivity.this, ListarUsuariosActivity.class));
+                return true;
+            case itemMainCadastrarRoupas:
                 mostrarMensagem("Cadastrar Roupas");
-                break;
-            case R.id.menu_item_listar_roupas:
+                startActivity(new Intent(MainActivity.this, CadastrarRoupasActivity.class));
+                return true;
+            case itemMainListarRoupas:
                 mostrarMensagem("Listar Roupas");
-                break;
-            case R.id.menu_item_sobre:
+                startActivity(new Intent(MainActivity.this, ListarRoupasActivity.class));
+                return true;
+            case itemMainInfoApp:
                 mostrarMensagem("Sobre");
-                break;
+                startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void mostrarMensagem(String texto) {

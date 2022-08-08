@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -15,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
+
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
 import br.com.devvader.easycloset.domain.adapters.RoupaAdapter;
@@ -25,7 +24,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_ROUPAS = "Listar Roupas";
 
-    private IRoupaRepository roupaRepository = new RoupaRepository();
+    private final IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
     private RoupaEntity roupa;
     private Button enderecoBotaoAdicionar;
@@ -37,7 +36,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_roupas);
     }
-
 
     // ------------------------------ OnResume ------------------------------
     @Override
@@ -76,24 +74,17 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
 
         private void ativarBotaoAdicionar() {
-            enderecoBotaoAdicionar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CadastrarRoupasActivity.cadastrarRoupaComRetorno(ListarRoupasActivity.this);
-                }
-            });
+            enderecoBotaoAdicionar.setOnClickListener(v -> CadastrarRoupasActivity
+                    .cadastrarRoupaComRetorno(ListarRoupasActivity.this));
         }
 
         private void ativarCliqueNosItensDalistaParaEditar() {
-            enderecoDaListaDeRoupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    roupa = (RoupaEntity) parent.getItemAtPosition(position);
+            enderecoDaListaDeRoupas.setOnItemClickListener((parent, view, position, id) -> {
+                roupa = (RoupaEntity) parent.getItemAtPosition(position);
 
-                    gerarMensagemDeRoupaEscolhida();
-                    gerarLogDaRoupaEscolhida(position);
-                    CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupa);
-                }
+                gerarMensagemDeRoupaEscolhida();
+                gerarLogDaRoupaEscolhida(position);
+                CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupa);
             });
         }
 
