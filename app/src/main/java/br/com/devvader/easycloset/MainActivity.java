@@ -18,11 +18,11 @@ import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
 
 public final class MainActivity extends AppCompatActivity {
 
-    final int itemMainCadastrarUsuario = R.id.item_main_cadastrar_usuarios;
-    final int itemMainListarUsuario = R.id.item_main_listar_usuarios;
-    final int itemMainCadastrarRoupas = R.id.item_main_cadastrar_roupas;
-    final int itemMainListarRoupas = R.id.item_main_listar_roupas;
-    final int itemMainInfoApp = R.id.menu_item_sobre;
+    private final int itemMainInfoApp = R.id.item_main_sobre_app;
+    private final int itemMainCadastrarUsuario = R.id.item_main_cadastrar_usuarios;
+    private final int itemMainListarUsuario = R.id.item_main_listar_usuarios;
+    private final int itemMainCadastrarRoupas = R.id.item_main_cadastrar_roupas;
+    private final int itemMainListarRoupas = R.id.item_main_listar_roupas;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -41,39 +41,39 @@ public final class MainActivity extends AppCompatActivity {
     // ------------------------------ MENU DE OPÇÕES ------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_opcoes, menu);
+        getMenuInflater().inflate(R.menu.menu_opcoes_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case itemMainInfoApp:
+                mostrarMensagemNaTela("Sobre App");
+                startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
+                return true;
             case itemMainCadastrarUsuario:
-                mostrarMensagem("Cadastrar Usuários");
+                mostrarMensagemNaTela("Cadastrar Usuários");
                 startActivity(new Intent(MainActivity.this, CadastrarUsuarioActivity.class));
                 return true;
             case itemMainListarUsuario:
-                mostrarMensagem("Listar Usuários");
+                mostrarMensagemNaTela("Listar Usuários");
                 startActivity(new Intent(MainActivity.this, ListarUsuariosActivity.class));
                 return true;
             case itemMainCadastrarRoupas:
-                mostrarMensagem("Cadastrar Roupas");
+                mostrarMensagemNaTela("Cadastrar Roupas");
                 startActivity(new Intent(MainActivity.this, CadastrarRoupasActivity.class));
                 return true;
             case itemMainListarRoupas:
-                mostrarMensagem("Listar Roupas");
+                mostrarMensagemNaTela("Listar Roupas");
                 startActivity(new Intent(MainActivity.this, ListarRoupasActivity.class));
-                return true;
-            case itemMainInfoApp:
-                mostrarMensagem("Sobre");
-                startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void mostrarMensagem(String texto) {
+    private void mostrarMensagemNaTela(String texto) {
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
 }

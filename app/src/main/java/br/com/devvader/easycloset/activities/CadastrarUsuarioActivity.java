@@ -12,9 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.recursos.IUsuarioRepository;
@@ -24,8 +22,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_CADASTRAR_USUARIO = "Cadastrar Usuário";
 
-    private IUsuarioRepository usuarioRepository = new UsuarioRepository();
-    private UsuarioEntity usuarioEntity = null;
+    private final IUsuarioRepository usuarioRepository = new UsuarioRepository();
+    private UsuarioEntity usuarioEntity;
 
     private RadioGroup enderecoSexoUsuario;
     private Spinner enderecoEscolaridadeUsuario;
@@ -45,9 +43,11 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private String escolaridadeUsuario;
 
     private boolean camposValidados;
-    Intent capturarIntentDeListar;
+    private Intent capturarIntentDeListar;
     private int tipoDeCaminho;
-    Bundle bundle;
+
+    private final int radioButtonMasculino = R.id.radioButton_sexoMasculino;
+    private final int radioButtonFeminino = R.id.radioButton_sexoFeminino;
 
     // Padrão estático para salvar roupas - com retorno de resultado
     public static final String MODO = "MODO";
@@ -70,8 +70,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
     // ------------------------------ OnCreate ------------------------------
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
@@ -80,7 +79,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
         private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarUsuarioComRetorno() {
             capturarIntentDeListar = getIntent();
-            bundle = capturarIntentDeListar.getExtras();
+            Bundle bundle = capturarIntentDeListar.getExtras();
 
             if(bundle != null) {
                 tipoDeCaminho = bundle.getInt(MODO);
@@ -168,17 +167,14 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         }
 
         private void ativarRadioGroupDeSexoDoUsuario() {
-            enderecoSexoUsuario.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    switch (checkedId) {
-                        case R.id.radioButton_sexoMasculino:
-                            sexoUsuario = "Masculino";
-                            break;
-                        case R.id.radioButton_sexoFeminino:
-                            sexoUsuario = "Feminino";
-                            break;
-                    }
+            enderecoSexoUsuario.setOnCheckedChangeListener((group, checkedId) -> {
+                switch (checkedId) {
+                    case radioButtonMasculino:
+                        sexoUsuario = "Masculino";
+                        break;
+                    case radioButtonFeminino:
+                        sexoUsuario = "Feminino";
+                        break;
                 }
             });
         }
@@ -208,44 +204,39 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         }
 
             private void ativarBotaoDeSalvarCadastrarUsuario() {
-                enderecoBotaoSalvarUsuario.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        validarFormulario();
-                        if(camposValidados) {
-                            pegarEscolaridadeDoUsuarioNoSpinner();
+                enderecoBotaoSalvarUsuario.setOnClickListener(view -> {
+                    validarFormulario();
+                    if(camposValidados) {
+                        pegarEscolaridadeDoUsuarioNoSpinner();
 
-                            if(tipoDeCaminho == SALVAR) {
-                              criarUsuario();
-
-                              Intent intent = getIntent();
-                              intent.putExtra(MODO, SALVAR);
-                              intent.putExtra(CadastrarUsuarioActivity.USUARIO, usuarioEntity);
-                              setResult(Activity.RESULT_OK, intent);
-                              finish();
-                            } else if(tipoDeCaminho == ATUALIZAR) {
-                              alterarUsuario();
-
-                                Intent intent = getIntent();
-                                intent.putExtra(MODO, ATUALIZAR);
-                                intent.putExtra(CadastrarUsuarioActivity.USUARIO, usuarioEntity);
-                                setResult(Activity.RESULT_OK, intent);
-                                finish();
-                            } else if(tipoDeCaminho != SALVAR && tipoDeCaminho != ATUALIZAR) {
-                                caminhoBifurcaEntreSalvarOuEditarRoupa();
-                                imprimirNomeNaTela();
-                                limparCamposDoFormularioDeCadastrarUsuario();
-                                finish();
-                            }
+                        if(tipoDeCaminho == SALVAR) {
+                            criarUsuario();
+                            devolucaoDeResultadoParaStartActivityForResult(SALVAR);
+                        } else if(tipoDeCaminho == ATUALIZAR) {
+                            alterarUsuario();
+                            devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                         } else {
-                            Toast.makeText(CadastrarUsuarioActivity.this,
-                                    R.string.formulario_incompleto,
-                                    Toast.LENGTH_SHORT)
-                                    .show();
+                            caminhoBifurcaEntreSalvarOuEditarRoupa();
+                            imprimirNomeNaTela();
+                            limparCamposDoFormularioDeCadastrarUsuario();
+                            finish();
                         }
+                    } else {
+                        Toast.makeText(CadastrarUsuarioActivity.this,
+                                R.string.formulario_incompleto,
+                                Toast.LENGTH_SHORT)
+                                .show();
                     }
                 });
             }
+
+                private void devolucaoDeResultadoParaStartActivityForResult(int salvarOuAtualizar) {
+                    Intent intent = getIntent();
+                    intent.putExtra(MODO, salvarOuAtualizar);
+                    intent.putExtra(CadastrarRoupasActivity.ROUPA, usuarioEntity);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
 
                 private void validarFormulario() {
                     camposValidados = false;
@@ -334,13 +325,10 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 }
 
         private void ativarBotaoDeLimparFormularioDeCadastrar() {
-            enderecoBotaoLimparCamposCadastroUsuario.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mapearEnderecosDosCampos();
-                    limparCamposDoFormularioDeCadastrarUsuario();
-                    direcionarFocoDoUsuarioParaCampoNome();
-                }
+            enderecoBotaoLimparCamposCadastroUsuario.setOnClickListener(view -> {
+                mapearEnderecosDosCampos();
+                limparCamposDoFormularioDeCadastrarUsuario();
+                direcionarFocoDoUsuarioParaCampoNome();
             });
         }
 
@@ -366,12 +354,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             }
 
         private void ativarButtonVoltarCadastrar() {
-            enderecoBotaoVoltar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+            enderecoBotaoVoltar.setOnClickListener(v -> onBackPressed());
         }
 
         @Override

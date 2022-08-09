@@ -16,12 +16,23 @@
     <string name="salvar">Salvar</string>
     <string name="limpar">Limpar</string>
     <string name="adicionar">Adicionar</string>
-    <string name="sobre">Sobre</string>
     <string name="voltar">Voltar</string>
+    <string name="sobre">Sobre App</string>
     <string name="cadastrar_usuarios">Cadastrar Usuários</string>
     <string name="listar_usuarios">Listar Usuários</string>
     <string name="cadastrar_roupas">Cadastrar Roupas</string>
     <string name="listar_roupas">Listar Roupas</string>
+
+    <string name="autor">Autor App</string>
+    <string name="junior_martins">Junior Martins</string>
+    <string name="formacao_autor">
+        "- Cursando Pós-graduação Lato Sensu (especialização) em Tecnologia Java (UTFPR);
+        - Formado em MBA (Master in Business Administration) de Administração de Banco de Dados (FAMEESP);
+        - Formado em Pós-graduação Lato Sensu (especialização) em Administração de Banco de Dados (Unopar);
+        - Formado em Curso Superior (bacharelado) em Comunicação Social com Ênfase em Jornalismo (Unic-MT);
+        - Formado em Curso Superior (tecnólogo) em Fotografia (Unic-MT);
+        - Formato em Curso Técnico em Processamento de Dados (Urcamp-RS)."
+    </string>
 
     <string name="sexoMasculino">Masculino</string>
     <string name="sexoFeminino">Feminino</string>
@@ -81,6 +92,9 @@
     <string name="la">Lã</string>
     <string name="seda">Seda</string>
     <string name="linho">Linho</string>
+    <string name="descricao_logomarca_utfpr">Logomarca da Universidade Tecnológica Federal do Paraná</string>
+    <string name="descricao_foto_autor_app">Fotografia do desenvolvedor autor do App.</string>
+    <string name="home">HOME</string>
 
 </resources>
 

@@ -5,15 +5,19 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
+import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
 import br.com.devvader.easycloset.domain.adapters.RoupaAdapter;
@@ -23,6 +27,10 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 public final class ListarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_ROUPAS = "Listar Roupas";
+    private final int menuItemInfoApp = R.id.item_main_sobre_app;
+    private final int menuItemHome = R.id.menu_item_tela_principal;
+    private final int menuItemCadastrarRoupas = R.id.item_main_cadastrar_roupas;
+    private final int menuItemListarRoupas = R.id.item_main_listar_roupas;
 
     private final IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
@@ -74,7 +82,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
 
         private void ativarBotaoAdicionar() {
-            enderecoBotaoAdicionar.setOnClickListener(v -> CadastrarRoupasActivity
+            enderecoBotaoAdicionar.setOnClickListener(view -> CadastrarRoupasActivity
                     .cadastrarRoupaComRetorno(ListarRoupasActivity.this));
         }
 
@@ -121,5 +129,40 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
             roupaAdapter.notifyDataSetChanged();
         }
+    }
+
+    // ------------------------------ MENU DE OPÇÕES ------------------------------
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_opcoes_roupas, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case menuItemInfoApp:
+                mostrarMensagemNaTela("Sobre App");
+                startActivity(new Intent(ListarRoupasActivity.this, InfoAppActivity.class));
+                return true;
+            case menuItemHome:
+                mostrarMensagemNaTela("HOME");
+                startActivity(new Intent(ListarRoupasActivity.this, MainActivity.class));
+                return true;
+            case menuItemCadastrarRoupas:
+                mostrarMensagemNaTela("Cadastrar Roupas");
+                startActivity(new Intent(ListarRoupasActivity.this, CadastrarRoupasActivity.class));
+                return true;
+            case menuItemListarRoupas:
+                mostrarMensagemNaTela("Listar Roupas");
+                startActivity(new Intent(ListarRoupasActivity.this, ListarRoupasActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void mostrarMensagemNaTela(String texto) {
+        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
 }

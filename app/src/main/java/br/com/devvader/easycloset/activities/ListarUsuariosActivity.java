@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
+
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.domain.adapters.UsuarioAdapter;
@@ -23,7 +24,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
 
-    private IUsuarioRepository usuarioRepository = new UsuarioRepository();
+    private final IUsuarioRepository usuarioRepository = new UsuarioRepository();
     private ListView enderecoDaListaDeUsuarios;
     private UsuarioEntity usuario;
     private Button enderecoBotaoAdicionar;
@@ -73,24 +74,17 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         }
 
         private void ativarBotaoAdicionar() {
-            enderecoBotaoAdicionar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CadastrarUsuarioActivity.cadastrarUsuarioComRetorno(ListarUsuariosActivity.this);
-                }
-            });
+            enderecoBotaoAdicionar.setOnClickListener(view -> CadastrarUsuarioActivity.
+                    cadastrarUsuarioComRetorno(ListarUsuariosActivity.this));
         }
 
         private void ativarCliqueNosItensDalistaParaEditar() {
-            enderecoDaListaDeUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    usuario = (UsuarioEntity) parent.getItemAtPosition(position);
+            enderecoDaListaDeUsuarios.setOnItemClickListener((parent, view, position, id) -> {
+                usuario = (UsuarioEntity) parent.getItemAtPosition(position);
 
-                    gerarMensagemDoUsuarioEscolhido();
-                    gerarLogDoUsuarioEscolhido(position);
-                    CadastrarUsuarioActivity.atualizarUsuarioComRetorno(ListarUsuariosActivity.this, usuario);
-                }
+                gerarMensagemDoUsuarioEscolhido();
+                gerarLogDoUsuarioEscolhido(position);
+                CadastrarUsuarioActivity.atualizarUsuarioComRetorno(ListarUsuariosActivity.this, usuario);
             });
         }
 
@@ -113,14 +107,14 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
         if(resultCode == Activity.RESULT_OK) {
             Bundle bundle = intent.getExtras();
-            UsuarioEntity usuarioNovo = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
+            usuario = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
 
             if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
-                usuarioRepository.atualizarUsuario(usuarioNovo);
+                usuarioRepository.atualizarUsuario(usuario);
             }
 
             if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.SALVAR) {
-                usuarioRepository.salvarUsuario(usuarioNovo);
+                usuarioRepository.salvarUsuario(usuario);
             }
 
             usuarioAdapter.notifyDataSetChanged();
