@@ -7,16 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.List;
-
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
@@ -27,16 +23,10 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 public final class ListarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_ROUPAS = "Listar Roupas";
-    private final int menuItemInfoApp = R.id.menu_item_sobre_app;
-    private final int menuItemHome = R.id.menu_item_tela_principal;
-    private final int menuItemAdicionarRoupas = R.id.menu_item_adicionar_roupas;
-    private final int menuItemCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
-    private final int menuItemListarRoupas = R.id.menu_item_listar_roupas;
 
     private final IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
     private RoupaEntity roupa;
-    private Button enderecoBotaoAdicionar;
     private RoupaAdapter roupaAdapter;
 
     // ------------------------------ OnCreate ------------------------------
@@ -54,9 +44,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
-
-        mapearEnderecoDoBotaoAdicionar();
-        ativarBotaoAdicionar();
 
         ativarCliqueNosItensDalistaParaEditar();
     }
@@ -77,15 +64,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             private List<RoupaEntity> buscarListaNoRepository() {
                 return roupaRepository.listar();
             }
-
-        private void mapearEnderecoDoBotaoAdicionar() {
-            enderecoBotaoAdicionar = findViewById(R.id.button_listar_adicionar_roupa);
-        }
-
-        private void ativarBotaoAdicionar() {
-            enderecoBotaoAdicionar.setOnClickListener(view -> CadastrarRoupasActivity
-                    .cadastrarRoupaComRetorno(ListarRoupasActivity.this));
-        }
 
         private void ativarCliqueNosItensDalistaParaEditar() {
             enderecoDaListaDeRoupas.setOnItemClickListener((parent, view, position, id) -> {
@@ -141,6 +119,12 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        final int menuItemInfoApp = R.id.menu_item_sobre_app;
+        final int menuItemHome = R.id.menu_item_tela_principal;
+        final int menuItemAdicionarRoupas = R.id.menu_item_adicionar_roupas;
+        final int menuItemCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
+        final int menuItemListarRoupas = R.id.menu_item_listar_roupas;
+
         switch (item.getItemId()) {
             case menuItemInfoApp:
                 mostrarMensagemNaTela("Sobre App");

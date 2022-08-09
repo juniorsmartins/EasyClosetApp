@@ -22,10 +22,6 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 public final class CadastrarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_CADASTRAR_ROUPAS = "Cadastrar Roupas";
-    private final int menuItemInfoApp = R.id.menu_item_sobre_app;
-    private final int menuItemHome = R.id.menu_item_tela_principal;
-    private final int menuItemCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
-    private final int menuItemListarRoupas = R.id.menu_item_listar_roupas;
 
     private final RoupaRepository roupaRepository = new RoupaRepository();
     private RoupaEntity roupaEntity;
@@ -431,6 +427,11 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        final int menuItemInfoApp = R.id.menu_item_sobre_app;
+        final int menuItemHome = R.id.menu_item_tela_principal;
+        final int menuItemCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
+        final int menuItemListarRoupas = R.id.menu_item_listar_roupas;
+
         switch (item.getItemId()) {
             case menuItemInfoApp:
                 mostrarMensagemNaTela("Sobre App");

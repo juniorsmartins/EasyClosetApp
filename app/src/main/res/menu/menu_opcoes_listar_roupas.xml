@@ -3,19 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_item_tela_principal"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_item_sobre_app"
         android:icon="@android:drawable/ic_dialog_info"
-        android:title="@string/sobre"
-        app:showAsAction="ifRoom" />
+        android:title="@string/sobre" />
     <item
         android:id="@+id/menu_item_adicionar_roupas"
         android:icon="@android:drawable/ic_input_add"
         android:title="@string/adicionar"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menu_item_tela_principal"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="@string/home" />
     <item
         android:id="@+id/menu_item_submenu2"
         android:title="@string/roupas" >
