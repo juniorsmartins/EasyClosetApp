@@ -95,6 +95,7 @@
     <string name="descricao_logomarca_utfpr">Logomarca da Universidade Tecnológica Federal do Paraná</string>
     <string name="descricao_foto_autor_app">Fotografia do desenvolvedor autor do App.</string>
     <string name="home">HOME</string>
+    <string name="acoes">Ações</string>
 
 </resources>
 

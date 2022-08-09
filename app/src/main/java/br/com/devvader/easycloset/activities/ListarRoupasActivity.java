@@ -27,10 +27,11 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 public final class ListarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_ROUPAS = "Listar Roupas";
-    private final int menuItemInfoApp = R.id.item_main_sobre_app;
+    private final int menuItemInfoApp = R.id.menu_item_sobre_app;
     private final int menuItemHome = R.id.menu_item_tela_principal;
-    private final int menuItemCadastrarRoupas = R.id.item_main_cadastrar_roupas;
-    private final int menuItemListarRoupas = R.id.item_main_listar_roupas;
+    private final int menuItemAdicionarRoupas = R.id.menu_item_adicionar_roupas;
+    private final int menuItemCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
+    private final int menuItemListarRoupas = R.id.menu_item_listar_roupas;
 
     private final IRoupaRepository roupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
@@ -134,7 +135,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     // ------------------------------ MENU DE OPÇÕES ------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_opcoes_roupas, menu);
+        getMenuInflater().inflate(R.menu.menu_opcoes_listar_roupas, menu);
         return true;
     }
 
@@ -156,6 +157,10 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             case menuItemListarRoupas:
                 mostrarMensagemNaTela("Listar Roupas");
                 startActivity(new Intent(ListarRoupasActivity.this, ListarRoupasActivity.class));
+                return true;
+            case menuItemAdicionarRoupas:
+                mostrarMensagemNaTela("Adicionar Roupas");
+                CadastrarRoupasActivity.cadastrarRoupaComRetorno(ListarRoupasActivity.this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

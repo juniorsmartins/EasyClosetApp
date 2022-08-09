@@ -22,10 +22,10 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 public final class CadastrarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_CADASTRAR_ROUPAS = "Cadastrar Roupas";
-    private final int menuItemInfoApp = R.id.item_main_sobre_app;
+    private final int menuItemInfoApp = R.id.menu_item_sobre_app;
     private final int menuItemHome = R.id.menu_item_tela_principal;
-    private final int menuItemCadastrarRoupas = R.id.item_main_cadastrar_roupas;
-    private final int menuItemListarRoupas = R.id.item_main_listar_roupas;
+    private final int menuItemCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
+    private final int menuItemListarRoupas = R.id.menu_item_listar_roupas;
 
     private final RoupaRepository roupaRepository = new RoupaRepository();
     private RoupaEntity roupaEntity;
@@ -425,7 +425,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     // ------------------------------ MENU DE OPÇÕES ------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_opcoes_roupas, menu);
+        getMenuInflater().inflate(R.menu.menu_opcoes_cadastrar_roupas, menu);
         return true;
     }
 

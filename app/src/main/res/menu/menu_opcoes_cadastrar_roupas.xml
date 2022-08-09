@@ -8,17 +8,9 @@
         android:title="@string/sobre"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/item_main_submenu1"
-        android:title="@string/usuarios">
-        <menu>
-            <item
-                android:id="@+id/item_main_cadastrar_usuarios"
-                android:title="@string/cadastrar_usuarios" />
-            <item
-                android:id="@+id/item_main_listar_usuarios"
-                android:title="@string/listar_usuarios" />
-        </menu>
-    </item>
+        android:id="@+id/menu_item_tela_principal"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="@string/home" />
     <item
         android:id="@+id/menu_item_submenu2"
         android:title="@string/roupas" >

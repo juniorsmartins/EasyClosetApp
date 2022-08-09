@@ -18,11 +18,11 @@ import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
 
 public final class MainActivity extends AppCompatActivity {
 
-    private final int itemMainInfoApp = R.id.item_main_sobre_app;
+    private final int itemMainInfoApp = R.id.menu_item_sobre_app;
     private final int itemMainCadastrarUsuario = R.id.item_main_cadastrar_usuarios;
     private final int itemMainListarUsuario = R.id.item_main_listar_usuarios;
-    private final int itemMainCadastrarRoupas = R.id.item_main_cadastrar_roupas;
-    private final int itemMainListarRoupas = R.id.item_main_listar_roupas;
+    private final int itemMainCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
+    private final int itemMainListarRoupas = R.id.menu_item_listar_roupas;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
