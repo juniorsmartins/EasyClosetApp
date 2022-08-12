@@ -37,7 +37,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private String tamanhoDeRoupa;
 
     private Button enderecoBotaoSalvarRoupa;
-    private Button enderecoBotaoLimparFormulario;
     private Button enderecoBotaoVoltar;
 
     private boolean camposValidados;
@@ -281,13 +280,11 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
         private void mapearEnderecosDosBotoes() {
             enderecoBotaoSalvarRoupa = findViewById(R.id.button_salvar_cadastrar_roupa);
-            enderecoBotaoLimparFormulario = findViewById(R.id.button_limpar_cadastrar_roupa);
             enderecoBotaoVoltar = findViewById(R.id.button_voltar_cadastrar_roupa);
         }
 
         private void ativarButtonsDoFormularioDeCadastrar() {
             ativarButtonSalvarCadastrarRoupas();
-            ativarButtonLimparFormularioCadastrar();
             ativarButtonVoltarCadastrar();
         }
 
@@ -382,14 +379,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                             .show();
                 }
 
-            private void ativarButtonLimparFormularioCadastrar() {
-                enderecoBotaoLimparFormulario.setOnClickListener(view -> {
-                    mapearEnderecosDosCampos();
-                    limparCamposDoFormularioDeCadastrarRoupas();
-                    direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario();
-                });
-            }
-
                 private void limparCamposDoFormularioDeCadastrarRoupas() {
                     enderecoCadastrarTipoDeRoupa.setSelection(0);
                     enderecoCadastrarTecidoDaRoupa.setSelection(0);
@@ -427,19 +416,24 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        final int menuItemInfoApp = R.id.menu_item_sobre_app;
+        final int menuItemLimparFormularioRoupas = R.id.menu_item_limpar_formulario_roupas;
         final int menuItemHome = R.id.menu_item_tela_principal;
+        final int menuItemInfoApp = R.id.menu_item_sobre_app;
         final int menuItemCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
         final int menuItemListarRoupas = R.id.menu_item_listar_roupas;
 
         switch (item.getItemId()) {
-            case menuItemInfoApp:
-                mostrarMensagemNaTela("Sobre App");
-                startActivity(new Intent(CadastrarRoupasActivity.this, InfoAppActivity.class));
+            case menuItemLimparFormularioRoupas:
+                limparCamposDoFormularioDeCadastrarRoupas();
+                direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario();
                 return true;
             case menuItemHome:
                 mostrarMensagemNaTela("HOME");
                 startActivity(new Intent(CadastrarRoupasActivity.this, MainActivity.class));
+                return true;
+            case menuItemInfoApp:
+                mostrarMensagemNaTela("Sobre App");
+                startActivity(new Intent(CadastrarRoupasActivity.this, InfoAppActivity.class));
                 return true;
             case menuItemCadastrarRoupas:
                 mostrarMensagemNaTela("Cadastrar Roupas");

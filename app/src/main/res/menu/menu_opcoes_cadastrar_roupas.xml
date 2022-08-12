@@ -3,6 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_item_salvar_cadastrar_roupas"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/salvar"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_item_limpar_formulario_roupas"
+        android:icon="@android:drawable/ic_notification_clear_all"
+        android:title="@string/limpar"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_item_tela_principal"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="@string/home"
