@@ -9,11 +9,13 @@
         android:id="@+id/textView_cadastrar_tipo_roupa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/tipo_de_roupa"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,6 +28,7 @@
         android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrar_tipo_roupa"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tipo_roupa"
         app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tipo_roupa"
         tools:ignore="DuplicateSpeakableTextCheck" />
@@ -38,6 +41,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/tecido"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_cadastrar_tipo_de_roupa"
         app:layout_constraintStart_toStartOf="@+id/spinner_cadastrar_tipo_de_roupa"
         app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tipo_de_roupa" />
 
@@ -50,6 +54,7 @@
         android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrar_tecido"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tecido"
         app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tecido" />
 
@@ -61,6 +66,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/cor_principal"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_cadastrar_tecido_de_roupa"
         app:layout_constraintStart_toStartOf="@+id/spinner_cadastrar_tecido_de_roupa"
         app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_tecido_de_roupa" />
 
@@ -73,6 +79,7 @@
         android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrar_corPrincipal"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_corPrincipal"
         app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_corPrincipal" />
 
@@ -84,6 +91,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/tamanho"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_cadastrar_cor_principal_de_roupa"
         app:layout_constraintStart_toStartOf="@+id/spinner_cadastrar_cor_principal_de_roupa"
         app:layout_constraintTop_toBottomOf="@+id/spinner_cadastrar_cor_principal_de_roupa" />
 
@@ -95,27 +103,8 @@
         android:entries="@array/listaDeTamanhosDeRoupa"
         android:minHeight="48dp"
         android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrarTamanho"
         app:layout_constraintStart_toStartOf="@+id/textView_cadastrarTamanho"
         app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
 
-    <Button
-        android:id="@+id/button_salvar_cadastrar_roupa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/salvar"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_tecido_de_roupa"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tecido" />
-
-    <Button
-        android:id="@+id/button_voltar_cadastrar_roupa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/voltar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner_cadastrar_tamanho_de_roupa"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
 </androidx.constraintlayout.widget.ConstraintLayout>

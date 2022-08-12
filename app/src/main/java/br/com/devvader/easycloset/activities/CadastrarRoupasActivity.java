@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.devvader.easycloset.MainActivity;
@@ -64,8 +65,15 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_roupas);
 
+        criarBotaoUpNaBarraDoApp();
         caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno();
     }
+
+        private void criarBotaoUpNaBarraDoApp() {
+            ActionBar barraDeAcao = getSupportActionBar();
+            if(barraDeAcao != null)
+                barraDeAcao.setDisplayHomeAsUpEnabled(true);
+        }
 
         private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno() {
             capturarIntentDeListar = getIntent();
@@ -130,7 +138,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                         return 3;
                     case "Canvas":
                         return 4;
-                    case "Cordoba":
+                    case "Córdoba":
                         return 5;
                     case "Microfibra":
                         return 6;

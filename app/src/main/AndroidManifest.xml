@@ -19,13 +19,12 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".activities.usuario.CadastrarUsuarioActivity"
+            android:name=".activities.CadastrarUsuarioActivity"
             android:exported="false">
         </activity>
 
@@ -36,7 +35,12 @@
 
         <activity
             android:name=".activities.CadastrarRoupasActivity"
+            android:parentActivityName=".activities.ListarRoupasActivity"
             android:exported="false">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ListarRoupasActivity" />
         </activity>
 
         <activity
@@ -46,7 +50,12 @@
 
         <activity
             android:name=".activities.InfoAppActivity"
+            android:parentActivityName=".activities.ListarRoupasActivity"
             android:exported="false">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ListarRoupasActivity" />
         </activity>
 
     </application>

@@ -63,13 +63,16 @@
     <string name="sapato">Sapato</string>
     <string name="tenis">Tênis</string>
 
-    <string name="pp">PP</string>
-    <string name="p">P</string>
-    <string name="m">M</string>
-    <string name="g">G</string>
-    <string name="gg">GG</string>
-    <string name="xg">XG</string>
-    <string name="xgg">XGG</string>
+    <string name="tricoline">Tricoline</string>
+    <string name="malha">Malha</string>
+    <string name="cetim">Cetim</string>
+    <string name="canvas">Canvas</string>
+    <string name="cordoba">Córdoba</string>
+    <string name="microfibra">Microfibra</string>
+    <string name="algodao">Algodão</string>
+    <string name="la">Lã</string>
+    <string name="seda">Seda</string>
+    <string name="linho">Linho</string>
 
     <string name="azul">Azul</string>
     <string name="verde">Verde</string>
@@ -82,16 +85,13 @@
     <string name="rosa">Rosa</string>
     <string name="vermelho">Vermelho</string>
 
-    <string name="tricoline">Tricoline</string>
-    <string name="malha">Malha</string>
-    <string name="cetim">Cetim</string>
-    <string name="canvas">Canvas</string>
-    <string name="cordoba">Córdoba</string>
-    <string name="microfibra">Microfibra</string>
-    <string name="algodao">Algodão</string>
-    <string name="la">Lã</string>
-    <string name="seda">Seda</string>
-    <string name="linho">Linho</string>
+    <string name="pp">PP</string>
+    <string name="p">P</string>
+    <string name="m">M</string>
+    <string name="g">G</string>
+    <string name="gg">GG</string>
+    <string name="xg">XG</string>
+    <string name="xgg">XGG</string>
 
 </resources>
 
