@@ -27,18 +27,8 @@ public final class RoupaRepository implements IRoupaRepository {
 
     @Override
     public void atualizarRoupa(RoupaEntity novaRoupa) {
-        System.out.println(novaRoupa + "\n\n");
-        int posicaoNaLista = -1;
-        for(RoupaEntity roupa : listaDeRoupas) {
-            if(roupa.getId() == novaRoupa.getId()) {
-                int contador = 0;
-                System.out.println("\n\n----- testes -----" + contador++);
-                posicaoNaLista = listaDeRoupas.indexOf(roupa);
-                break;
-            }
-        }
-        if(posicaoNaLista >= 0)
-            listaDeRoupas.remove(posicaoNaLista);
+        if(listaDeRoupas.contains(novaRoupa))
+            return;
         listaDeRoupas.add(novaRoupa);
     }
 
@@ -49,6 +39,11 @@ public final class RoupaRepository implements IRoupaRepository {
                 .stream()
                 .sorted(Comparator.comparing(RoupaEntity::getId).reversed())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void excluirRoupa(RoupaEntity roupaEntity) {
+        listaDeRoupas.remove(roupaEntity);
     }
 
     @Override

@@ -8,14 +8,6 @@
         android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_item_adicionar_roupas"
-        android:icon="@android:drawable/ic_input_add"
-        android:title="@string/adicionar"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menu_item_sobre_app"
-        android:title="@string/sobre" />
-    <item
         android:id="@+id/menu_item_submenu2"
         android:title="@string/roupas" >
         <menu >
@@ -27,4 +19,7 @@
                 android:title="@string/listar_roupas" />
         </menu>
     </item>
+    <item
+        android:id="@+id/menu_item_voltar"
+        android:title="@string/voltar" />
 </menu>

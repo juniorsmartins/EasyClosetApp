@@ -96,6 +96,8 @@
     <string name="descricao_foto_autor_app">Fotografia do desenvolvedor autor do App.</string>
     <string name="home">HOME</string>
     <string name="acoes">Ações</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
 
 </resources>
 

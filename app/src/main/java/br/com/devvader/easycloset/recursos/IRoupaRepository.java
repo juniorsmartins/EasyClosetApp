@@ -8,5 +8,6 @@ public interface IRoupaRepository {
     void salvarRoupa(RoupaEntity roupa);
     void atualizarRoupa(RoupaEntity novaRoupa);
     List<RoupaEntity> listar();
+    void excluirRoupa(RoupaEntity roupaEntity);
     RoupaEntity consultarPecasDeRoupaPorPosicao(int position);
 }
