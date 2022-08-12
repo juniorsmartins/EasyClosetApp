@@ -73,12 +73,14 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         private void ativarCliqueRapidoNosItensDalistaParaEditar() {
             enderecoDaListaDeRoupas.setOnItemClickListener((parent, view, position, id) -> {
+
                 roupaEntity = (RoupaEntity) parent.getItemAtPosition(position);
+                roupaAdapter = (RoupaAdapter) parent.getAdapter();
 
                 publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
                 gerarLogSobreQualRoupaFoiEscolhida(position);
-
-                excluirRoupaDaListaAndNotificarAdapter();
+                excluirRoupaDaListaDeRoupas();
+                notificarAdapterSobreModificacaoNaListView();
                 CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
             });
         }
@@ -90,6 +92,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                     return false;
 
                 roupaEntity = (RoupaEntity) parent.getItemAtPosition(position);
+                roupaAdapter = (RoupaAdapter) parent.getAdapter();
 
                 publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
                 gerarLogSobreQualRoupaFoiEscolhida(position);
@@ -119,28 +122,6 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 view.setBackgroundColor(Color.LTGRAY);
             }
 
-    // ------------------------------ OnActivityResult ------------------------------
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-        if(resultCode == Activity.RESULT_OK) {
-            Bundle bundle = intent.getExtras();
-            roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
-
-            if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
-                excluirRoupaDaListaAndNotificarAdapter();
-                iRoupaRepository.atualizarRoupa(roupaEntity);
-            }
-
-            if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
-                iRoupaRepository.salvarRoupa(roupaEntity);
-            }
-
-            roupaAdapter.notifyDataSetChanged();
-        }
-    }
-
 
     // ------------------------------ MENU DE OPÇÕES ------------------------------
     @Override
@@ -159,23 +140,23 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case menuItemHome:
-                mostrarMensagemNaTela("HOME");
+                publicarMensagemNaTela("HOME");
                 startActivity(new Intent(ListarRoupasActivity.this, MainActivity.class));
                 return true;
             case menuItemAdicionarRoupas:
-                mostrarMensagemNaTela("Adicionar Roupas");
+                publicarMensagemNaTela("Adicionar Roupas");
                 CadastrarRoupasActivity.cadastrarRoupaComRetorno(ListarRoupasActivity.this); // StartActivityForResult
                 return true;
             case menuItemInfoApp:
-                mostrarMensagemNaTela("Sobre App");
+                publicarMensagemNaTela("Sobre App");
                 startActivity(new Intent(ListarRoupasActivity.this, InfoAppActivity.class));
                 return true;
             case menuItemCadastrarRoupas:
-                mostrarMensagemNaTela("Cadastrar Roupas");
+                publicarMensagemNaTela("Cadastrar Roupas");
                 startActivity(new Intent(ListarRoupasActivity.this, CadastrarRoupasActivity.class));
                 return true;
             case menuItemListarRoupas:
-                mostrarMensagemNaTela("Listar Roupas");
+                publicarMensagemNaTela("Listar Roupas");
                 startActivity(new Intent(ListarRoupasActivity.this, ListarRoupasActivity.class));
                 return true;
             default:
@@ -183,8 +164,8 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarMensagemNaTela(String texto) {
-        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
+    private void publicarMensagemNaTela(String mensagem) {
+        Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -215,12 +196,13 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case menuItemEditarRoupas:
-                    excluirRoupaDaListaAndNotificarAdapter();
+                    excluirRoupaDaListaDeRoupas();
                     CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
                 case menuItemExcluirRoupas:
-                    excluirRoupaDaListaAndNotificarAdapter();
+                    excluirRoupaDaListaDeRoupas();
+                    notificarAdapterSobreModificacaoNaListView();
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
                 default:
@@ -232,12 +214,38 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
+            enderecoDaListaDeRoupas.setEnabled(true);
         }
     };
 
-        private void excluirRoupaDaListaAndNotificarAdapter() {
-            iRoupaRepository.excluirRoupa(roupaEntity);
-            roupaAdapter.notifyDataSetChanged();
-        }
+    private void excluirRoupaDaListaDeRoupas() {
+        iRoupaRepository.excluirRoupa(roupaEntity);
+    }
 
+    private void notificarAdapterSobreModificacaoNaListView() {
+        roupaAdapter.notifyDataSetChanged();
+    }
+
+
+    // ------------------------------ OnActivityResult ------------------------------
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if(resultCode == Activity.RESULT_OK) {
+            Bundle bundle = intent.getExtras();
+            roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
+
+            if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
+                iRoupaRepository.salvarRoupa(roupaEntity);
+            } else if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
+                excluirRoupaDaListaDeRoupas();
+                iRoupaRepository.atualizarRoupa(roupaEntity);
+            } else {
+                publicarMensagemNaTela("OnActivityResult - ERROR - Retorno não se enquadra em Salvar nem Atualizar.");
+            }
+
+            notificarAdapterSobreModificacaoNaListView();
+        }
+    }
 }

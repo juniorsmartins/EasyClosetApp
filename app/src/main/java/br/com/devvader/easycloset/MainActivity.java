@@ -18,12 +18,6 @@ import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
 
 public final class MainActivity extends AppCompatActivity {
 
-    private final int itemMainInfoApp = R.id.menu_item_sobre_app;
-    private final int itemMainCadastrarUsuario = R.id.item_main_cadastrar_usuarios;
-    private final int itemMainListarUsuario = R.id.item_main_listar_usuarios;
-    private final int itemMainCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
-    private final int itemMainListarRoupas = R.id.menu_item_listar_roupas;
-
     // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +41,12 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        final int itemMainInfoApp = R.id.menu_item_sobre_app;
+        final int itemMainCadastrarUsuario = R.id.item_main_cadastrar_usuarios;
+        final int itemMainListarUsuario = R.id.item_main_listar_usuarios;
+        final int itemMainCadastrarRoupas = R.id.menu_item_cadastrar_roupas;
+        final int itemMainListarRoupas = R.id.menu_item_listar_roupas;
+
         switch (item.getItemId()) {
             case itemMainInfoApp:
                 mostrarMensagemNaTela("Sobre App");
