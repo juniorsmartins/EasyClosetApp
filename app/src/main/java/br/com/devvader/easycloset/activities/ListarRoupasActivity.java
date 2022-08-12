@@ -77,6 +77,8 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
                 publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
                 gerarLogSobreQualRoupaFoiEscolhida(position);
+
+                excluirRoupaDaListaAndNotificarAdapter();
                 CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
             });
         }
@@ -127,7 +129,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
 
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
-                iRoupaRepository.excluirRoupa(roupaEntity);
+                excluirRoupaDaListaAndNotificarAdapter();
                 iRoupaRepository.atualizarRoupa(roupaEntity);
             }
 
@@ -213,13 +215,12 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case menuItemEditarRoupas:
-                    iRoupaRepository.excluirRoupa(roupaEntity);
+                    excluirRoupaDaListaAndNotificarAdapter();
                     CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
                 case menuItemExcluirRoupas:
-                    iRoupaRepository.excluirRoupa(roupaEntity);
-                    roupaAdapter.notifyDataSetChanged();
+                    excluirRoupaDaListaAndNotificarAdapter();
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
                 default:
@@ -234,5 +235,9 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
     };
 
+        private void excluirRoupaDaListaAndNotificarAdapter() {
+            iRoupaRepository.excluirRoupa(roupaEntity);
+            roupaAdapter.notifyDataSetChanged();
+        }
 
 }
