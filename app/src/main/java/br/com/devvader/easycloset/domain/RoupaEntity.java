@@ -8,19 +8,19 @@ public final class RoupaEntity implements Serializable {
 
     private Long id;
     private String tipo;
-    private String tamanho;
-    private String corPrincipal;
     private String tecido;
+    private String corPrincipal;
+    private String tamanho;
 
     public RoupaEntity() {}
     public RoupaEntity(String tipo,
-                       String tamanho,
+                       String tecido,
                        String corPrincipal,
-                       String tecido) {
+                       String tamanho) {
         this.tipo = tipo;
-        this.tamanho = tamanho;
-        this.corPrincipal = corPrincipal;
         this.tecido = tecido;
+        this.corPrincipal = corPrincipal;
+        this.tamanho = tamanho;
     }
 
     public Long getId() {
@@ -67,8 +67,8 @@ public final class RoupaEntity implements Serializable {
     public String toString() {
         return "\n\nID = " + id +
                 "\nTipo = " + tipo +
-                "\nTamanho = " + tamanho +
+                "\nTecido = " + tecido +
                 "\nCor Principal = " + corPrincipal +
-                "\nTecido = " + tecido;
+                "\nTamanho = " + tamanho;
     }
 }

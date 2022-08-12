@@ -30,17 +30,17 @@ public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
         View rowView = inflater.inflate(R.layout.item_roupa, parent, false);
 
         TextView tipo = rowView.findViewById(R.id.tipo_de_roupa);
-        TextView tamanho = rowView.findViewById(R.id.tamanho_de_roupa);
-        TextView corPrincipal = rowView.findViewById(R.id.cor_principal_da_roupa);
         TextView tecido = rowView.findViewById(R.id.tecido_da_roupa);
+        TextView corPrincipal = rowView.findViewById(R.id.cor_principal_da_roupa);
+        TextView tamanho = rowView.findViewById(R.id.tamanho_de_roupa);
 
         tipo.setText(listaDeRoupas.get(position).getTipo());
-        tamanho.setText(listaDeRoupas.get(position).getTamanho());
-        corPrincipal.setText(listaDeRoupas.get(position).getCorPrincipal());
         tecido.setText(listaDeRoupas.get(position).getTecido());
+        corPrincipal.setText(listaDeRoupas.get(position).getCorPrincipal());
+        tamanho.setText(listaDeRoupas.get(position).getTamanho());
 
         if(position % 2 == 0) {
-            rowView.setBackgroundColor(Color.GRAY);
+            rowView.setBackgroundColor(Color.LTGRAY);
         }
 
         return rowView;

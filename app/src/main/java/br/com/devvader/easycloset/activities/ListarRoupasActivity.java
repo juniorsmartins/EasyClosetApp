@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     private RoupaEntity roupaEntity;
     private RoupaAdapter roupaAdapter;
     private ActionMode actionMode;
+    private View viewSelecionada;
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -51,7 +53,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         enderecoDaListaDeRoupas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ativarCliqueRapidoNosItensDalistaParaEditar();
-        ativarCliqueDemoradoNosItensDaListaParaMenuDeAcaoContextual();
+        ativarCliqueDemoradoNosItensDaListaParaAtivarMenuDeAcaoContextual();
     }
 
         private void colocarTituloNaTela() {
@@ -79,13 +81,11 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
                 publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
                 gerarLogSobreQualRoupaFoiEscolhida(position);
-                excluirRoupaDaListaDeRoupas();
-                notificarAdapterSobreModificacaoNaListView();
                 CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
             });
         }
 
-        private void ativarCliqueDemoradoNosItensDaListaParaMenuDeAcaoContextual() {
+        private void ativarCliqueDemoradoNosItensDaListaParaAtivarMenuDeAcaoContextual() {
             enderecoDaListaDeRoupas.setOnItemLongClickListener((parent, view, position, id) -> {
 
                 if (actionMode != null)
@@ -93,13 +93,14 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
                 roupaEntity = (RoupaEntity) parent.getItemAtPosition(position);
                 roupaAdapter = (RoupaAdapter) parent.getAdapter();
+                viewSelecionada = view;
 
+                colorirBackgroundDoItemDaLista();
                 publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
                 gerarLogSobreQualRoupaFoiEscolhida(position);
-                colorirBackgroundDoItemDaLista(view);
 
                 enderecoDaListaDeRoupas.setEnabled(false); // O que faz?
-                actionMode = startSupportActionMode(actionModeCallback); // O que faz?
+                actionMode = startSupportActionMode(actionModeCallback);
 
                 return true;
             });
@@ -118,9 +119,94 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                         " - na posição: " + posicao);
             }
 
-            private void colorirBackgroundDoItemDaLista(View view) {
-                view.setBackgroundColor(Color.LTGRAY);
+            private void colorirBackgroundDoItemDaLista() {
+                viewSelecionada.setBackgroundColor(Color.YELLOW);
             }
+
+
+    // ------------------------------ MENU DE AÇÃO CONTEXTUAL ------------------------------
+    private final ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+
+        // Chamado quando o modo de ação é criado; startActionMode() foi chamado
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflar um recurso de menu fornecendo itens de menu de contexto
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_contextual_item_listar_roupas, menu);
+            return true;
+        }
+
+        // Chamado cada vez que o modo de ação é mostrado. Sempre chamado após onCreateActionMode, mas
+        // pode ser chamado várias vezes se o modo for invalidado.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Retorna false se nada for feito
+        }
+
+        // Chamado quando o usuário seleciona um item de menu contextual
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            final int menuItemEditarRoupas = R.id.menu_item_editar_roupas;
+            final int menuItemExcluirRoupas = R.id.menu_item_excluir_roupas;
+
+            switch (item.getItemId()) {
+                case menuItemEditarRoupas:
+                    CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
+                    mode.finish(); // Ação escolhida, então feche o CAB
+                    return true;
+                case menuItemExcluirRoupas:
+                    excluirRoupaDaListaDeRoupas();
+                    mode.finish(); // Ação escolhida, então feche o CAB
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // Chamado quando o usuário sai do modo de ação
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            viewSelecionada = null;
+            actionMode = null;
+            enderecoDaListaDeRoupas.setEnabled(true);
+            notificarAdapterSobreModificacaoNaListView();
+        }
+    };
+
+    private void excluirRoupaDaListaDeRoupas() {
+        iRoupaRepository.excluirRoupa(roupaEntity);
+    }
+
+    private void notificarAdapterSobreModificacaoNaListView() {
+        roupaAdapter.notifyDataSetChanged();
+    }
+
+
+    // ------------------------------ OnActivityResult ------------------------------
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        System.out.println("\n\n---------- OnActivityResult 3 ----------\n");
+
+        if(resultCode == Activity.RESULT_OK) {
+            Bundle bundle = intent.getExtras();
+
+            if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
+                roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
+                iRoupaRepository.salvarRoupa(roupaEntity);
+            } else if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
+                excluirRoupaDaListaDeRoupas();
+                roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
+                iRoupaRepository.atualizarRoupa(roupaEntity);
+                System.out.println("\n\n---------- OnActivityResult 4 ----------\n");
+            } else {
+                publicarMensagemNaTela("OnActivityResult - ERROR - Retorno não se enquadra em Salvar nem Atualizar.");
+            }
+
+            notificarAdapterSobreModificacaoNaListView();
+        }
+    }
 
 
     // ------------------------------ MENU DE OPÇÕES ------------------------------
@@ -166,86 +252,5 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
     private void publicarMensagemNaTela(String mensagem) {
         Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
-    }
-
-
-    // ------------------------------ MENU DE AÇÃO CONTEXTUAL ------------------------------
-    private final ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
-
-        // Chamado quando o modo de ação é criado; startActionMode() foi chamado
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflar um recurso de menu fornecendo itens de menu de contexto
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.menu_contextual_item_listar_roupas, menu);
-            return true;
-        }
-
-        // Chamado cada vez que o modo de ação é mostrado. Sempre chamado após onCreateActionMode, mas
-        // pode ser chamado várias vezes se o modo for invalidado.
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false; // Retorna false se nada for feito
-        }
-
-        // Chamado quando o usuário seleciona um item de menu contextual
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            final int menuItemEditarRoupas = R.id.menu_item_editar_roupas;
-            final int menuItemExcluirRoupas = R.id.menu_item_excluir_roupas;
-
-            switch (item.getItemId()) {
-                case menuItemEditarRoupas:
-                    excluirRoupaDaListaDeRoupas();
-                    CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
-                    mode.finish(); // Ação escolhida, então feche o CAB
-                    return true;
-                case menuItemExcluirRoupas:
-                    excluirRoupaDaListaDeRoupas();
-                    notificarAdapterSobreModificacaoNaListView();
-                    mode.finish(); // Ação escolhida, então feche o CAB
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        // Chamado quando o usuário sai do modo de ação
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            actionMode = null;
-            enderecoDaListaDeRoupas.setEnabled(true);
-        }
-    };
-
-    private void excluirRoupaDaListaDeRoupas() {
-        iRoupaRepository.excluirRoupa(roupaEntity);
-    }
-
-    private void notificarAdapterSobreModificacaoNaListView() {
-        roupaAdapter.notifyDataSetChanged();
-    }
-
-
-    // ------------------------------ OnActivityResult ------------------------------
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-        if(resultCode == Activity.RESULT_OK) {
-            Bundle bundle = intent.getExtras();
-            roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
-
-            if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
-                iRoupaRepository.salvarRoupa(roupaEntity);
-            } else if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
-                excluirRoupaDaListaDeRoupas();
-                iRoupaRepository.atualizarRoupa(roupaEntity);
-            } else {
-                publicarMensagemNaTela("OnActivityResult - ERROR - Retorno não se enquadra em Salvar nem Atualizar.");
-            }
-
-            notificarAdapterSobreModificacaoNaListView();
-        }
     }
 }

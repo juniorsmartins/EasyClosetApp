@@ -372,7 +372,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     }
 
                     private void criarRoupa() {
-                        roupaEntity = new RoupaEntity(tipoDeRoupa, tamanhoDeRoupa, corPrincipalDeRoupa, tecidoDeRoupa);
+                        roupaEntity = new RoupaEntity(tipoDeRoupa, tecidoDeRoupa, corPrincipalDeRoupa, tamanhoDeRoupa);
                     }
 
                 private void imprimirNomeNaTela() {
