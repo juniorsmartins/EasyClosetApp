@@ -14,9 +14,15 @@
     <string name="formulario_limpo">Formulário Limpo</string>
 
     <string name="autor">Autor App</string>
-    <string name="junior_martins">Junior Martins</string>
+    <string name="autor_junior_martins">Junior Martins</string>
     <string name="descricao_logomarca_utfpr">Logomarca da Universidade Tecnológica Federal do Paraná</string>
     <string name="descricao_foto_autor_app">Fotografia do desenvolvedor do App.</string>
+    <string name="autor_formacao_academica">" - Cursando Pós-graduação Lato Sensu (especialização) em Tecnologia Java (UTFPR); \n
+        - Formado em Master in Business Administration (MBA) em Administração de Banco de Dados (Fameesp); \n
+        - Formado em Pós-graduação Lato Sensu (especialização) em Administração de Banco de Dados (Unopar); \n
+        - Formado em curso superior de bacharelado em Comunicação Social com Ênfase em Jornalismo (Unic-MT); \n
+        - Formado em curso superior tecnólogo em Fotografia (Unic-MT); \n
+        - Formado em curso técnico em Processamento de Dados (Urcamp-RS)."</string>
 
     <string name="usuarios">Usuários</string>
     <string name="roupas">Roupas</string>
@@ -33,6 +39,11 @@
     <string name="acoes">Ações</string>
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
+
+    <string name="instrucoes_entrega4">"Recado para o professor: \n
+        Os requisitos da entrega 4 são cumpridos pelas activities e ou funcionalidades do model ROUPAS.
+
+        O model USUARIOS está no padrão de entregas anteriores."</string>
 
 
     <string name="sexoMasculino">Masculino</string>

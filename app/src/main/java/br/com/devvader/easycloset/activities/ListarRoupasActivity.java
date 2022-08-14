@@ -77,7 +77,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 roupaEntity = (RoupaEntity) parent.getItemAtPosition(position);
                 roupaAdapter = (RoupaAdapter) parent.getAdapter();
 
-                publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
+                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" Selecionada"));
                 gerarLogSobreQualRoupaFoiEscolhida(position);
                 CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
             });
@@ -94,7 +94,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 viewSelecionada = view;
 
                 colorirBackgroundDoItemDaLista();
-                publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
+                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" Selecionada"));
                 gerarLogSobreQualRoupaFoiEscolhida(position);
 
                 enderecoDaListaDeRoupas.setEnabled(false);
@@ -104,12 +104,9 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             });
         }
 
-            private void publicarMensagemNaTelaDeQualRoupaFoiEscolhida() {
-                Toast.makeText(getApplicationContext(),
-                        roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()),
-                        Toast.LENGTH_SHORT)
-                        .show();
-            }
+            private void publicarMensagemNaTela(String mensagem) {
+        Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
+    }
 
             private void gerarLogSobreQualRoupaFoiEscolhida(int posicao) {
                 Log.i("Roupa:", " " +
@@ -154,6 +151,8 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                     return true;
                 case menuItemExcluirRoupas:
                     excluirRoupaDaListaDeRoupas();
+                    publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" Excluído!"));
+                    mostrarListaNaTelaComAdapterCustomizado();
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
                 default:
@@ -245,9 +244,5 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void publicarMensagemNaTela(String mensagem) {
-        Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
     }
 }
