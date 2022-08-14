@@ -418,11 +418,11 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 startActivity(new Intent(CadastrarRoupasActivity.this, InfoAppActivity.class));
                 return true;
             case menuItemCadastrarRoupas:
-                mostrarMensagemNaTela(getString(R.string.cadastrar_roupas));
+                mostrarMensagemNaTela(getString(R.string.cadastrar));
                 startActivity(new Intent(CadastrarRoupasActivity.this, CadastrarRoupasActivity.class));
                 return true;
             case menuItemListarRoupas:
-                mostrarMensagemNaTela(getString(R.string.listar_roupas));
+                mostrarMensagemNaTela(getString(R.string.listar));
                 startActivity(new Intent(CadastrarRoupasActivity.this, ListarRoupasActivity.class));
                 return true;
             default:

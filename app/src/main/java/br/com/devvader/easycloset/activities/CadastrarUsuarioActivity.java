@@ -344,7 +344,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 usuarioEntity = null;
 
                 Toast.makeText(CadastrarUsuarioActivity.this,
-                        "Formulário Limpo!",
+                        getString(R.string.formulario_limpo),
                         Toast.LENGTH_SHORT)
                         .show();
             }

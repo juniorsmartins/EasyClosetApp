@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.usuario.CadastrarUsuarioActivity">
+    tools:context=".activities.CadastrarUsuarioActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,13 +25,13 @@
                 android:id="@+id/radioButton_sexoMasculino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sexoMasculino" />
+                android:text="@string/sexo_masculino" />
 
             <RadioButton
                 android:id="@+id/radioButton_sexoFeminino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sexoFeminino" />
+                android:text="@string/sexo_feminino" />
         </RadioGroup>
 
         <EditText
@@ -159,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/botaoSalvarCadastroUsuario"
+            android:text="@string/salvar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_autorizoPublicidade" />
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:text="@string/botaoLimparCadastroUsuario"
+            android:text="@string/limpar"
             app:layout_constraintEnd_toStartOf="@+id/button_voltar_cadastrar_usuario"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

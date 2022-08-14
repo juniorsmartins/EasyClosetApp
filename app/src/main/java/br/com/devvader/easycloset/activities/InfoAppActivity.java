@@ -61,19 +61,19 @@ public final class InfoAppActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case menuItemHome:
-                mostrarMensagemNaTela("HOME");
+                mostrarMensagemNaTela(getString(R.string.home));
                 startActivity(new Intent(InfoAppActivity.this, MainActivity.class));
                 return true;
             case menuItemCadastrarRoupas:
-                mostrarMensagemNaTela("Cadastrar Roupas");
+                mostrarMensagemNaTela(getString(R.string.cadastrar));
                 startActivity(new Intent(InfoAppActivity.this, CadastrarRoupasActivity.class));
                 return true;
             case menuItemListarRoupas:
-                mostrarMensagemNaTela("Listar Roupas");
+                mostrarMensagemNaTela(getString(R.string.listar));
                 startActivity(new Intent(InfoAppActivity.this, ListarRoupasActivity.class));
                 return true;
             case menuItemVoltar:
-                mostrarMensagemNaTela("Voltar");
+                mostrarMensagemNaTela(getString(R.string.voltar));
                 setResult(Activity.RESULT_CANCELED);
                 finish();
                 return true;

@@ -1,101 +1,98 @@
 <resources>
     <string name="app_name">EasyCloset</string>
-    <string name="campoNomeCadastroUsuario">Nome</string>
-    <string name="campoSobrenomeCadastroUsuario">Sobrenome</string>
+    <string name="campoNomeCadastroUsuario">First Name</string>
+    <string name="campoSobrenomeCadastroUsuario">Last Name</string>
     <string name="campoCpfCadastroUsuario">CPF</string>
-    <string name="campoFoneCadastroUsuario">Fone</string>
+    <string name="campoFoneCadastroUsuario">Phone</string>
     <string name="campoEmailCadastroUsuario">E-mail</string>
-    <string name="botaoSalvarCadastroUsuario">Salvar</string>
-    <string name="botaoLimparCadastroUsuario">Limpar</string>
-    <string name="nomeObrigatorioCadastroUsuario">Nome - campo de preenchimento obrigatório!</string>
-    <string name="sobrenomeObrigatorioCadastroUsuario">Sobrenome - campo de preenchimento obrigatório!</string>
-    <string name="autorizoPublicidade">Autorizo publicidade no meu e-mail.</string>
-    <string name="formulario_incompleto">Formulário Incompleto!</string>
-    <string name="formulario_limpo">Formulário Limpo</string>
+    <string name="nomeObrigatorioCadastroUsuario">First Name - mandatory field!</string>
+    <string name="sobrenomeObrigatorioCadastroUsuario">" Last Name - mandatory field!"</string>
+    <string name="autorizoPublicidade">" I authorize advertising in my email."</string>
+    <string name="formulario_incompleto">Incomplete Form</string>
+    <string name="formulario_limpo">Clean Form</string>
 
-    <string name="autor">Autor App</string>
+    <string name="autor">Author App</string>
     <string name="autor_junior_martins">Junior Martins</string>
-    <string name="descricao_logomarca_utfpr">Logomarca da Universidade Tecnológica Federal do Paraná</string>
-    <string name="descricao_foto_autor_app">Fotografia do desenvolvedor do App.</string>
-    <string name="autor_formacao_academica">" - Cursando Pós-graduação Lato Sensu (especialização) em Tecnologia Java (UTFPR); \n
-        - Formado em Master in Business Administration (MBA) em Administração de Banco de Dados (Fameesp); \n
-        - Formado em Pós-graduação Lato Sensu (especialização) em Administração de Banco de Dados (Unopar); \n
-        - Formado em curso superior de bacharelado em Comunicação Social com Ênfase em Jornalismo (Unic-MT); \n
-        - Formado em curso superior tecnólogo em Fotografia (Unic-MT); \n
-        - Formado em curso técnico em Processamento de Dados (Urcamp-RS)."</string>
+    <string name="descricao_logomarca_utfpr">"Logo of the Federal Technological University of Paraná "</string>
+    <string name="descricao_foto_autor_app">"App developer photo. "</string>
+    <string name="autor_formacao_academica">- Attending Lato Sensu Post-Graduation (specialization) in Java Technology (UTFPR);          - Graduated in Master in Business Administration (MBA) in Database Administration (Fameesp);          - Graduated in Lato Sensu Postgraduate (specialization) in Database Administration (Unopar);          - Graduated in a bachelor\'s degree in Social Communication with an emphasis on Journalism (Unic-MT);          - Graduated in a higher technical course in Photography (Unic-MT);          - Graduated in a technical course in Data Processing (Urcamp-RS).</string>
+    <string name="autor_celular">(65)99611-8288</string>
+    <string name="autor_email">juniorsoaresmartins@gmail.com</string>
+    <string name="pos_java">Lato Sensu Postgraduate (Specialization) in Java Technology</string>
+    <string name="app_descricao">EasyCloset - Apparel management application.</string>
 
-    <string name="usuarios">Usuários</string>
-    <string name="roupas">Roupas</string>
-    <string name="salvar">Salvar</string>
-    <string name="limpar">Limpar</string>
-    <string name="adicionar">Adicionar</string>
-    <string name="voltar">Voltar</string>
-    <string name="sobre">Sobre App</string>
-    <string name="cadastrar_usuarios">Cadastrar Usuários</string>
-    <string name="listar_usuarios">Listar Usuários</string>
-    <string name="cadastrar_roupas">Cadastrar Roupas</string>
-    <string name="listar_roupas">Listar Roupas</string>
+    <string name="roupas">Clothes</string>
+    <string name="usuarios">Users</string>
+
     <string name="home">HOME</string>
-    <string name="acoes">Ações</string>
-    <string name="editar">Editar</string>
-    <string name="excluir">Excluir</string>
+    <string name="cadastrar">Register</string>
+    <string name="salvar">Save</string>
+    <string name="listar">List</string>
+    <string name="editar">Edit</string>
+    <string name="excluir">Delete</string>
+    <string name="limpar">Clean</string>
+    <string name="voltar">Back</string>
+    <string name="acoes">Actions</string>
+    <string name="adicionar">Add</string>
+    <string name="sobre">About</string>
 
-    <string name="instrucoes_entrega4">"Recado para o professor: \n
+
+    <string name="instrucoes_entrega4">"Message to the teacher: \n
         Os requisitos da entrega 4 são cumpridos pelas activities e ou funcionalidades do model ROUPAS.
 
         O model USUARIOS está no padrão de entregas anteriores."</string>
 
 
-    <string name="sexoMasculino">Masculino</string>
-    <string name="sexoFeminino">Feminino</string>
+    <string name="sexo_masculino">Masculine</string>
+    <string name="sexo_feminino">Feminine</string>
 
-    <string name="Selecionar">Selecionar</string>
-    <string name="Doutorado">Doutorado</string>
-    <string name="Mestrado">Mestrado</string>
-    <string name="Especializações_e_MBAs">Especializações e MBAs</string>
-    <string name="Superior">Superior</string>
-    <string name="Técnico">Técnico</string>
-    <string name="Ensino_Médio">Ensino Médio</string>
-    <string name="Ensino_Fundamental">Ensino Fundamental</string>
-    <string name="Ensino_Fundamental_Incompleto">Ensino Fundamental Incompleto</string>
+    <string name="Selecionar">Select</string>
+    <string name="Doutorado">Doctorate degree</string>
+    <string name="Mestrado">Master´s degree</string>
+    <string name="Especializações_e_MBAs">Specializations and MBAs</string>
+    <string name="Superior">Higher</string>
+    <string name="Técnico">Technician</string>
+    <string name="Ensino_Médio">High School</string>
+    <string name="Ensino_Fundamental">Elementary School</string>
+    <string name="Ensino_Fundamental_Incompleto">Incomplete Elementary School</string>
 
-    <string name="tipo_de_roupa">Tipo de roupa:</string>
-    <string name="tecido">Tecido:</string>
-    <string name="cor_principal">Cor principal:</string>
-    <string name="tamanho">Tamanho:</string>
+    <string name="tipo_de_roupa">Type of Clothing:</string>
+    <string name="tecido">Tissue:</string>
+    <string name="cor_principal">Main Color:</string>
+    <string name="tamanho">Size:</string>
 
-    <string name="chapeu">Chapéu</string>
-    <string name="bone">Boné</string>
-    <string name="camisa">Camisa</string>
-    <string name="camiseta">Camiseta</string>
-    <string name="calca">Calça</string>
-    <string name="bermuda">Bermuda</string>
-    <string name="cueca">Cueca</string>
-    <string name="meia">Meia</string>
-    <string name="sapato">Sapato</string>
-    <string name="tenis">Tênis</string>
+    <string name="chapeu">Hat</string>
+    <string name="bone">Cap</string>
+    <string name="camisa">Shirt</string>
+    <string name="camiseta">T-shirt</string>
+    <string name="calca">Pants</string>
+    <string name="bermuda">Shorts</string>
+    <string name="cueca">Underwear</string>
+    <string name="meia">Half</string>
+    <string name="sapato">Shoe</string>
+    <string name="tenis">Sneakers</string>
 
     <string name="tricoline">Tricoline</string>
-    <string name="malha">Malha</string>
-    <string name="cetim">Cetim</string>
+    <string name="malha">Mesh</string>
+    <string name="cetim">Satin</string>
     <string name="canvas">Canvas</string>
-    <string name="cordoba">Córdoba</string>
-    <string name="microfibra">Microfibra</string>
-    <string name="algodao">Algodão</string>
-    <string name="la">Lã</string>
-    <string name="seda">Seda</string>
-    <string name="linho">Linho</string>
+    <string name="cordoba">Cordoba</string>
+    <string name="microfibra">Microfiber</string>
+    <string name="algodao">Cotton</string>
+    <string name="la">Wool</string>
+    <string name="seda">Silk</string>
+    <string name="linho">Linen</string>
 
-    <string name="azul">Azul</string>
-    <string name="verde">Verde</string>
-    <string name="branco">Branco</string>
-    <string name="preto">Preto</string>
-    <string name="amarelo">Amarelo</string>
-    <string name="marrom">Marrom</string>
-    <string name="laranja">Laranja</string>
-    <string name="roxo">Roxo</string>
-    <string name="rosa">Rosa</string>
-    <string name="vermelho">Vermelho</string>
+    <string name="azul">Blue</string>
+    <string name="verde">Green</string>
+    <string name="branco">White</string>
+    <string name="preto">Black</string>
+    <string name="amarelo">Yellow</string>
+    <string name="marrom">Brown</string>
+    <string name="laranja">Orange</string>
+    <string name="roxo">Purple</string>
+    <string name="rosa">Pink</string>
+    <string name="vermelho">Red</string>
 
     <string name="pp">PP</string>
     <string name="p">P</string>
@@ -104,6 +101,9 @@
     <string name="gg">GG</string>
     <string name="xg">XG</string>
     <string name="xgg">XGG</string>
+
+
+
 
 </resources>
 
