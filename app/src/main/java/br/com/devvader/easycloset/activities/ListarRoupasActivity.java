@@ -9,13 +9,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewParent;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
-
 import java.util.List;
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
@@ -99,7 +97,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 publicarMensagemNaTelaDeQualRoupaFoiEscolhida();
                 gerarLogSobreQualRoupaFoiEscolhida(position);
 
-                enderecoDaListaDeRoupas.setEnabled(false); // O que faz?
+                enderecoDaListaDeRoupas.setEnabled(false);
                 actionMode = startSupportActionMode(actionModeCallback);
 
                 return true;
@@ -187,19 +185,18 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        System.out.println("\n\n---------- OnActivityResult 3 ----------\n");
-
         if(resultCode == Activity.RESULT_OK) {
             Bundle bundle = intent.getExtras();
 
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
                 iRoupaRepository.salvarRoupa(roupaEntity);
+                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" ").concat("Salva"));
             } else if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
                 excluirRoupaDaListaDeRoupas();
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
                 iRoupaRepository.atualizarRoupa(roupaEntity);
-                System.out.println("\n\n---------- OnActivityResult 4 ----------\n");
+                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" ").concat("Atualizada"));
             } else {
                 publicarMensagemNaTela("OnActivityResult - ERROR - Retorno não se enquadra em Salvar nem Atualizar.");
             }

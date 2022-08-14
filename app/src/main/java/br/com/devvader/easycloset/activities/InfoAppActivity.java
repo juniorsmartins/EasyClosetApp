@@ -9,10 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 
@@ -76,7 +74,8 @@ public final class InfoAppActivity extends AppCompatActivity {
                 return true;
             case menuItemVoltar:
                 mostrarMensagemNaTela("Voltar");
-                onBackPressed();
+                setResult(Activity.RESULT_CANCELED);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -87,9 +86,10 @@ public final class InfoAppActivity extends AppCompatActivity {
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onBackPressed() {
-        setResult(Activity.RESULT_CANCELED);
-        finish();
-    }
+// OnBackPressed interfere no funcionamento do Botão UP - por isso foi desativado. Assim o botão Up retorna para Listar como pré-definido.
+//    @Override
+//    public void onBackPressed() {
+//        setResult(Activity.RESULT_CANCELED);
+//        finish();
+//    }
 }

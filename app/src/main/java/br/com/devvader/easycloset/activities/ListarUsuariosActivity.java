@@ -8,12 +8,9 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.List;
-
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.domain.adapters.UsuarioAdapter;
