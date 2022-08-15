@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">EasyCloset</string>
+    <string name="titulo_cadastrar_roupas">Register Clothes</string>
+    <string name="titulo_listar_roupas">List Clothes</string>
+    <string name="titulo_informacoes">Information</string>
+
     <string name="campoNomeCadastroUsuario">First Name</string>
     <string name="campoSobrenomeCadastroUsuario">Last Name</string>
     <string name="campoCpfCadastroUsuario">CPF</string>
@@ -11,18 +15,20 @@
     <string name="formulario_incompleto">Incomplete Form</string>
     <string name="formulario_limpo">Clean Form</string>
 
-    <string name="autor">Author App</string>
-    <string name="autor_junior_martins">Junior Martins</string>
+    <string name="app_descricao">EasyCloset - Apparel management application.</string>
     <string name="descricao_logomarca_utfpr">"Logo of the Federal Technological University of Paraná "</string>
     <string name="descricao_foto_autor_app">"App developer photo. "</string>
+    <string name="autor">Author App</string>
+    <string name="autor_junior_martins">Junior Martins</string>
     <string name="autor_formacao_academica">- Attending Lato Sensu Post-Graduation (specialization) in Java Technology (UTFPR);          - Graduated in Master in Business Administration (MBA) in Database Administration (Fameesp);          - Graduated in Lato Sensu Postgraduate (specialization) in Database Administration (Unopar);          - Graduated in a bachelor\'s degree in Social Communication with an emphasis on Journalism (Unic-MT);          - Graduated in a higher technical course in Photography (Unic-MT);          - Graduated in a technical course in Data Processing (Urcamp-RS).</string>
-    <string name="autor_celular">(65)99611-8288</string>
+    <string name="autor_celular">"(65) 99611-8288"</string>
     <string name="autor_email">juniorsoaresmartins@gmail.com</string>
     <string name="pos_java">Lato Sensu Postgraduate (Specialization) in Java Technology</string>
-    <string name="app_descricao">EasyCloset - Apparel management application.</string>
 
     <string name="roupas">Clothes</string>
+    <string name="roupa">Clothing</string>
     <string name="usuarios">Users</string>
+    <string name="usuario">User</string>
 
     <string name="home">HOME</string>
     <string name="cadastrar">Register</string>
@@ -36,6 +42,11 @@
     <string name="adicionar">Add</string>
     <string name="sobre">About</string>
 
+    <string name="na_posicao">in position</string>
+    <string name="excluido">Excluded!</string>
+    <string name="salvo">Saved</string>
+    <string name="atualizado">Updated</string>
+    <string name="erro_retorno_incompativel">ERROR - Incompatible Return!</string>
 
     <string name="instrucoes_entrega4">"Message to the teacher: \n
         Os requisitos da entrega 4 são cumpridos pelas activities e ou funcionalidades do model ROUPAS.
@@ -46,15 +57,15 @@
     <string name="sexo_masculino">Masculine</string>
     <string name="sexo_feminino">Feminine</string>
 
-    <string name="Selecionar">Select</string>
-    <string name="Doutorado">Doctorate degree</string>
-    <string name="Mestrado">Master´s degree</string>
-    <string name="Especializações_e_MBAs">Specializations and MBAs</string>
-    <string name="Superior">Higher</string>
-    <string name="Técnico">Technician</string>
-    <string name="Ensino_Médio">High School</string>
-    <string name="Ensino_Fundamental">Elementary School</string>
-    <string name="Ensino_Fundamental_Incompleto">Incomplete Elementary School</string>
+    <string name="selecionar">Select</string>
+    <string name="doutorado">Doctorate degree</string>
+    <string name="mestrado">Master´s degree</string>
+    <string name="especializações_e_mbas">Specializations and MBAs</string>
+    <string name="superior">Higher</string>
+    <string name="tecnico">Technician</string>
+    <string name="ensino_medio">High School</string>
+    <string name="ensino_fundamental">Elementary School</string>
+    <string name="ensino_fundamental_incompleto">Incomplete Elementary School</string>
 
     <string name="tipo_de_roupa">Type of Clothing:</string>
     <string name="tecido">Tissue:</string>
@@ -101,8 +112,6 @@
     <string name="gg">GG</string>
     <string name="xg">XG</string>
     <string name="xgg">XGG</string>
-
-
 
 
 </resources>

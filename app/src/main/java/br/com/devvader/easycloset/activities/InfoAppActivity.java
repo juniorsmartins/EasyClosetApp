@@ -16,7 +16,7 @@ import br.com.devvader.easycloset.R;
 
 public final class InfoAppActivity extends AppCompatActivity {
 
-    private static final String TITULO_DE_TELA_INFO_APP = "Informações";
+    private final String tituloDeTelaInfoApp = getString(R.string.titulo_informacoes);
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -41,7 +41,7 @@ public final class InfoAppActivity extends AppCompatActivity {
     }
 
         private void colocarTituloNaTela() {
-            setTitle(TITULO_DE_TELA_INFO_APP);
+            setTitle(tituloDeTelaInfoApp);
         }
 
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="cadastrarUsuario_spinnerEscolaridade">
-        <item>@string/Selecionar</item>
-        <item>@string/Doutorado</item>
-        <item>@string/Mestrado</item>
-        <item>@string/Especializações_e_MBAs</item>
-        <item>@string/Superior</item>
-        <item>@string/Técnico</item>
-        <item>@string/Ensino_Médio</item>
-        <item>@string/Ensino_Fundamental</item>
-        <item>@string/Ensino_Fundamental_Incompleto</item>
+        <item>@string/selecionar</item>
+        <item>@string/doutorado</item>
+        <item>@string/mestrado</item>
+        <item>@string/especializações_e_mbas</item>
+        <item>@string/superior</item>
+        <item>@string/tecnico</item>
+        <item>@string/ensino_medio</item>
+        <item>@string/ensino_fundamental</item>
+        <item>@string/ensino_fundamental_incompleto</item>
     </string-array>
 
     <string-array name="listaDeTiposDeRoupas">
-        <item>@string/Selecionar</item>
+        <item>@string/selecionar</item>
         <item>@string/chapeu</item>
         <item>@string/bone</item>
         <item>@string/camisa</item>
@@ -27,7 +27,7 @@
     </string-array>
 
     <string-array name="listaDeTecidos">
-        <item>@string/Selecionar</item>
+        <item>@string/selecionar</item>
         <item>@string/tricoline</item>
         <item>@string/malha</item>
         <item>@string/cetim</item>
@@ -41,7 +41,7 @@
     </string-array>
 
     <string-array name="listaDeCores">
-        <item>@string/Selecionar</item>
+        <item>@string/selecionar</item>
         <item>@string/azul</item>
         <item>@string/verde</item>
         <item>@string/branco</item>
@@ -55,7 +55,7 @@
     </string-array>
 
     <string-array name="listaDeTamanhosDeRoupa">
-        <item>@string/Selecionar</item>
+        <item>@string/selecionar</item>
         <item>@string/pp</item>
         <item>@string/p</item>
         <item>@string/m</item>

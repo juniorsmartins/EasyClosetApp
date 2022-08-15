@@ -24,7 +24,7 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 
 public final class ListarRoupasActivity extends AppCompatActivity {
 
-    private static final String TITULO_DE_TELA_LISTAR_ROUPAS = "Listar Roupas";
+    private final String tituloDeTelaListarRoupas = getString(R.string.titulo_listar_roupas);
 
     private final IRoupaRepository iRoupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
@@ -55,7 +55,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     }
 
         private void colocarTituloNaTela() {
-            setTitle(TITULO_DE_TELA_LISTAR_ROUPAS);
+            setTitle(tituloDeTelaListarRoupas);
         }
 
         private void mapearEnderecoDaLista() {
@@ -77,7 +77,11 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 roupaEntity = (RoupaEntity) parent.getItemAtPosition(position);
                 roupaAdapter = (RoupaAdapter) parent.getAdapter();
 
-                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" Selecionada"));
+                publicarMensagemNaTela(roupaEntity.getTipo()
+                        .concat(" ")
+                        .concat(roupaEntity.getCorPrincipal())
+                        .concat(" ")
+                        .concat(getString(R.string.selecionar)));
                 gerarLogSobreQualRoupaFoiEscolhida(position);
                 CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
             });
@@ -94,7 +98,11 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 viewSelecionada = view;
 
                 colorirBackgroundDoItemDaLista();
-                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" Selecionada"));
+                publicarMensagemNaTela(roupaEntity.getTipo()
+                        .concat(" ")
+                        .concat(roupaEntity.getCorPrincipal())
+                        .concat(" ")
+                        .concat(getString(R.string.selecionar)));
                 gerarLogSobreQualRoupaFoiEscolhida(position);
 
                 enderecoDaListaDeRoupas.setEnabled(false);
@@ -109,9 +117,14 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     }
 
             private void gerarLogSobreQualRoupaFoiEscolhida(int posicao) {
-                Log.i("Roupa:", " " +
-                        roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()) +
-                        " - na posição: " + posicao);
+                Log.i(getString(R.string.roupa), " "
+                        .concat(roupaEntity.getTipo())
+                        .concat(" ")
+                        .concat(roupaEntity.getCorPrincipal())
+                        .concat(" - ")
+                        .concat(getString(R.string.na_posicao))
+                        .concat(": ")
+                        .concat(String.valueOf(posicao)));
             }
 
             private void colorirBackgroundDoItemDaLista() {
@@ -151,7 +164,10 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                     return true;
                 case menuItemExcluirRoupas:
                     excluirRoupaDaListaDeRoupas();
-                    publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" Excluído!"));
+                    publicarMensagemNaTela(roupaEntity.getTipo()
+                            .concat(" ")
+                            .concat(roupaEntity.getCorPrincipal())
+                            .concat(getString(R.string.excluido)));
                     mostrarListaNaTelaComAdapterCustomizado();
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
@@ -190,14 +206,22 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
                 iRoupaRepository.salvarRoupa(roupaEntity);
-                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" ").concat("Salva"));
+                publicarMensagemNaTela(roupaEntity.getTipo()
+                        .concat(" ")
+                        .concat(roupaEntity.getCorPrincipal())
+                        .concat(" ")
+                        .concat(getString(R.string.salvo)));
             } else if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
                 excluirRoupaDaListaDeRoupas();
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
                 iRoupaRepository.atualizarRoupa(roupaEntity);
-                publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()).concat(" ").concat("Atualizada"));
+                publicarMensagemNaTela(roupaEntity.getTipo()
+                        .concat(" ")
+                        .concat(roupaEntity.getCorPrincipal())
+                        .concat(" ")
+                        .concat(getString(R.string.atualizado)));
             } else {
-                publicarMensagemNaTela("OnActivityResult - ERROR - Retorno não se enquadra em Salvar nem Atualizar.");
+                publicarMensagemNaTela(getString(R.string.erro_retorno_incompativel));
             }
 
             notificarAdapterSobreModificacaoNaListView();
@@ -222,23 +246,23 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case menuItemHome:
-                publicarMensagemNaTela("HOME");
+                publicarMensagemNaTela(getString(R.string.home));
                 startActivity(new Intent(ListarRoupasActivity.this, MainActivity.class));
                 return true;
             case menuItemAdicionarRoupas:
-                publicarMensagemNaTela("Adicionar Roupas");
+                publicarMensagemNaTela(getString(R.string.adicionar));
                 CadastrarRoupasActivity.cadastrarRoupaComRetorno(ListarRoupasActivity.this); // StartActivityForResult
                 return true;
             case menuItemInfoApp:
-                publicarMensagemNaTela("Sobre App");
+                publicarMensagemNaTela(getString(R.string.sobre));
                 startActivity(new Intent(ListarRoupasActivity.this, InfoAppActivity.class));
                 return true;
             case menuItemCadastrarRoupas:
-                publicarMensagemNaTela("Cadastrar Roupas");
+                publicarMensagemNaTela(getString(R.string.cadastrar));
                 startActivity(new Intent(ListarRoupasActivity.this, CadastrarRoupasActivity.class));
                 return true;
             case menuItemListarRoupas:
-                publicarMensagemNaTela("Listar Roupas");
+                publicarMensagemNaTela(getString(R.string.listar));
                 startActivity(new Intent(ListarRoupasActivity.this, ListarRoupasActivity.class));
                 return true;
             default:

@@ -19,7 +19,7 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 
 public final class CadastrarRoupasActivity extends AppCompatActivity {
 
-    private static final String TITULO_DE_TELA_CADASTRAR_ROUPAS = "Cadastrar Roupas";
+    private final String tituloDeTelaCadastrarRoupas = getString(R.string.titulo_cadastrar_roupas);
 
     private final RoupaRepository roupaRepository = new RoupaRepository();
     private RoupaEntity roupaEntity;
@@ -101,24 +101,34 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
                 private int verificarPosicaoDoTipoDeRoupa() {
                     switch(roupaEntity.getTipo()) {
+                        case "Hat":
                         case "Chapéu":
                             return 1;
+                        case "Cap":
                         case "Boné":
                             return 2;
+                        case "Shirt":
                         case "Camisa":
                             return 3;
+                        case "T-shirt":
                         case "Camiseta":
                             return 4;
+                        case "Pants":
                         case "Calça":
                             return 5;
+                        case "Shorts":
                         case "Bermuda":
                             return 6;
+                        case "Underwear":
                         case "Cueca":
                             return 7;
+                        case "Half":
                         case "Meia":
                             return 8;
+                        case "Shoe":
                         case "Sapato":
                             return 9;
+                        case "Sneakers":
                         case "Tênis":
                             return 10;
                         default:
@@ -130,22 +140,30 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     switch(roupaEntity.getTecido()) {
                         case "Tricoline":
                             return 1;
+                        case "Mesh":
                         case "Malha":
                             return 2;
+                        case "Satin":
                         case "Cetim":
                             return 3;
                         case "Canvas":
                             return 4;
+                        case "Cordoba":
                         case "Córdoba":
                             return 5;
+                        case "Microfiber":
                         case "Microfibra":
                             return 6;
+                        case "Cotton":
                         case "Algodão":
                             return 7;
+                        case "Wool":
                         case "Lã":
                             return 8;
+                        case "Silk":
                         case "Seda":
                             return 9;
+                        case "Linen":
                         case "Linho":
                             return 10;
                         default:
@@ -155,24 +173,34 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
 
                 private int verificarPosicaoDaCorPrincipalDaRoupa() {
                     switch(roupaEntity.getCorPrincipal()) {
+                        case "Blue":
                         case "Azul":
                             return 1;
+                        case "Green":
                         case "Verde":
                             return 2;
+                        case "White":
                         case "Branco":
                             return 3;
+                        case "Black":
                         case "Preto":
                             return 4;
+                        case "Yellow":
                         case "Amarelo":
                             return 5;
+                        case "Brown":
                         case "Marrom":
                             return 6;
+                        case "Orange":
                         case "Laranja":
                             return 7;
+                        case "Purple":
                         case "Roxo":
                             return 8;
+                        case "Pink":
                         case "Rosa":
                             return 9;
+                        case "Red":
                         case "Vermelho":
                             return 10;
                         default:
@@ -212,7 +240,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     }
 
         private void colocarTituloNaTela() {
-            setTitle(TITULO_DE_TELA_CADASTRAR_ROUPAS);
+            setTitle(tituloDeTelaCadastrarRoupas);
         }
 
         private void mapearEnderecosDosCampos() {
@@ -345,44 +373,37 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 }
             }
 
-                    private void alterarRoupa() {
-                        roupaEntity.setTipo(tipoDeRoupa);
-                        roupaEntity.setTecido(tecidoDeRoupa);
-                        roupaEntity.setCorPrincipal(corPrincipalDeRoupa);
-                        roupaEntity.setTamanho(tamanhoDeRoupa);
-                    }
-
-                    private void criarRoupa() {
-                        roupaEntity = new RoupaEntity(tipoDeRoupa, tecidoDeRoupa, corPrincipalDeRoupa, tamanhoDeRoupa);
-                    }
-
-                private void imprimirNomeNaTela() {
-                    Toast.makeText(CadastrarRoupasActivity.this,
-                            roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()),
-                            Toast.LENGTH_SHORT)
-                            .show();
+                private void alterarRoupa() {
+                    roupaEntity.setTipo(tipoDeRoupa);
+                    roupaEntity.setTecido(tecidoDeRoupa);
+                    roupaEntity.setCorPrincipal(corPrincipalDeRoupa);
+                    roupaEntity.setTamanho(tamanhoDeRoupa);
                 }
 
-                private void limparCamposDoFormularioDeCadastrarRoupas() {
-                    enderecoCadastrarTipoDeRoupa.setSelection(0);
-                    enderecoCadastrarTecidoDaRoupa.setSelection(0);
-                    enderecoCadastrarCorPrincipalDaRoupa.setSelection(0);
-                    enderecoCadastrarTamanhoDaRoupa.setSelection(0);
-                    roupaEntity = null;
-
-                    mostrarMensagemNaTela(getString(R.string.formulario_limpo));
+                private void criarRoupa() {
+                    roupaEntity = new RoupaEntity(tipoDeRoupa, tecidoDeRoupa, corPrincipalDeRoupa, tamanhoDeRoupa);
                 }
 
-                private void direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario() {
-                    enderecoCadastrarTipoDeRoupa.requestFocus();
-                }
+            private void imprimirNomeNaTela() {
+                Toast.makeText(CadastrarRoupasActivity.this,
+                        roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()),
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
 
-// OnBackPressed interfere no funcionamento do Botão UP - por isso foi desativado. Assim o botão Up retorna para Listar como pré-definido.
-//                @Override
-//                public void onBackPressed() {
-//                    setResult(Activity.RESULT_CANCELED);
-//                    finish();
-//                }
+            private void limparCamposDoFormularioDeCadastrarRoupas() {
+                enderecoCadastrarTipoDeRoupa.setSelection(0);
+                enderecoCadastrarTecidoDaRoupa.setSelection(0);
+                enderecoCadastrarCorPrincipalDaRoupa.setSelection(0);
+                enderecoCadastrarTamanhoDaRoupa.setSelection(0);
+                roupaEntity = null;
+
+                mostrarMensagemNaTela(getString(R.string.formulario_limpo));
+            }
+
+            private void direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario() {
+                enderecoCadastrarTipoDeRoupa.requestFocus();
+            }
 
 
     // ------------------------------ MENU DE OPÇÕES ------------------------------

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EasyCloset</string>
+    <string name="titulo_cadastrar_roupas">Cadastrar Roupas</string>
+    <string name="titulo_listar_roupas">Listar Roupas</string>
+    <string name="titulo_informacoes">Informações</string>
+
     <string name="campoNomeCadastroUsuario">Nome</string>
     <string name="campoSobrenomeCadastroUsuario">Sobrenome</string>
     <string name="campoCpfCadastroUsuario">CPF</string>
@@ -28,7 +32,9 @@
     <string name="app_descricao">EasyCloset - Aplicação para gerenciamento de vestuário.</string>
 
     <string name="roupas">Roupas</string>
+    <string name="roupa">Roupa</string>
     <string name="usuarios">Usuários</string>
+    <string name="usuario">Usuário</string>
 
     <string name="limpar">Limpar</string>
     <string name="voltar">Voltar</string>
@@ -42,6 +48,11 @@
     <string name="adicionar">Adicionar</string>
     <string name="sobre">Sobre</string>
 
+    <string name="na_posicao">na posição</string>
+    <string name="excluido">Excluído!</string>
+    <string name="salvo">Salvo</string>
+    <string name="atualizado">Atualizado</string>
+    <string name="erro_retorno_incompativel">ERRO - Retorno Incompatível!</string>
 
     <string name="instrucoes_entrega4">"Recado ao professor: \n
         Os requisitos da entrega 4 são cumpridos pelas activities e ou funcionalidades do model ROUPAS.
@@ -52,15 +63,15 @@
     <string name="sexo_masculino">Masculino</string>
     <string name="sexo_feminino">Feminino</string>
 
-    <string name="Selecionar">Selecionar</string>
-    <string name="Doutorado">Doutorado</string>
-    <string name="Mestrado">Mestrado</string>
-    <string name="Especializações_e_MBAs">Especializações e MBAs</string>
-    <string name="Superior">Superior</string>
-    <string name="Técnico">Técnico</string>
-    <string name="Ensino_Médio">Ensino Médio</string>
-    <string name="Ensino_Fundamental">Ensino Fundamental</string>
-    <string name="Ensino_Fundamental_Incompleto">Ensino Fundamental Incompleto</string>
+    <string name="selecionar">Selecionar</string>
+    <string name="doutorado">Doutorado</string>
+    <string name="mestrado">Mestrado</string>
+    <string name="especializações_e_mbas">Especializações e MBAs</string>
+    <string name="superior">Superior</string>
+    <string name="tecnico">Técnico</string>
+    <string name="ensino_medio">Ensino Médio</string>
+    <string name="ensino_fundamental">Ensino Fundamental</string>
+    <string name="ensino_fundamental_incompleto">Ensino Fundamental Incompleto</string>
 
     <string name="tipo_de_roupa">Tipo de roupa:</string>
     <string name="tecido">Tecido:</string>
