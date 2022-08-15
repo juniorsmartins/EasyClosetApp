@@ -49,23 +49,23 @@ public final class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case itemMainInfoApp:
-                mostrarMensagemNaTela("Sobre App");
+                mostrarMensagemNaTela(getString(R.string.sobre));
                 startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
                 return true;
             case itemMainCadastrarUsuario:
-                mostrarMensagemNaTela("Cadastrar Usuários");
+                mostrarMensagemNaTela(getString(R.string.cadastrar));
                 startActivity(new Intent(MainActivity.this, CadastrarUsuarioActivity.class));
                 return true;
             case itemMainListarUsuario:
-                mostrarMensagemNaTela("Listar Usuários");
+                mostrarMensagemNaTela(getString(R.string.listar));
                 startActivity(new Intent(MainActivity.this, ListarUsuariosActivity.class));
                 return true;
             case itemMainCadastrarRoupas:
-                mostrarMensagemNaTela("Cadastrar Roupas");
+                mostrarMensagemNaTela(getString(R.string.cadastrar));
                 startActivity(new Intent(MainActivity.this, CadastrarRoupasActivity.class));
                 return true;
             case itemMainListarRoupas:
-                mostrarMensagemNaTela("Listar Roupas");
+                mostrarMensagemNaTela(getString(R.string.listar));
                 startActivity(new Intent(MainActivity.this, ListarRoupasActivity.class));
                 return true;
             default:

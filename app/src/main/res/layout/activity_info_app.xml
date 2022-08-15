@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView_infoLogo"
+        android:id="@+id/image_view_info_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -17,17 +17,17 @@
         app:srcCompat="@drawable/logo_utfpr_menor" />
 
     <TextView
-        android:id="@+id/textView_infoAutor"
+        android:id="@+id/text_view_info_autor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/autor_junior_martins"
-        app:layout_constraintEnd_toEndOf="@+id/textView_infoCurso"
-        app:layout_constraintStart_toStartOf="@+id/textView_infoCurso"
-        app:layout_constraintTop_toBottomOf="@+id/textView_infoCurso" />
+        app:layout_constraintEnd_toEndOf="@+id/text_view_info_curso"
+        app:layout_constraintStart_toStartOf="@+id/text_view_info_curso"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_info_curso" />
 
     <TextView
-        android:id="@+id/textView_infoCurso"
+        android:id="@+id/text_view_info_curso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -35,39 +35,39 @@
         android:layout_marginEnd="32dp"
         android:text="@string/pos_java"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_infoLogo"
-        app:layout_constraintStart_toStartOf="@+id/imageView_infoLogo"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_infoLogo" />
+        app:layout_constraintEnd_toEndOf="@+id/image_view_info_logo"
+        app:layout_constraintStart_toStartOf="@+id/image_view_info_logo"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_info_logo" />
 
     <TextView
-        android:id="@+id/textView_infoCelular"
+        android:id="@+id/text_view_info_celular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/autor_celular"
-        app:layout_constraintEnd_toEndOf="@+id/textView_infoAutor"
-        app:layout_constraintStart_toStartOf="@+id/textView_infoAutor"
-        app:layout_constraintTop_toBottomOf="@+id/textView_infoAutor" />
+        app:layout_constraintEnd_toEndOf="@+id/text_view_info_autor"
+        app:layout_constraintStart_toStartOf="@+id/text_view_info_autor"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_info_autor" />
 
     <TextView
-        android:id="@+id/textView_infoEmail"
+        android:id="@+id/text_view_info_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/autor_email"
-        app:layout_constraintEnd_toEndOf="@+id/textView_infoCelular"
-        app:layout_constraintStart_toStartOf="@+id/textView_infoCelular"
-        app:layout_constraintTop_toBottomOf="@+id/textView_infoCelular" />
+        app:layout_constraintEnd_toEndOf="@+id/text_view_info_celular"
+        app:layout_constraintStart_toStartOf="@+id/text_view_info_celular"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_info_celular" />
 
     <TextView
-        android:id="@+id/textView_infoDescricao"
+        android:id="@+id/text_view_info_descricao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/app_descricao"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/textView_infoEmail"
-        app:layout_constraintStart_toStartOf="@+id/textView_infoEmail"
-        app:layout_constraintTop_toBottomOf="@+id/textView_infoEmail" />
+        app:layout_constraintEnd_toEndOf="@+id/text_view_info_email"
+        app:layout_constraintStart_toStartOf="@+id/text_view_info_email"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_info_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

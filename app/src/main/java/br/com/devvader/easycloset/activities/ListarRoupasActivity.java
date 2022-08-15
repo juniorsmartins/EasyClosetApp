@@ -24,7 +24,7 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 
 public final class ListarRoupasActivity extends AppCompatActivity {
 
-    private final String tituloDeTelaListarRoupas = getString(R.string.titulo_listar_roupas);
+    private static final String tituloDeTelaListarRoupas = "EasyCloset";
 
     private final IRoupaRepository iRoupaRepository = new RoupaRepository();
     private ListView enderecoDaListaDeRoupas;
@@ -167,6 +167,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                     publicarMensagemNaTela(roupaEntity.getTipo()
                             .concat(" ")
                             .concat(roupaEntity.getCorPrincipal())
+                            .concat(" ")
                             .concat(getString(R.string.excluido)));
                     mostrarListaNaTelaComAdapterCustomizado();
                     mode.finish(); // Ação escolhida, então feche o CAB

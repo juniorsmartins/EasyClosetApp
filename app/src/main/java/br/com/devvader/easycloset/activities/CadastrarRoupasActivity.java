@@ -19,7 +19,7 @@ import br.com.devvader.easycloset.recursos.RoupaRepository;
 
 public final class CadastrarRoupasActivity extends AppCompatActivity {
 
-    private final String tituloDeTelaCadastrarRoupas = getString(R.string.titulo_cadastrar_roupas);
+    private static final String tituloDeTelaCadastrarRoupas = "EasyCloset";
 
     private final RoupaRepository roupaRepository = new RoupaRepository();
     private RoupaEntity roupaEntity;
