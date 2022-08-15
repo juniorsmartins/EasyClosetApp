@@ -8,7 +8,26 @@
         android:title="@string/sobre"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/item_main_submenu1"
+        android:id="@+id/menu_item_submenu1_main"
+        android:title="@string/preferencias" >
+        <menu >
+            <group
+                android:id="@+id/menu_group1_submenu1_main"
+                android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/menu_preferencias_tema_padrao"
+                    android:title="@string/tema_padrao" />
+                <item
+                    android:id="@+id/menu_preferencias_tema_escuro"
+                    android:title="@string/tema_dark" />
+                <item
+                    android:id="@+id/menu_preferencias_tema_latino"
+                    android:title="@string/tema_latino" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/item_main_submenu2_main"
         android:title="@string/usuarios">
         <menu>
             <item
@@ -20,7 +39,7 @@
         </menu>
     </item>
     <item
-        android:id="@+id/menu_item_submenu2"
+        android:id="@+id/menu_item_submenu3_main"
         android:title="@string/roupas" >
         <menu >
             <item

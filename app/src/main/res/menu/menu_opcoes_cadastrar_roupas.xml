@@ -22,7 +22,7 @@
         android:icon="@android:drawable/ic_dialog_info"
         android:title="@string/sobre" />
     <item
-        android:id="@+id/menu_item_submenu2"
+        android:id="@+id/menu_item_submenu3_main"
         android:title="@string/roupas" >
         <menu >
             <item

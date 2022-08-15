@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.List;
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
@@ -27,6 +29,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     private static final String tituloDeTelaListarRoupas = "EasyCloset";
 
     private final IRoupaRepository iRoupaRepository = new RoupaRepository();
+
     private ListView enderecoDaListaDeRoupas;
     private RoupaEntity roupaEntity;
     private RoupaAdapter roupaAdapter;
@@ -250,22 +253,27 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 publicarMensagemNaTela(getString(R.string.home));
                 startActivity(new Intent(ListarRoupasActivity.this, MainActivity.class));
                 return true;
+
             case menuItemAdicionarRoupas:
                 publicarMensagemNaTela(getString(R.string.adicionar));
                 CadastrarRoupasActivity.cadastrarRoupaComRetorno(ListarRoupasActivity.this); // StartActivityForResult
                 return true;
+
             case menuItemInfoApp:
                 publicarMensagemNaTela(getString(R.string.sobre));
                 startActivity(new Intent(ListarRoupasActivity.this, InfoAppActivity.class));
                 return true;
+
             case menuItemCadastrarRoupas:
                 publicarMensagemNaTela(getString(R.string.cadastrar));
                 startActivity(new Intent(ListarRoupasActivity.this, CadastrarRoupasActivity.class));
                 return true;
+
             case menuItemListarRoupas:
                 publicarMensagemNaTela(getString(R.string.listar));
                 startActivity(new Intent(ListarRoupasActivity.this, ListarRoupasActivity.class));
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
