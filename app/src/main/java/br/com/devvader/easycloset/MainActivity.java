@@ -34,20 +34,19 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        capturarEnderecosParaManipularPreferencias();
-        verificarExistenciaDePreferenciasConfiguradas();
+        mapearEnderecosParaManipularPreferencias();
+        verificarPreferenciasPreConfiguradas();
         ativarPreferenciasConfiguradas();
     }
 
-        private void capturarEnderecosParaManipularPreferencias() {
+        private void mapearEnderecosParaManipularPreferencias() {
             preferenciasConfig = PreferenceManager.getDefaultSharedPreferences(this);
+            editorDePreferencias = preferenciasConfig.edit();
             constraintLayoutMain = findViewById(R.id.constraint_layout_main);
             textViewRecadoProfessor = findViewById(R.id.text_view_main_recado_professor);
         }
 
-        private void verificarExistenciaDePreferenciasConfiguradas() {
-            editorDePreferencias = preferenciasConfig.edit();
-
+        private void verificarPreferenciasPreConfiguradas() {
             if(preferenciasConfig.getString("temaPadrao", null) == null)
                 editorDePreferencias.putString("temaPadrao", "desativado");
             if(preferenciasConfig.getString("temaEscuro", null) == null)
