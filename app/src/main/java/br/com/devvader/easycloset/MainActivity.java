@@ -1,7 +1,10 @@
 package br.com.devvader.easycloset;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -20,6 +23,8 @@ import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
 
 public final class MainActivity extends AppCompatActivity {
 
+    private SharedPreferences preferenciasConfig;
+    private SharedPreferences.Editor editorDePreferencias;
     private ConstraintLayout constraintLayoutMain;
     private TextView textViewRecadoProfessor;
 
@@ -29,13 +34,41 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        capturarEnderecosDeLayoutsParaManipularPreferencias();
+        capturarEnderecosParaManipularPreferencias();
+        verificarExistenciaDePreferenciasConfiguradas();
+        ativarPreferenciasConfiguradas();
     }
 
-        private void capturarEnderecosDeLayoutsParaManipularPreferencias() {
+        private void capturarEnderecosParaManipularPreferencias() {
+            preferenciasConfig = PreferenceManager.getDefaultSharedPreferences(this);
             constraintLayoutMain = findViewById(R.id.constraint_layout_main);
             textViewRecadoProfessor = findViewById(R.id.text_view_main_recado_professor);
         }
+
+        private void verificarExistenciaDePreferenciasConfiguradas() {
+            editorDePreferencias = preferenciasConfig.edit();
+
+            if(preferenciasConfig.getString("temaPadrao", null) == null)
+                editorDePreferencias.putString("temaPadrao", "desativado");
+            if(preferenciasConfig.getString("temaEscuro", null) == null)
+                editorDePreferencias.putString("temaEscuro", "desativado");
+            if(preferenciasConfig.getString("temaLatino", null) == null)
+                editorDePreferencias.putString("temaLatino", "desativado");
+            editorDePreferencias.apply();
+        }
+
+        private void ativarPreferenciasConfiguradas() {
+            if(preferenciasConfig.getString("temaPadrao", null).equalsIgnoreCase("ativado")) {
+                ativarTemaPadrao();
+            }
+            if(preferenciasConfig.getString("temaEscuro", null).equalsIgnoreCase("ativado")) {
+                ativarTemaEscuro();
+            }
+            if(preferenciasConfig.getString("temaLatino", null).equalsIgnoreCase("ativado")) {
+                ativarTemaLatino();
+            }
+        }
+
 
     // ------------------------------ OnResume ------------------------------
     @Override
@@ -90,23 +123,17 @@ public final class MainActivity extends AppCompatActivity {
 
             case itemMainPreferenciasTemaPadrao:
                 item.setChecked(true);
-                modificarCorDoFundoDaTela(R.color.color_white);
-                modificarCorDoTexto(R.color.color_black);
-
+                ativarTemaPadrao();
                 return true;
 
             case itemMainPreferenciasTemaEscuro:
                 item.setChecked(true);
-                modificarCorDoFundoDaTela(R.color.color_black);
-                modificarCorDoTexto(R.color.color_white);
-
+                ativarTemaEscuro();
                 return true;
 
             case itemMainPreferenciasTemaLatino:
                 item.setChecked(true);
-                modificarCorDoFundoDaTela(R.color.color_green_dark);
-                modificarCorDoTexto(R.color.color_yellow_light);
-
+                ativarTemaLatino();
                 return true;
 
             default:
@@ -114,15 +141,53 @@ public final class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarMensagemNaTela(String texto) {
-        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
-    }
+        private void mostrarMensagemNaTela(String texto) {
+            Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
+        }
 
-    private void modificarCorDoFundoDaTela(int cor) {
-        constraintLayoutMain.setBackgroundResource(cor);
-    }
+        private void ativarTemaPadrao() {
+            editorDePreferencias.putString("temaPadrao", "ativado");
+            editorDePreferencias.putString("temaEscuro", "desativado");
+            editorDePreferencias.putString("temaLatino", "desativado");
+            editorDePreferencias.apply();
 
-    private void modificarCorDoTexto(int cor) {
-        textViewRecadoProfessor.setTextColor(getResources().getColor(cor));
-    }
+            modificarCorDeFundoDaTela(R.color.color_white);
+            modificarCorDoTexto(R.color.color_black);
+            modificarCorDoBarraDeAcao(R.color.color_purple_700);
+        }
+
+        private void ativarTemaEscuro() {
+            editorDePreferencias.putString("temaPadrao", "desativado");
+            editorDePreferencias.putString("temaEscuro", "ativado");
+            editorDePreferencias.putString("temaLatino", "desativado");
+            editorDePreferencias.apply();
+
+            modificarCorDeFundoDaTela(R.color.color_black);
+            modificarCorDoTexto(R.color.color_white);
+            modificarCorDoBarraDeAcao(R.color.color_black);
+        }
+
+        private void ativarTemaLatino() {
+            editorDePreferencias.putString("temaPadrao", "desativado");
+            editorDePreferencias.putString("temaEscuro", "desativado");
+            editorDePreferencias.putString("temaLatino", "ativado");
+            editorDePreferencias.apply();
+
+            modificarCorDeFundoDaTela(R.color.color_green_dark);
+            modificarCorDoTexto(R.color.color_yellow_light);
+            modificarCorDoBarraDeAcao(R.color.color_blue_dark);
+        }
+
+            private void modificarCorDeFundoDaTela(int cor) {
+                constraintLayoutMain.setBackgroundResource(cor);
+            }
+
+            private void modificarCorDoTexto(int cor) {
+                textViewRecadoProfessor.setTextColor(getResources().getColor(cor));
+                textViewRecadoProfessor.setHintTextColor(getResources().getColor(cor));
+            }
+
+            private void modificarCorDoBarraDeAcao(int cor) {
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(cor)));
+            }
 }
