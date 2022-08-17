@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView_cadastrar_tipo_roupa"
+        android:id="@+id/text_view_cadastrar_tipo_roupa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -29,13 +29,13 @@
         android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrar_tipo_roupa"
-        app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tipo_roupa"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tipo_roupa"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_cadastrar_tipo_roupa"
+        app:layout_constraintStart_toStartOf="@+id/text_view_cadastrar_tipo_roupa"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_cadastrar_tipo_roupa"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
-        android:id="@+id/textView_cadastrar_tecido"
+        android:id="@+id/text_view_cadastrar_tecido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -55,12 +55,12 @@
         android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrar_tecido"
-        app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_tecido"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_tecido" />
+        app:layout_constraintEnd_toEndOf="@+id/text_view_cadastrar_tecido"
+        app:layout_constraintStart_toStartOf="@+id/text_view_cadastrar_tecido"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_cadastrar_tecido" />
 
     <TextView
-        android:id="@+id/textView_cadastrar_corPrincipal"
+        android:id="@+id/text_view_cadastrar_corPrincipal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -80,12 +80,12 @@
         android:minHeight="48dp"
         android:spinnerMode="dialog"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrar_corPrincipal"
-        app:layout_constraintStart_toStartOf="@+id/textView_cadastrar_corPrincipal"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrar_corPrincipal" />
+        app:layout_constraintEnd_toEndOf="@+id/text_view_cadastrar_corPrincipal"
+        app:layout_constraintStart_toStartOf="@+id/text_view_cadastrar_corPrincipal"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_cadastrar_corPrincipal" />
 
     <TextView
-        android:id="@+id/textView_cadastrarTamanho"
+        android:id="@+id/text_view_cadastrarTamanho"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -104,8 +104,8 @@
         android:entries="@array/listaDeTamanhosDeRoupa"
         android:minHeight="48dp"
         android:spinnerMode="dialog"
-        app:layout_constraintEnd_toEndOf="@+id/textView_cadastrarTamanho"
-        app:layout_constraintStart_toStartOf="@+id/textView_cadastrarTamanho"
-        app:layout_constraintTop_toBottomOf="@+id/textView_cadastrarTamanho" />
+        app:layout_constraintEnd_toEndOf="@+id/text_view_cadastrarTamanho"
+        app:layout_constraintStart_toStartOf="@+id/text_view_cadastrarTamanho"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_cadastrarTamanho" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

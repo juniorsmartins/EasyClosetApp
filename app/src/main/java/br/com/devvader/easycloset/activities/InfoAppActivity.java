@@ -19,15 +19,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
+import br.com.devvader.easycloset.domain.utils.Utils;
 
 public final class InfoAppActivity extends AppCompatActivity {
 
     private static final String tituloDeTelaInfoApp = "EasyCloset";
 
+    // Preferências Compartilhadas
     private SharedPreferences preferenciasConfig;
-    private SharedPreferences.Editor editorDePreferencias;
-    private ConstraintLayout constraintLayoutMain;
-
+    private ConstraintLayout constraintLayout;
     private TextView textoNomeDoCurso;
     private TextView textoNomeDoAutor;
     private TextView textoTelefoneDoAutor;
@@ -54,8 +54,7 @@ public final class InfoAppActivity extends AppCompatActivity {
 
         private void mapearEnderecosParaManipularPreferencias() {
             preferenciasConfig = PreferenceManager.getDefaultSharedPreferences(this);
-            editorDePreferencias = preferenciasConfig.edit();
-            constraintLayoutMain = findViewById(R.id.constraint_layout_info);
+            constraintLayout = findViewById(R.id.constraint_layout_info);
 
             textoNomeDoCurso = findViewById(R.id.text_view_info_curso);
             textoNomeDoAutor = findViewById(R.id.text_view_info_autor);
@@ -65,14 +64,12 @@ public final class InfoAppActivity extends AppCompatActivity {
         }
 
         private void verificarPreferenciasPreConfiguradas() {
-            if(preferenciasConfig.getString("temaPadrao", null).equalsIgnoreCase("ativado")) {
-                ativarTemaPadrao();
-            }
-            if(preferenciasConfig.getString("temaEscuro", null).equalsIgnoreCase("ativado")) {
+            if(preferenciasConfig.getString(Utils.TEMA_ESCURO, null).equalsIgnoreCase(Utils.ATIVADO)) {
                 ativarTemaEscuro();
-            }
-            if(preferenciasConfig.getString("temaLatino", null).equalsIgnoreCase("ativado")) {
+            } else if(preferenciasConfig.getString(Utils.TEMA_LATINO, null).equalsIgnoreCase(Utils.ATIVADO)) {
                 ativarTemaLatino();
+            } else {
+                ativarTemaPadrao();
             }
         }
 
@@ -95,7 +92,7 @@ public final class InfoAppActivity extends AppCompatActivity {
             }
 
                 private void modificarCorDeFundoDaTela(int cor) {
-                    constraintLayoutMain.setBackgroundResource(cor);
+                    constraintLayout.setBackgroundResource(cor);
                 }
 
                 private void modificarCorDoTexto(int cor) {

@@ -2,14 +2,19 @@ package br.com.devvader.easycloset.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,12 +26,13 @@ import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
 import br.com.devvader.easycloset.domain.adapters.RoupaAdapter;
+import br.com.devvader.easycloset.domain.utils.Utils;
 import br.com.devvader.easycloset.recursos.IRoupaRepository;
 import br.com.devvader.easycloset.recursos.RoupaRepository;
 
 public final class ListarRoupasActivity extends AppCompatActivity {
 
-    private static final String tituloDeTelaListarRoupas = "EasyCloset";
+    private static final String TITULO_TELA_LISTAR_ROUPAS = "EasyCloset";
 
     private final IRoupaRepository iRoupaRepository = new RoupaRepository();
 
@@ -36,12 +42,58 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     private ActionMode actionMode;
     private View viewSelecionada;
 
+    // Preferências Compartilhadas
+    private SharedPreferences preferenciasConfig;
+    private ConstraintLayout constraintLayout;
+
+
     // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_roupas);
+
+        mapearEnderecosParaManipularPreferencias();
+        verificarPreferenciasPreConfiguradas();
     }
+
+        private void mapearEnderecosParaManipularPreferencias() {
+            preferenciasConfig = PreferenceManager.getDefaultSharedPreferences(this);
+            constraintLayout = findViewById(R.id.constraint_layout_listar_roupas);
+        }
+
+        private void verificarPreferenciasPreConfiguradas() {
+            if(preferenciasConfig.getString(Utils.TEMA_ESCURO, null).equalsIgnoreCase(Utils.ATIVADO)) {
+                ativarTemaEscuro();
+            } else if(preferenciasConfig.getString(Utils.TEMA_LATINO, null).equalsIgnoreCase(Utils.ATIVADO)) {
+                ativarTemaLatino();
+            } else {
+                ativarTemaPadrao();
+            }
+        }
+
+            private void ativarTemaPadrao() {
+                modificarCorDeFundoDaTela(R.color.color_white);
+                modificarCorDoBarraDeAcao(R.color.color_purple_700);
+            }
+
+            private void ativarTemaEscuro() {
+                modificarCorDeFundoDaTela(R.color.color_black);
+                modificarCorDoBarraDeAcao(R.color.color_black);
+            }
+
+            private void ativarTemaLatino() {
+                modificarCorDeFundoDaTela(R.color.color_green_dark);
+                modificarCorDoBarraDeAcao(R.color.color_blue_dark);
+            }
+
+                private void modificarCorDeFundoDaTela(int cor) {
+                    constraintLayout.setBackgroundResource(cor);
+                }
+
+                private void modificarCorDoBarraDeAcao(int cor) {
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(cor)));
+                }
 
     // ------------------------------ OnResume ------------------------------
     @Override
@@ -51,14 +103,13 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
-
         enderecoDaListaDeRoupas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ativarCliqueRapidoNosItensDalistaParaEditar();
         ativarCliqueDemoradoNosItensDaListaParaAtivarMenuDeAcaoContextual();
     }
 
         private void colocarTituloNaTela() {
-            setTitle(tituloDeTelaListarRoupas);
+            setTitle(TITULO_TELA_LISTAR_ROUPAS);
         }
 
         private void mapearEnderecoDaLista() {
@@ -116,8 +167,8 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
 
             private void publicarMensagemNaTela(String mensagem) {
-        Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
-    }
+                Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
+            }
 
             private void gerarLogSobreQualRoupaFoiEscolhida(int posicao) {
                 Log.i(getString(R.string.roupa), " "
@@ -131,7 +182,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             }
 
             private void colorirBackgroundDoItemDaLista() {
-                viewSelecionada.setBackgroundColor(Color.YELLOW);
+                viewSelecionada.setBackgroundColor(Color.RED);
             }
 
 

@@ -20,6 +20,7 @@ import br.com.devvader.easycloset.activities.CadastrarUsuarioActivity;
 import br.com.devvader.easycloset.activities.InfoAppActivity;
 import br.com.devvader.easycloset.activities.ListarRoupasActivity;
 import br.com.devvader.easycloset.activities.ListarUsuariosActivity;
+import br.com.devvader.easycloset.domain.utils.Utils;
 
 public final class MainActivity extends AppCompatActivity {
 
@@ -145,9 +146,9 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         private void ativarTemaPadrao() {
-            editorDePreferencias.putString("temaPadrao", "ativado");
-            editorDePreferencias.putString("temaEscuro", "desativado");
-            editorDePreferencias.putString("temaLatino", "desativado");
+            editorDePreferencias.putString(Utils.TEMA_PADRAO, Utils.ATIVADO);
+            editorDePreferencias.putString(Utils.TEMA_ESCURO, Utils.DESATIVADO);
+            editorDePreferencias.putString(Utils.TEMA_LATINO, Utils.DESATIVADO);
             editorDePreferencias.apply();
 
             modificarCorDeFundoDaTela(R.color.color_white);
@@ -156,9 +157,9 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         private void ativarTemaEscuro() {
-            editorDePreferencias.putString("temaPadrao", "desativado");
-            editorDePreferencias.putString("temaEscuro", "ativado");
-            editorDePreferencias.putString("temaLatino", "desativado");
+            editorDePreferencias.putString(Utils.TEMA_PADRAO, Utils.DESATIVADO);
+            editorDePreferencias.putString(Utils.TEMA_ESCURO, Utils.ATIVADO);
+            editorDePreferencias.putString(Utils.TEMA_LATINO, Utils.DESATIVADO);
             editorDePreferencias.apply();
 
             modificarCorDeFundoDaTela(R.color.color_black);
@@ -167,9 +168,9 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         private void ativarTemaLatino() {
-            editorDePreferencias.putString("temaPadrao", "desativado");
-            editorDePreferencias.putString("temaEscuro", "desativado");
-            editorDePreferencias.putString("temaLatino", "ativado");
+            editorDePreferencias.putString(Utils.TEMA_PADRAO, Utils.DESATIVADO);
+            editorDePreferencias.putString(Utils.TEMA_ESCURO, Utils.DESATIVADO);
+            editorDePreferencias.putString(Utils.TEMA_LATINO, Utils.ATIVADO);
             editorDePreferencias.apply();
 
             modificarCorDeFundoDaTela(R.color.color_green_dark);

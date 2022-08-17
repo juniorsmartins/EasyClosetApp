@@ -2,19 +2,26 @@ package br.com.devvader.easycloset.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
+import br.com.devvader.easycloset.domain.utils.Utils;
 import br.com.devvader.easycloset.recursos.RoupaRepository;
 
 public final class CadastrarRoupasActivity extends AppCompatActivity {
@@ -38,6 +45,10 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private Intent capturarIntentDeListar;
     private int tipoDeCaminho;
 
+    // Preferências Compartilhadas
+    private SharedPreferences preferenciasConfig;
+    private ConstraintLayout constraintLayout;
+
     // Padrão estático para salvar roupas - com retorno de resultado
     public static final String MODO = "MODO";
     public static final int SALVAR = 1;
@@ -57,15 +68,78 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         activity.startActivityForResult(intent, ATUALIZAR);
     }
 
+
     // ------------------------------ OnCreate ------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_roupas);
 
+        mapearEnderecosParaManipularPreferencias();
+        verificarPreferenciasPreConfiguradas();
+
         criarBotaoUpNaBarraDoApp();
         caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno();
     }
+
+        private void mapearEnderecosParaManipularPreferencias() {
+            preferenciasConfig = PreferenceManager.getDefaultSharedPreferences(this);
+            constraintLayout = findViewById(R.id.constraint_layout_cadastrar_roupas);
+        }
+
+        private void verificarPreferenciasPreConfiguradas() {
+            if(preferenciasConfig.getString(Utils.TEMA_ESCURO, null).equalsIgnoreCase(Utils.ATIVADO)) {
+                ativarTemaEscuro();
+            } else if(preferenciasConfig.getString(Utils.TEMA_LATINO, null).equalsIgnoreCase(Utils.ATIVADO)) {
+                ativarTemaLatino();
+            } else {
+                ativarTemaPadrao();
+            }
+        }
+
+            private void ativarTemaPadrao() {
+                modificarCorDeFundoDaTela(R.color.color_white);
+                modificarCorDoTexto(R.color.color_black);
+                modificarCorDoBarraDeAcao(R.color.color_purple_700);
+                modificarCoresDoSpinner(R.color.color_black);
+            }
+
+            private void ativarTemaEscuro() {
+                modificarCorDeFundoDaTela(R.color.color_black);
+                modificarCorDoTexto(R.color.color_white);
+                modificarCorDoBarraDeAcao(R.color.color_black);
+                modificarCoresDoSpinner(R.color.color_white);
+            }
+
+            private void ativarTemaLatino() {
+                modificarCorDeFundoDaTela(R.color.color_green_dark);
+                modificarCorDoTexto(R.color.color_yellow_light);
+                modificarCorDoBarraDeAcao(R.color.color_blue_dark);
+                modificarCoresDoSpinner(R.color.color_yellow_light);
+            }
+
+                private void modificarCorDeFundoDaTela(int cor) {
+                    constraintLayout.setBackgroundResource(cor);
+                }
+
+                private void modificarCorDoTexto(int cor) {
+                    TextView tipoDeTecido = findViewById(R.id.text_view_cadastrar_tipo_roupa);
+                    tipoDeTecido.setTextColor(getResources().getColor(cor));
+                    TextView tecido = findViewById(R.id.text_view_cadastrar_tecido);
+                    tecido.setTextColor(getResources().getColor(cor));
+                    TextView corPrincipal = findViewById(R.id.text_view_cadastrar_corPrincipal);
+                    corPrincipal.setTextColor(getResources().getColor(cor));
+                    TextView tamanho = findViewById(R.id.text_view_cadastrarTamanho);
+                    tamanho.setTextColor(getResources().getColor(cor));
+                }
+
+                private void modificarCorDoBarraDeAcao(int cor) {
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(cor)));
+                }
+
+                private void modificarCoresDoSpinner(int cor) {
+
+                }
 
         private void criarBotaoUpNaBarraDoApp() {
             ActionBar barraDeAcao = getSupportActionBar();
@@ -228,6 +302,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                             return 0;
                     }
                 }
+
 
     // ------------------------------ OnResume ------------------------------
     @Override
