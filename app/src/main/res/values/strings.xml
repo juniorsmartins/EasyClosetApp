@@ -54,9 +54,8 @@
     <string name="erro_retorno_incompativel">ERROR - Incompatible Return!</string>
 
     <string name="instrucoes_entrega4">"Message to the teacher: \n
-        Os requisitos da entrega 4 são cumpridos pelas activities e ou funcionalidades do model ROUPAS.
-
-        O model USUARIOS está no padrão de entregas anteriores."</string>
+        - Activity 5 delivery requirements are met by the MAIN, INFO and CLOTHING activities; \n
+        - Discard USER activities, as they are in the pattern of previous activities."</string>
 
 
     <string name="sexo_masculino">Masculine</string>

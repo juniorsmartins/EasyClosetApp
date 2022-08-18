@@ -60,9 +60,8 @@
     <string name="erro_retorno_incompativel">ERRO - Retorno Incompatível!</string>
 
     <string name="instrucoes_entrega4">"Recado ao professor: \n
-        Os requisitos da entrega 4 são cumpridos pelas activities e ou funcionalidades do model ROUPAS.
-
-        O model USUARIOS está no padrão de entregas anteriores."</string>
+        - Os requisitos de entrega da atividade 5 são cumpridos pelas activitys de MAIN, INFO e ROUPAS; \n
+        - Descartar as activitys de USUARIOS, pois estão no padrão de atividades anteriores."</string>
 
 
     <string name="sexo_masculino">Masculino</string>

@@ -101,21 +101,21 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 modificarCorDeFundoDaTela(R.color.color_white);
                 modificarCorDoTexto(R.color.color_black);
                 modificarCorDoBarraDeAcao(R.color.color_purple_700);
-                modificarCoresDoSpinner(R.color.color_black);
+                modificarCorDoSpinner(R.color.color_steel_blue);
             }
 
             private void ativarTemaEscuro() {
                 modificarCorDeFundoDaTela(R.color.color_black);
                 modificarCorDoTexto(R.color.color_white);
                 modificarCorDoBarraDeAcao(R.color.color_black);
-                modificarCoresDoSpinner(R.color.color_white);
+                modificarCorDoSpinner(R.color.color_white);
             }
 
             private void ativarTemaLatino() {
                 modificarCorDeFundoDaTela(R.color.color_green_dark);
                 modificarCorDoTexto(R.color.color_yellow_light);
                 modificarCorDoBarraDeAcao(R.color.color_blue_dark);
-                modificarCoresDoSpinner(R.color.color_yellow_light);
+                modificarCorDoSpinner(R.color.color_spring_green);
             }
 
                 private void modificarCorDeFundoDaTela(int cor) {
@@ -125,10 +125,13 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 private void modificarCorDoTexto(int cor) {
                     TextView tipoDeTecido = findViewById(R.id.text_view_cadastrar_tipo_roupa);
                     tipoDeTecido.setTextColor(getResources().getColor(cor));
+
                     TextView tecido = findViewById(R.id.text_view_cadastrar_tecido);
                     tecido.setTextColor(getResources().getColor(cor));
+
                     TextView corPrincipal = findViewById(R.id.text_view_cadastrar_corPrincipal);
                     corPrincipal.setTextColor(getResources().getColor(cor));
+
                     TextView tamanho = findViewById(R.id.text_view_cadastrarTamanho);
                     tamanho.setTextColor(getResources().getColor(cor));
                 }
@@ -137,8 +140,18 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(cor)));
                 }
 
-                private void modificarCoresDoSpinner(int cor) {
+                private void modificarCorDoSpinner(int cor) {
+                    Spinner spinnerTipoDeTecido = findViewById(R.id.spinner_cadastrar_tipo_de_roupa);
+                    spinnerTipoDeTecido.setBackgroundColor(getResources().getColor(cor));
 
+                    Spinner spinnerTecido = findViewById(R.id.spinner_cadastrar_tecido_de_roupa);
+                    spinnerTecido.setBackgroundColor(getResources().getColor(cor));
+
+                    Spinner spinnerCorPrincipal = findViewById(R.id.spinner_cadastrar_cor_principal_de_roupa);
+                    spinnerCorPrincipal.setBackgroundColor(getResources().getColor(cor));
+
+                    Spinner spinnerTamanho = findViewById(R.id.spinner_cadastrar_tamanho_de_roupa);
+                    spinnerTamanho.setBackgroundColor(getResources().getColor(cor));
                 }
 
         private void criarBotaoUpNaBarraDoApp() {
