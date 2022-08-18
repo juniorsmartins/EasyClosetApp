@@ -12,15 +12,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import java.util.List;
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
@@ -95,6 +92,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                     getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(cor)));
                 }
 
+
     // ------------------------------ OnResume ------------------------------
     @Override
     protected void onResume() {
@@ -103,7 +101,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
-        enderecoDaListaDeRoupas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        limitarSelecaoDeItensNalista();
         ativarCliqueRapidoNosItensDalistaParaEditar();
         ativarCliqueDemoradoNosItensDaListaParaAtivarMenuDeAcaoContextual();
     }
@@ -125,6 +123,10 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 return iRoupaRepository.listar();
             }
 
+        private void limitarSelecaoDeItensNalista() {
+            enderecoDaListaDeRoupas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        }
+
         private void ativarCliqueRapidoNosItensDalistaParaEditar() {
             enderecoDaListaDeRoupas.setOnItemClickListener((parent, view, position, id) -> {
 
@@ -136,7 +138,9 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                         .concat(roupaEntity.getCorPrincipal())
                         .concat(" ")
                         .concat(getString(R.string.selecionar)));
-                gerarLogSobreQualRoupaFoiEscolhida(position);
+
+                gerarLogSobreQualItemFoiSelecionadoNaLista(position);
+
                 CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
             });
         }
@@ -157,7 +161,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                         .concat(roupaEntity.getCorPrincipal())
                         .concat(" ")
                         .concat(getString(R.string.selecionar)));
-                gerarLogSobreQualRoupaFoiEscolhida(position);
+                gerarLogSobreQualItemFoiSelecionadoNaLista(position);
 
                 enderecoDaListaDeRoupas.setEnabled(false);
                 actionMode = startSupportActionMode(actionModeCallback);
@@ -170,7 +174,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
             }
 
-            private void gerarLogSobreQualRoupaFoiEscolhida(int posicao) {
+            private void gerarLogSobreQualItemFoiSelecionadoNaLista(int posicao) {
                 Log.i(getString(R.string.roupa), " "
                         .concat(roupaEntity.getTipo())
                         .concat(" ")

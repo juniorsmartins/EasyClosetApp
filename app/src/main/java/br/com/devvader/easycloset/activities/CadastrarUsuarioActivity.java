@@ -52,20 +52,20 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     // Padrão estático para salvar roupas - com retorno de resultado
     public static final String MODO = "MODO";
     public static final int SALVAR = 1;
-    public static void cadastrarUsuarioComRetorno(AppCompatActivity activity) {
-        Intent intent = new Intent(activity, CadastrarUsuarioActivity.class);
+    public static void cadastrarUsuarioComRetorno(AppCompatActivity activityOrigem) {
+        Intent intent = new Intent(activityOrigem, CadastrarUsuarioActivity.class);
         intent.putExtra(MODO, SALVAR);
-        activity.startActivityForResult(intent, SALVAR);
+        activityOrigem.startActivityForResult(intent, SALVAR);
     }
 
     // Padrão estático para atualizar roupas - com retorno de resultado
     public static final String USUARIO = "USUARIO";
     public static final int ATUALIZAR = 2;
-    public static void atualizarUsuarioComRetorno(AppCompatActivity activity, UsuarioEntity usuario) {
-        Intent intent = new Intent(activity, CadastrarUsuarioActivity.class);
+    public static void atualizarUsuarioComRetorno(AppCompatActivity activityOrigem, UsuarioEntity usuario) {
+        Intent intent = new Intent(activityOrigem, CadastrarUsuarioActivity.class);
         intent.putExtra(MODO, ATUALIZAR);
         intent.putExtra(USUARIO, usuario);
-        activity.startActivityForResult(intent, ATUALIZAR);
+        activityOrigem.startActivityForResult(intent, ATUALIZAR);
     }
 
     // ------------------------------ OnCreate ------------------------------

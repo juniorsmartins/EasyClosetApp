@@ -22,10 +22,12 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
 
     private final IUsuarioRepository usuarioRepository = new UsuarioRepository();
+
     private ListView enderecoDaListaDeUsuarios;
-    private UsuarioEntity usuario;
+    private UsuarioEntity usuarioEntity;
     private Button enderecoBotaoAdicionar;
     private UsuarioAdapter usuarioAdapter;
+
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -33,6 +35,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_usuarios);
     }
+
 
     // ------------------------------ OnResume ------------------------------
     @Override
@@ -42,6 +45,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
+        limitarSelecaoDeItensNalista();
 
         mapearEnderecoDoBotaoAdicionar();
         ativarBotaoAdicionar();
@@ -66,35 +70,43 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
                 return usuarioRepository.listar();
             }
 
+        private void limitarSelecaoDeItensNalista() {
+            enderecoDaListaDeUsuarios.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        }
+
         private void mapearEnderecoDoBotaoAdicionar() {
             enderecoBotaoAdicionar = findViewById(R.id.button_listar_adicionar_usuario);
         }
 
         private void ativarBotaoAdicionar() {
-            enderecoBotaoAdicionar.setOnClickListener(view -> CadastrarUsuarioActivity.
-                    cadastrarUsuarioComRetorno(ListarUsuariosActivity.this));
+            enderecoBotaoAdicionar.setOnClickListener(view -> CadastrarUsuarioActivity
+                    .cadastrarUsuarioComRetorno(ListarUsuariosActivity.this));
         }
 
         private void ativarCliqueNosItensDalistaParaEditar() {
             enderecoDaListaDeUsuarios.setOnItemClickListener((parent, view, position, id) -> {
-                usuario = (UsuarioEntity) parent.getItemAtPosition(position);
+                usuarioEntity = (UsuarioEntity) parent.getItemAtPosition(position);
 
-                gerarMensagemDoUsuarioEscolhido();
-                gerarLogDoUsuarioEscolhido(position);
-                CadastrarUsuarioActivity.atualizarUsuarioComRetorno(ListarUsuariosActivity.this, usuario);
+                publicarMensagemNaTela(usuarioEntity.getNome()
+                        .concat(" ")
+                        .concat(usuarioEntity.getSobrenome())
+                        .concat(" ")
+                        .concat(getString(R.string.selecionar)));
+                gerarLogSobreQualItemFoiSelecionadoNaLista(position);
+
+                CadastrarUsuarioActivity
+                        .atualizarUsuarioComRetorno(ListarUsuariosActivity.this, usuarioEntity);
             });
         }
 
-            private void gerarMensagemDoUsuarioEscolhido() {
-                Toast.makeText(getApplicationContext(),
-                        usuario.getNome().concat(" ").concat(usuario.getSobrenome()),
-                        Toast.LENGTH_LONG)
-                        .show();
+            private void publicarMensagemNaTela(String mensagem) {
+                Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
             }
 
-            private void gerarLogDoUsuarioEscolhido(int position) {
-                Log.i("Usuário:", " " + usuario.getNome() + " e posição: " + position);
+            private void gerarLogSobreQualItemFoiSelecionadoNaLista(int position) {
+                Log.i("Usuário:", " " + usuarioEntity.getNome() + " e posição: " + position);
             }
+
 
     // ------------------------------ OnActivityResult ------------------------------
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -104,14 +116,14 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
         if(resultCode == Activity.RESULT_OK) {
             Bundle bundle = intent.getExtras();
-            usuario = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
+            usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
 
             if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
-                usuarioRepository.atualizarUsuario(usuario);
+                usuarioRepository.atualizarUsuario(usuarioEntity);
             }
 
             if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.SALVAR) {
-                usuarioRepository.salvarUsuario(usuario);
+                usuarioRepository.salvarUsuario(usuarioEntity);
             }
 
             usuarioAdapter.notifyDataSetChanged();
