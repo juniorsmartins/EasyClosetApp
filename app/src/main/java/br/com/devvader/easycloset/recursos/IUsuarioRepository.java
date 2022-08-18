@@ -9,4 +9,5 @@ public interface IUsuarioRepository {
     void salvarUsuario(UsuarioEntity usuario);
     void atualizarUsuario(UsuarioEntity novoUsuario);
     List<UsuarioEntity> listar();
+    void excluirUsuario(UsuarioEntity usuarioEntity);
 }

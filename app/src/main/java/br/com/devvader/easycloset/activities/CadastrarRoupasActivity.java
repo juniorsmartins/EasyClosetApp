@@ -394,10 +394,11 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
             }
 
         private void salvarCadastroDeRoupa() {
+
             validarFormulario();
+
             if(camposValidados) {
                 pegarValoresDosSpinners();
-
                 if(tipoDeCaminho == SALVAR) {
                     criarRoupa();
                     devolucaoDeResultadoParaStartActivityForResult(SALVAR);
@@ -406,12 +407,12 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                 } else {
                     caminhoBifurcaEntreSalvarOuEditarRoupa();
-                    imprimirNomeNaTela();
+                    publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()));
                     limparCamposDoFormularioDeCadastrarRoupas();
                     finish();
                 }
             } else {
-                mostrarMensagemNaTela(getString(R.string.formulario_incompleto));
+                publicarMensagemNaTela(getString(R.string.formulario_incompleto));
             }
         }
 
@@ -472,13 +473,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     roupaEntity = new RoupaEntity(tipoDeRoupa, tecidoDeRoupa, corPrincipalDeRoupa, tamanhoDeRoupa);
                 }
 
-            private void imprimirNomeNaTela() {
-                Toast.makeText(CadastrarRoupasActivity.this,
-                        roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()),
-                        Toast.LENGTH_SHORT)
-                        .show();
-            }
-
             private void limparCamposDoFormularioDeCadastrarRoupas() {
                 enderecoCadastrarTipoDeRoupa.setSelection(0);
                 enderecoCadastrarTecidoDaRoupa.setSelection(0);
@@ -486,7 +480,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 enderecoCadastrarTamanhoDaRoupa.setSelection(0);
                 roupaEntity = null;
 
-                mostrarMensagemNaTela(getString(R.string.formulario_limpo));
+                publicarMensagemNaTela(getString(R.string.formulario_limpo));
             }
 
             private void direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario() {
@@ -519,19 +513,19 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 direcionarFocoDoUsuarioParaPrimeiroCampoDoFormulario();
                 return true;
             case menuItemHome:
-                mostrarMensagemNaTela(getString(R.string.home));
+                publicarMensagemNaTela(getString(R.string.home));
                 startActivity(new Intent(CadastrarRoupasActivity.this, MainActivity.class));
                 return true;
             case menuItemInfoApp:
-                mostrarMensagemNaTela(getString(R.string.sobre));
+                publicarMensagemNaTela(getString(R.string.sobre));
                 startActivity(new Intent(CadastrarRoupasActivity.this, InfoAppActivity.class));
                 return true;
             case menuItemCadastrarRoupas:
-                mostrarMensagemNaTela(getString(R.string.cadastrar));
+                publicarMensagemNaTela(getString(R.string.cadastrar));
                 startActivity(new Intent(CadastrarRoupasActivity.this, CadastrarRoupasActivity.class));
                 return true;
             case menuItemListarRoupas:
-                mostrarMensagemNaTela(getString(R.string.listar));
+                publicarMensagemNaTela(getString(R.string.listar));
                 startActivity(new Intent(CadastrarRoupasActivity.this, ListarRoupasActivity.class));
                 return true;
             default:
@@ -539,7 +533,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarMensagemNaTela(String texto) {
-        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
+    private void publicarMensagemNaTela(String mensagem) {
+        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }
 }

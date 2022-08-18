@@ -21,7 +21,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
 
-    private final IUsuarioRepository usuarioRepository = new UsuarioRepository();
+    private final IUsuarioRepository iUsuarioRepository = new UsuarioRepository();
 
     private ListView enderecoDaListaDeUsuarios;
     private UsuarioEntity usuarioEntity;
@@ -67,7 +67,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         }
 
             private List<UsuarioEntity> buscarListaNoRepository() {
-                return usuarioRepository.listar();
+                return iUsuarioRepository.listar();
             }
 
         private void limitarSelecaoDeItensNalista() {
@@ -116,18 +116,41 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
         if(resultCode == Activity.RESULT_OK) {
             Bundle bundle = intent.getExtras();
-            usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
-
-            if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
-                usuarioRepository.atualizarUsuario(usuarioEntity);
-            }
 
             if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.SALVAR) {
-                usuarioRepository.salvarUsuario(usuarioEntity);
-            }
+                usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
+                iUsuarioRepository.salvarUsuario(usuarioEntity);
 
-            usuarioAdapter.notifyDataSetChanged();
+                publicarMensagemNaTela(usuarioEntity.getNome()
+                        .concat(" ")
+                        .concat(usuarioEntity.getSobrenome())
+                        .concat(" ")
+                        .concat(getString(R.string.salvo)));
+
+            } else if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
+                excluirItemDesatualizadoDaLista();
+                usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
+                iUsuarioRepository.atualizarUsuario(usuarioEntity);
+
+                publicarMensagemNaTela(usuarioEntity.getNome()
+                        .concat(" ")
+                        .concat(usuarioEntity.getSobrenome())
+                        .concat(" ")
+                        .concat(getString(R.string.atualizado)));
+
+            } else {
+                publicarMensagemNaTela(getString(R.string.erro_retorno_incompativel));
+            }
+            notificarAdapterSobreModificacaoNaListView();
         }
     }
+
+        private void excluirItemDesatualizadoDaLista() {
+            iUsuarioRepository.excluirUsuario(usuarioEntity);
+        }
+
+        private void notificarAdapterSobreModificacaoNaListView() {
+            usuarioAdapter.notifyDataSetChanged();
+        }
 }
 

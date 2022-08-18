@@ -224,7 +224,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
                 case menuItemExcluirRoupas:
-                    excluirRoupaDaListaDeRoupas();
+                    excluirItemDesatualizadoDaLista();
                     publicarMensagemNaTela(roupaEntity.getTipo()
                             .concat(" ")
                             .concat(roupaEntity.getCorPrincipal())
@@ -248,7 +248,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
     };
 
-    private void excluirRoupaDaListaDeRoupas() {
+    private void excluirItemDesatualizadoDaLista() {
         iRoupaRepository.excluirRoupa(roupaEntity);
     }
 
@@ -268,24 +268,27 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
                 iRoupaRepository.salvarRoupa(roupaEntity);
+
                 publicarMensagemNaTela(roupaEntity.getTipo()
                         .concat(" ")
                         .concat(roupaEntity.getCorPrincipal())
                         .concat(" ")
                         .concat(getString(R.string.salvo)));
+
             } else if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
-                excluirRoupaDaListaDeRoupas();
+                excluirItemDesatualizadoDaLista();
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
                 iRoupaRepository.atualizarRoupa(roupaEntity);
+
                 publicarMensagemNaTela(roupaEntity.getTipo()
                         .concat(" ")
                         .concat(roupaEntity.getCorPrincipal())
                         .concat(" ")
                         .concat(getString(R.string.atualizado)));
+
             } else {
                 publicarMensagemNaTela(getString(R.string.erro_retorno_incompativel));
             }
-
             notificarAdapterSobreModificacaoNaListView();
         }
     }

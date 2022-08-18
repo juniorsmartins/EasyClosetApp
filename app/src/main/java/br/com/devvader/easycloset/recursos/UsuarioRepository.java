@@ -27,12 +27,9 @@ public final class UsuarioRepository implements IUsuarioRepository {
 
     @Override
     public void atualizarUsuario(UsuarioEntity novoUsuario) {
-        for(UsuarioEntity usuario : listaDeUsuarios) {
-            if(usuario.getIdUsuario() == novoUsuario.getIdUsuario()) {
-                int posicaoDoUsuario = listaDeUsuarios.indexOf(usuario);
-                listaDeUsuarios.set(posicaoDoUsuario, novoUsuario);
-            }
-        }
+        if(listaDeUsuarios.contains(novoUsuario))
+            return;
+        listaDeUsuarios.add(novoUsuario);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -42,5 +39,10 @@ public final class UsuarioRepository implements IUsuarioRepository {
                 .stream()
                 .sorted(Comparator.comparing(UsuarioEntity::getIdUsuario).reversed())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void excluirUsuario(UsuarioEntity usuarioEntity) {
+        listaDeUsuarios.remove(usuarioEntity);
     }
 }
