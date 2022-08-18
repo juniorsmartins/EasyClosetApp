@@ -171,7 +171,10 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
 
             private void publicarMensagemNaTela(String mensagem) {
-                Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        mensagem,
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
 
             private void gerarLogSobreQualItemFoiSelecionadoNaLista(int posicao) {

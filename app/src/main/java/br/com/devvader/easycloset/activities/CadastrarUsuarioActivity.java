@@ -23,8 +23,10 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private static final String TITULO_DE_TELA_CADASTRAR_USUARIO = "Cadastrar Usuário";
 
     private final IUsuarioRepository usuarioRepository = new UsuarioRepository();
-    private UsuarioEntity usuarioEntity;
+    private final String MASCULINO = "Masculino";
+    private final String FEMININO = "Feminino";
 
+    private UsuarioEntity usuarioEntity;
     private RadioGroup enderecoSexoUsuario;
     private Spinner enderecoEscolaridadeUsuario;
 
@@ -102,7 +104,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     enderecoCpfUsuario.setText(usuarioEntity.getCpf());
                     enderecoFoneUsuario.setText(usuarioEntity.getFone());
                     enderecoEmailUsuario.setText(usuarioEntity.getEmail());
-                    enderecoSexoUsuario.check(usuarioEntity.getSexo().equalsIgnoreCase("Masculino") ?
+                    enderecoSexoUsuario.check(usuarioEntity.getSexo().equalsIgnoreCase(MASCULINO) ?
                             R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
                     enderecoEscolaridadeUsuario.setSelection(verificarPosicaoDaEscolaridadeDoUsuario());
                     enderecoAutorizoPublicidade.setChecked(usuarioEntity.getAutorizo());
@@ -132,6 +134,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     }
                 }
 
+
     // ------------------------------ OnResume ------------------------------
     @Override
     protected void onResume() {
@@ -139,8 +142,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         colocarTituloNaTela();
 
         mapearEnderecosDosCampos();
-
         mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
+
         ativarRadioGroupDeSexoDoUsuario();
         ativarSpinnerDeEscolaridadeDoUsuario();
 
@@ -170,10 +173,10 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             enderecoSexoUsuario.setOnCheckedChangeListener((group, checkedId) -> {
                 switch (checkedId) {
                     case radioButtonMasculino:
-                        sexoUsuario = "Masculino";
+                        sexoUsuario = MASCULINO;
                         break;
                     case radioButtonFeminino:
-                        sexoUsuario = "Feminino";
+                        sexoUsuario = FEMININO;
                         break;
                 }
             });
@@ -205,10 +208,11 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
             private void ativarBotaoDeSalvarCadastrarUsuario() {
                 enderecoBotaoSalvarUsuario.setOnClickListener(view -> {
+
                     validarFormulario();
+
                     if(camposValidados) {
                         pegarEscolaridadeDoUsuarioNoSpinner();
-
                         if(tipoDeCaminho == SALVAR) {
                             criarUsuario();
                             devolucaoDeResultadoParaStartActivityForResult(SALVAR);
@@ -217,26 +221,15 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                             devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                         } else {
                             caminhoBifurcaEntreSalvarOuEditarRoupa();
-                            imprimirNomeNaTela();
-                            limparCamposDoFormularioDeCadastrarUsuario();
+                            publicarMensagemNaTela(usuarioEntity.getNome().concat(" ").concat(usuarioEntity.getSobrenome()));
+                            limparCamposDoFormularioDeCadastrar();
                             finish();
                         }
                     } else {
-                        Toast.makeText(CadastrarUsuarioActivity.this,
-                                R.string.formulario_incompleto,
-                                Toast.LENGTH_SHORT)
-                                .show();
+                        publicarMensagemNaTela(getString(R.string.formulario_incompleto));
                     }
                 });
             }
-
-                private void devolucaoDeResultadoParaStartActivityForResult(int salvarOuAtualizar) {
-                    Intent intent = getIntent();
-                    intent.putExtra(MODO, salvarOuAtualizar);
-                    intent.putExtra(CadastrarRoupasActivity.ROUPA, usuarioEntity);
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
 
                 private void validarFormulario() {
                     camposValidados = false;
@@ -285,6 +278,14 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     escolaridadeUsuario = (String) enderecoEscolaridadeUsuario.getSelectedItem();
                 }
 
+                private void devolucaoDeResultadoParaStartActivityForResult(int salvarOuAtualizar) {
+                    Intent intent = getIntent();
+                    intent.putExtra(MODO, salvarOuAtualizar);
+                    intent.putExtra(CadastrarUsuarioActivity.USUARIO, usuarioEntity);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+
                 private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
                     if(usuarioEntity != null && usuarioEntity.getIdUsuario() > 0) {
                         alterarUsuario();
@@ -318,21 +319,14 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                                 enderecoAutorizoPublicidade.isChecked());
                     }
 
-                private void imprimirNomeNaTela() {
-                    Toast.makeText(CadastrarUsuarioActivity.this,
-                            usuarioEntity.getNome().concat(" ").concat(usuarioEntity.getSobrenome()),
-                            Toast.LENGTH_SHORT).show();
-                }
-
         private void ativarBotaoDeLimparFormularioDeCadastrar() {
             enderecoBotaoLimparCamposCadastroUsuario.setOnClickListener(view -> {
-                mapearEnderecosDosCampos();
-                limparCamposDoFormularioDeCadastrarUsuario();
+                limparCamposDoFormularioDeCadastrar();
                 direcionarFocoDoUsuarioParaCampoNome();
             });
         }
 
-            private void limparCamposDoFormularioDeCadastrarUsuario() {
+            private void limparCamposDoFormularioDeCadastrar() {
                 enderecoNomeUsuario.setText(null);
                 enderecoSobrenomeUsuario.setText(null);
                 enderecoCpfUsuario.setText(null);
@@ -343,10 +337,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoAutorizoPublicidade.setChecked(false);
                 usuarioEntity = null;
 
-                Toast.makeText(CadastrarUsuarioActivity.this,
-                        getString(R.string.formulario_limpo),
-                        Toast.LENGTH_SHORT)
-                        .show();
+                publicarMensagemNaTela(getString(R.string.formulario_limpo));
             }
 
             private void direcionarFocoDoUsuarioParaCampoNome() {
@@ -361,5 +352,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         public void onBackPressed() {
             setResult(Activity.RESULT_CANCELED);
             finish();
+        }
+
+        private void publicarMensagemNaTela(String mensagem) {
+            Toast.makeText(getApplicationContext(),
+                    mensagem,
+                    Toast.LENGTH_SHORT)
+                    .show();
         }
 }

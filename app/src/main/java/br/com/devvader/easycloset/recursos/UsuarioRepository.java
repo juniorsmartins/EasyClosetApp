@@ -43,9 +43,4 @@ public final class UsuarioRepository implements IUsuarioRepository {
                 .sorted(Comparator.comparing(UsuarioEntity::getIdUsuario).reversed())
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public UsuarioEntity consultarUsuarioPorPosicao(int position) {
-        return listaDeUsuarios.get(position);
-    }
 }

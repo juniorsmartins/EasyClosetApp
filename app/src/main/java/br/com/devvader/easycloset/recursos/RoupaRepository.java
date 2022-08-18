@@ -45,9 +45,4 @@ public final class RoupaRepository implements IRoupaRepository {
     public void excluirRoupa(RoupaEntity roupaEntity) {
         listaDeRoupas.remove(roupaEntity);
     }
-
-    @Override
-    public RoupaEntity consultarPecasDeRoupaPorPosicao(int position) {
-        return listaDeRoupas.get(position);
-    }
 }
