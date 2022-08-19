@@ -101,9 +101,9 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
-        limitarSelecaoDeItensNalista();
         ativarCliqueRapidoNosItensDalistaParaEditar();
         ativarCliqueDemoradoNosItensDaListaParaAtivarMenuDeAcaoContextual();
+        limitarQuantiaDeItensSelecionadosPorCliqueNalista();
     }
 
         private void colocarTituloNaTela() {
@@ -123,7 +123,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 return iRoupaRepository.listar();
             }
 
-        private void limitarSelecaoDeItensNalista() {
+        private void limitarQuantiaDeItensSelecionadosPorCliqueNalista() {
             enderecoDaListaDeRoupas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
 
@@ -141,7 +141,8 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
                 gerarLogSobreQualItemFoiSelecionadoNaLista(position);
 
-                CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
+                CadastrarRoupasActivity
+                        .atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
             });
         }
 
@@ -156,11 +157,13 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                 viewSelecionada = view;
 
                 colorirBackgroundDoItemDaLista();
+
                 publicarMensagemNaTela(roupaEntity.getTipo()
                         .concat(" ")
                         .concat(roupaEntity.getCorPrincipal())
                         .concat(" ")
                         .concat(getString(R.string.selecionar)));
+
                 gerarLogSobreQualItemFoiSelecionadoNaLista(position);
 
                 enderecoDaListaDeRoupas.setEnabled(false);
@@ -219,20 +222,26 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             final int menuItemExcluirRoupas = R.id.menu_item_excluir_roupas;
 
             switch (item.getItemId()) {
+
                 case menuItemEditarRoupas:
-                    CadastrarRoupasActivity.atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
+                    CadastrarRoupasActivity
+                            .atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
+
                 case menuItemExcluirRoupas:
                     excluirItemDesatualizadoDaLista();
+                    mostrarListaNaTelaComAdapterCustomizado();
+
                     publicarMensagemNaTela(roupaEntity.getTipo()
                             .concat(" ")
                             .concat(roupaEntity.getCorPrincipal())
                             .concat(" ")
                             .concat(getString(R.string.excluido)));
-                    mostrarListaNaTelaComAdapterCustomizado();
+
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
+
                 default:
                     return false;
             }

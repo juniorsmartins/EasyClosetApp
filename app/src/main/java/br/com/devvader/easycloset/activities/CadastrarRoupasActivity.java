@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
@@ -79,7 +78,8 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         verificarPreferenciasPreConfiguradas();
 
         criarBotaoUpNaBarraDoApp();
-        caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno();
+
+        caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarComRetorno();
     }
 
         private void mapearEnderecosParaManipularPreferencias() {
@@ -160,7 +160,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 barraDeAcao.setDisplayHomeAsUpEnabled(true);
         }
 
-        private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarRoupaComRetorno() {
+        private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarComRetorno() {
             capturarIntentDeListar = getIntent();
             Bundle bundle = capturarIntentDeListar.getExtras();
 
@@ -406,8 +406,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     alterarRoupa();
                     devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                 } else {
-                    caminhoBifurcaEntreSalvarOuEditarRoupa();
-                    publicarMensagemNaTela(roupaEntity.getTipo().concat(" ").concat(roupaEntity.getCorPrincipal()));
+                    caminhoBifurcaEntreSalvarOuEditar();
                     limparCamposDoFormularioDeCadastrarRoupas();
                     finish();
                 }
@@ -452,13 +451,25 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 finish();
             }
 
-            private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
+            private void caminhoBifurcaEntreSalvarOuEditar() {
                 if(roupaEntity != null && roupaEntity.getId() > 0) {
                     alterarRoupa();
                     roupaRepository.atualizarRoupa(roupaEntity);
+
+                    publicarMensagemNaTela(roupaEntity.getTipo()
+                            .concat(" ")
+                            .concat(roupaEntity.getCorPrincipal())
+                            .concat(" ")
+                            .concat(getString(R.string.atualizado)));
                 } else {
                     criarRoupa();
                     roupaRepository.salvarRoupa(roupaEntity);
+
+                    publicarMensagemNaTela(roupaEntity.getTipo()
+                            .concat(" ")
+                            .concat(roupaEntity.getCorPrincipal())
+                            .concat(" ")
+                            .concat(getString(R.string.salvo)));
                 }
             }
 
@@ -470,7 +481,11 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 }
 
                 private void criarRoupa() {
-                    roupaEntity = new RoupaEntity(tipoDeRoupa, tecidoDeRoupa, corPrincipalDeRoupa, tamanhoDeRoupa);
+                    roupaEntity = new RoupaEntity(
+                            tipoDeRoupa,
+                            tecidoDeRoupa,
+                            corPrincipalDeRoupa,
+                            tamanhoDeRoupa);
                 }
 
             private void limparCamposDoFormularioDeCadastrarRoupas() {
@@ -534,6 +549,9 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     }
 
     private void publicarMensagemNaTela(String mensagem) {
-        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,
+                mensagem,
+                Toast.LENGTH_SHORT)
+                .show();
     }
 }

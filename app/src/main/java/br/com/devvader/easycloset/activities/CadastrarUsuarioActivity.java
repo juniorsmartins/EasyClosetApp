@@ -63,12 +63,13 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     // Padrão estático para atualizar roupas - com retorno de resultado
     public static final String USUARIO = "USUARIO";
     public static final int ATUALIZAR = 2;
-    public static void atualizarUsuarioComRetorno(AppCompatActivity activityOrigem, UsuarioEntity usuario) {
+    public static void atualizarUsuarioComRetorno(AppCompatActivity activityOrigem, UsuarioEntity usuarioParaAtualizar) {
         Intent intent = new Intent(activityOrigem, CadastrarUsuarioActivity.class);
         intent.putExtra(MODO, ATUALIZAR);
-        intent.putExtra(USUARIO, usuario);
+        intent.putExtra(USUARIO, usuarioParaAtualizar);
         activityOrigem.startActivityForResult(intent, ATUALIZAR);
     }
+
 
     // ------------------------------ OnCreate ------------------------------
     @Override
@@ -76,10 +77,10 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
-        caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarUsuarioComRetorno();
+        caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarComRetorno();
     }
 
-        private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarUsuarioComRetorno() {
+        private void caminhoDaActivityListarDentroDaActivityCadastrarParaAtualizarComRetorno() {
             capturarIntentDeListar = getIntent();
             Bundle bundle = capturarIntentDeListar.getExtras();
 
@@ -220,8 +221,16 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                             alterarUsuario();
                             devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                         } else {
-                            caminhoBifurcaEntreSalvarOuEditarRoupa();
-                            publicarMensagemNaTela(usuarioEntity.getNome().concat(" ").concat(usuarioEntity.getSobrenome()));
+                            criarUsuario();
+                            usuarioRepository.salvarUsuario(usuarioEntity);
+
+                            publicarMensagemNaTela(usuarioEntity.getNome()
+                                    .concat(" ")
+                                    .concat(usuarioEntity.getSobrenome())
+                                    .concat(" ")
+                                    .concat(getString(R.string.salvo)));
+
+//                            caminhoBifurcaEntreSalvarOuEditar();
                             limparCamposDoFormularioDeCadastrar();
                             finish();
                         }
@@ -286,13 +295,25 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     finish();
                 }
 
-                private void caminhoBifurcaEntreSalvarOuEditarRoupa() {
+                private void caminhoBifurcaEntreSalvarOuEditar() {
                     if(usuarioEntity != null && usuarioEntity.getIdUsuario() > 0) {
                         alterarUsuario();
                         usuarioRepository.atualizarUsuario(usuarioEntity);
+
+                        publicarMensagemNaTela(usuarioEntity.getNome()
+                                .concat(" ")
+                                .concat(usuarioEntity.getSobrenome())
+                                .concat(" ")
+                                .concat(getString(R.string.atualizado)));
                     } else {
                         criarUsuario();
                         usuarioRepository.salvarUsuario(usuarioEntity);
+
+                        publicarMensagemNaTela(usuarioEntity.getNome()
+                                .concat(" ")
+                                .concat(usuarioEntity.getSobrenome())
+                                .concat(" ")
+                                .concat(getString(R.string.salvo)));
                     }
                 }
 

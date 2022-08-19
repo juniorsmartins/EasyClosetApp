@@ -45,12 +45,11 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
-        limitarSelecaoDeItensNalista();
+        ativarCliqueRapidoNosItensDalistaParaEditar();
+        limitarQuantiaDeItensSelecionadosPorCliqueNalista();
 
         mapearEnderecoDoBotaoAdicionar();
         ativarBotaoAdicionar();
-
-        ativarCliqueNosItensDalistaParaEditar();
     }
 
         private void colocarTituloNaTela() {
@@ -70,9 +69,46 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
                 return iUsuarioRepository.listar();
             }
 
-        private void limitarSelecaoDeItensNalista() {
+        private void limitarQuantiaDeItensSelecionadosPorCliqueNalista() {
             enderecoDaListaDeUsuarios.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
+
+        private void ativarCliqueRapidoNosItensDalistaParaEditar() {
+            enderecoDaListaDeUsuarios.setOnItemClickListener((parent, view, position, id) -> {
+
+                usuarioEntity = (UsuarioEntity) parent.getItemAtPosition(position);
+                usuarioAdapter = (UsuarioAdapter) parent.getAdapter();
+
+                publicarMensagemNaTela(usuarioEntity.getNome()
+                        .concat(" ")
+                        .concat(usuarioEntity.getSobrenome())
+                        .concat(" ")
+                        .concat(getString(R.string.selecionar)));
+
+                gerarLogSobreQualItemFoiSelecionadoNaLista(position);
+
+                CadastrarUsuarioActivity
+                        .atualizarUsuarioComRetorno(ListarUsuariosActivity.this, usuarioEntity);
+            });
+        }
+
+            private void publicarMensagemNaTela(String mensagem) {
+                Toast.makeText(getApplicationContext(),
+                        mensagem,
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+            private void gerarLogSobreQualItemFoiSelecionadoNaLista(int position) {
+                Log.i(getString(R.string.usuario), " "
+                        .concat(usuarioEntity.getNome())
+                        .concat(" ")
+                        .concat(usuarioEntity.getSobrenome())
+                        .concat(" - ")
+                        .concat(getString(R.string.na_posicao))
+                        .concat(": ")
+                        .concat(String.valueOf(position)));
+            }
 
         private void mapearEnderecoDoBotaoAdicionar() {
             enderecoBotaoAdicionar = findViewById(R.id.button_listar_adicionar_usuario);
@@ -83,32 +119,8 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
                     .cadastrarUsuarioComRetorno(ListarUsuariosActivity.this));
         }
 
-        private void ativarCliqueNosItensDalistaParaEditar() {
-            enderecoDaListaDeUsuarios.setOnItemClickListener((parent, view, position, id) -> {
-                usuarioEntity = (UsuarioEntity) parent.getItemAtPosition(position);
 
-                publicarMensagemNaTela(usuarioEntity.getNome()
-                        .concat(" ")
-                        .concat(usuarioEntity.getSobrenome())
-                        .concat(" ")
-                        .concat(getString(R.string.selecionar)));
-                gerarLogSobreQualItemFoiSelecionadoNaLista(position);
-
-                CadastrarUsuarioActivity
-                        .atualizarUsuarioComRetorno(ListarUsuariosActivity.this, usuarioEntity);
-            });
-        }
-
-            private void publicarMensagemNaTela(String mensagem) {
-                Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
-            }
-
-            private void gerarLogSobreQualItemFoiSelecionadoNaLista(int position) {
-                Log.i("Usuário:", " " + usuarioEntity.getNome() + " e posição: " + position);
-            }
-
-
-    // ------------------------------ OnActivityResult ------------------------------
+    // -------------------- OnActivityResult - recepciona retorno de startActivityForResult --------------------
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -131,6 +143,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
                 excluirItemDesatualizadoDaLista();
                 usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
                 iUsuarioRepository.atualizarUsuario(usuarioEntity);
+                mostrarListaNaTelaComAdapterCustomizado();
 
                 publicarMensagemNaTela(usuarioEntity.getNome()
                         .concat(" ")
