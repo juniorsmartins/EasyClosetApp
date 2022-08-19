@@ -11,29 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioGroup
-            android:id="@+id/radioGroup_sexo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/editText_emailUsuario"
-            app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"
-            app:layout_constraintTop_toBottomOf="@+id/editText_emailUsuario">
-
-            <RadioButton
-                android:id="@+id/radioButton_sexoMasculino"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sexo_masculino" />
-
-            <RadioButton
-                android:id="@+id/radioButton_sexoFeminino"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sexo_feminino" />
-        </RadioGroup>
-
         <EditText
             android:id="@+id/editText_nomeUsuario"
             android:layout_width="wrap_content"
@@ -41,6 +18,7 @@
             android:layout_marginTop="8dp"
             android:ems="18"
             android:inputType="textPersonName"
+            android:minHeight="48dp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +31,7 @@
             android:layout_marginTop="8dp"
             android:ems="18"
             android:inputType="textPersonName"
+            android:minHeight="48dp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/editText_nomeUsuario"
             app:layout_constraintStart_toStartOf="@+id/editText_nomeUsuario"
@@ -102,6 +81,7 @@
             android:layout_marginTop="8dp"
             android:ems="8"
             android:inputType="textPersonName"
+            android:minHeight="48dp"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/editText_sobrenomeUsuario"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -126,6 +106,7 @@
             android:layout_marginTop="8dp"
             android:ems="8"
             android:inputType="phone"
+            android:minHeight="48dp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/editText_sobrenomeUsuario"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -149,18 +130,44 @@
             android:layout_marginTop="8dp"
             android:ems="18"
             android:inputType="textEmailAddress"
+            android:minHeight="48dp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/editText_foneUsuario"
             app:layout_constraintStart_toStartOf="@+id/editText_cpfUsuario"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+        <Spinner
+            android:id="@+id/spinner_escolaridadeUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:entries="@array/cadastrarUsuario_spinnerEscolaridade"
+            android:minHeight="48dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toEndOf="@+id/editText_emailUsuario"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"
+            app:layout_constraintTop_toBottomOf="@+id/editText_emailUsuario" />
+
+        <CheckBox
+            android:id="@+id/checkBox_autorizoPublicidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/autorizoPublicidade"
+            app:layout_constraintEnd_toEndOf="@+id/editText_emailUsuario"
+            app:layout_constraintHorizontal_bias="0.469"
+            app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_escolaridadeUsuario" />
+
         <Button
             android:id="@+id/button_salvarCadastroUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
             android:text="@string/salvar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_autorizoPublicidade" />
 
@@ -169,40 +176,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:text="@string/limpar"
             app:layout_constraintEnd_toStartOf="@+id/button_voltar_cadastrar_usuario"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_salvarCadastroUsuario" />
 
-        <CheckBox
-            android:id="@+id/checkBox_autorizoPublicidade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/autorizoPublicidade"
-            app:layout_constraintEnd_toEndOf="@+id/editText_emailUsuario"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_escolaridadeUsuario" />
-
-        <Spinner
-            android:id="@+id/spinner_escolaridadeUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:entries="@array/cadastrarUsuario_spinnerEscolaridade"
-            android:spinnerMode="dialog"
-            app:layout_constraintEnd_toEndOf="@+id/editText_emailUsuario"
-            app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup_sexo" />
-
         <Button
             android:id="@+id/button_voltar_cadastrar_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             android:text="@string/voltar"
             app:layout_constraintEnd_toEndOf="parent"

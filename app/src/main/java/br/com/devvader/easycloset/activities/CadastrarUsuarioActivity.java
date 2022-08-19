@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,11 +22,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private static final String TITULO_DE_TELA_CADASTRAR_USUARIO = "Cadastrar Usuário";
 
     private final IUsuarioRepository usuarioRepository = new UsuarioRepository();
-    private final String MASCULINO = "Masculino";
-    private final String FEMININO = "Feminino";
 
     private UsuarioEntity usuarioEntity;
-    private RadioGroup enderecoSexoUsuario;
     private Spinner enderecoEscolaridadeUsuario;
 
     private Button enderecoBotaoSalvarUsuario;
@@ -41,15 +37,11 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     private EditText enderecoEmailUsuario;
     private CheckBox enderecoAutorizoPublicidade;
 
-    private String sexoUsuario;
     private String escolaridadeUsuario;
 
     private boolean camposValidados;
     private Intent capturarIntentDeListar;
     private int tipoDeCaminho;
-
-    private final int radioButtonMasculino = R.id.radioButton_sexoMasculino;
-    private final int radioButtonFeminino = R.id.radioButton_sexoFeminino;
 
     // Padrão estático para salvar roupas - com retorno de resultado
     public static final String MODO = "MODO";
@@ -98,15 +90,13 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
                 if(usuarioEntity != null) {
                     mapearEnderecosDosCampos();
-                    mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
+                    mapearEnderecosDoSpinnerEscolaridade();
 
                     enderecoNomeUsuario.setText(usuarioEntity.getNome());
                     enderecoSobrenomeUsuario.setText(usuarioEntity.getSobrenome());
                     enderecoCpfUsuario.setText(usuarioEntity.getCpf());
                     enderecoFoneUsuario.setText(usuarioEntity.getFone());
                     enderecoEmailUsuario.setText(usuarioEntity.getEmail());
-                    enderecoSexoUsuario.check(usuarioEntity.getSexo().equalsIgnoreCase(MASCULINO) ?
-                            R.id.radioButton_sexoMasculino : R.id.radioButton_sexoFeminino);
                     enderecoEscolaridadeUsuario.setSelection(verificarPosicaoDaEscolaridadeDoUsuario());
                     enderecoAutorizoPublicidade.setChecked(usuarioEntity.getAutorizo());
                 }
@@ -143,9 +133,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         colocarTituloNaTela();
 
         mapearEnderecosDosCampos();
-        mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade();
+        mapearEnderecosDoSpinnerEscolaridade();
 
-        ativarRadioGroupDeSexoDoUsuario();
         ativarSpinnerDeEscolaridadeDoUsuario();
 
         mapearEnderecosDosBotoes();
@@ -165,22 +154,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
             enderecoAutorizoPublicidade = findViewById(R.id.checkBox_autorizoPublicidade);
         }
 
-        private void mapearEnderecosDoRadioGroupSexoAndSpinnerEscolaridade() {
-            enderecoSexoUsuario = findViewById(R.id.radioGroup_sexo);
+        private void mapearEnderecosDoSpinnerEscolaridade() {
             enderecoEscolaridadeUsuario = findViewById(R.id.spinner_escolaridadeUsuario);
-        }
-
-        private void ativarRadioGroupDeSexoDoUsuario() {
-            enderecoSexoUsuario.setOnCheckedChangeListener((group, checkedId) -> {
-                switch (checkedId) {
-                    case radioButtonMasculino:
-                        sexoUsuario = MASCULINO;
-                        break;
-                    case radioButtonFeminino:
-                        sexoUsuario = FEMININO;
-                        break;
-                }
-            });
         }
 
         private void ativarSpinnerDeEscolaridadeDoUsuario() {
@@ -218,6 +193,7 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                             criarUsuario();
                             devolucaoDeResultadoParaStartActivityForResult(SALVAR);
                         } else if(tipoDeCaminho == ATUALIZAR) {
+
                             alterarUsuario();
                             devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                         } else {
@@ -230,9 +206,8 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                                     .concat(" ")
                                     .concat(getString(R.string.salvo)));
 
-//                            caminhoBifurcaEntreSalvarOuEditar();
                             limparCamposDoFormularioDeCadastrar();
-                            finish();
+                            direcionarFocoDoUsuarioParaCampoNome();
                         }
                     } else {
                         publicarMensagemNaTela(getString(R.string.formulario_incompleto));
@@ -267,10 +242,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                         enderecoEmailUsuario.requestFocus();
                         return;
                     }
-                    if(enderecoSexoUsuario.getCheckedRadioButtonId() == -1) {
-                        enderecoSexoUsuario.requestFocus();
-                        return;
-                    }
                     if(enderecoEscolaridadeUsuario.getSelectedItemPosition() == 0) {
                         enderecoEscolaridadeUsuario.requestFocus();
                         return;
@@ -295,35 +266,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     finish();
                 }
 
-                private void caminhoBifurcaEntreSalvarOuEditar() {
-                    if(usuarioEntity != null && usuarioEntity.getIdUsuario() > 0) {
-                        alterarUsuario();
-                        usuarioRepository.atualizarUsuario(usuarioEntity);
-
-                        publicarMensagemNaTela(usuarioEntity.getNome()
-                                .concat(" ")
-                                .concat(usuarioEntity.getSobrenome())
-                                .concat(" ")
-                                .concat(getString(R.string.atualizado)));
-                    } else {
-                        criarUsuario();
-                        usuarioRepository.salvarUsuario(usuarioEntity);
-
-                        publicarMensagemNaTela(usuarioEntity.getNome()
-                                .concat(" ")
-                                .concat(usuarioEntity.getSobrenome())
-                                .concat(" ")
-                                .concat(getString(R.string.salvo)));
-                    }
-                }
-
                     private void alterarUsuario() {
                         usuarioEntity.setNome(enderecoNomeUsuario.getText().toString());
                         usuarioEntity.setSobrenome(enderecoSobrenomeUsuario.getText().toString());
                         usuarioEntity.setCpf(enderecoCpfUsuario.getText().toString());
                         usuarioEntity.setFone(enderecoFoneUsuario.getText().toString());
                         usuarioEntity.setEmail(enderecoEmailUsuario.getText().toString());
-                        usuarioEntity.setSexo(sexoUsuario);
                         usuarioEntity.setEscolaridade(escolaridadeUsuario);
                         usuarioEntity.setAutorizo(enderecoAutorizoPublicidade.isChecked());
                     }
@@ -335,7 +283,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                                 enderecoCpfUsuario.getText().toString(),
                                 enderecoFoneUsuario.getText().toString(),
                                 enderecoEmailUsuario.getText().toString(),
-                                sexoUsuario,
                                 escolaridadeUsuario,
                                 enderecoAutorizoPublicidade.isChecked());
                     }
@@ -353,7 +300,6 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                 enderecoCpfUsuario.setText(null);
                 enderecoFoneUsuario.setText(null);
                 enderecoEmailUsuario.setText(null);
-                enderecoSexoUsuario.clearCheck();
                 enderecoEscolaridadeUsuario.setSelection(0);
                 enderecoAutorizoPublicidade.setChecked(false);
                 usuarioEntity = null;

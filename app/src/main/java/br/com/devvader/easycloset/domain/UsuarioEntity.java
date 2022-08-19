@@ -12,20 +12,18 @@ public final class UsuarioEntity implements Serializable {
     private String cpf;
     private String fone;
     private String email;
-    private String sexo;
     private String escolaridade;
     private Boolean autorizo;
 
     public UsuarioEntity(){}
     public UsuarioEntity(String nomeUsuario, String sobrenomeUsuario, String cpfUsuario,
-                         String foneUsuario, String emailUsuario, String sexo,
+                         String foneUsuario, String emailUsuario,
                          String escolaridade, Boolean autorizoPublicidade) {
         this.nome = nomeUsuario;
         this.sobrenome = sobrenomeUsuario;
         this.cpf = cpfUsuario;
         this.fone = foneUsuario;
         this.email = emailUsuario;
-        this.sexo = sexo;
         this.escolaridade = escolaridade;
         this.autorizo = autorizoPublicidade;
     }
@@ -37,7 +35,6 @@ public final class UsuarioEntity implements Serializable {
             + "\nCPF: " + cpf
             + "\nFone: " + fone
             + "\nEmail: " + email
-            + "\nSexo: " + sexo
             + "\nEscolaridade: " + escolaridade
             + "\nAutorização de publicidade: " + autorizo;
     }
@@ -88,14 +85,6 @@ public final class UsuarioEntity implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
     }
 
     public String getEscolaridade() {
