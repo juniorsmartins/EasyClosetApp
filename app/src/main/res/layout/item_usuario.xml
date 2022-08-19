@@ -1,92 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutCompat"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="10dp"
-    >
+    android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/editText_nomeUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nome"
-        android:textSize="30dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textStyle="bold"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        />
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Nome"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/editText_sobrenomeUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Sobrenome"
-        android:textSize="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="sans-serif"
-        android:layout_marginHorizontal="10dp"
-        />
+        android:text="Sobrenome"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText_nomeUsuario"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/editText_cpfUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="CPF"
-        android:textSize="24dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:layout_marginHorizontal="10dp"
-        />
+        android:text="CPF"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/editText_nomeUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/editText_nomeUsuario" />
 
     <TextView
         android:id="@+id/editText_foneUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Fone"
-        android:textSize="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:layout_marginHorizontal="10dp"
-        />
+        android:text="Fone"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/editText_cpfUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/editText_sobrenomeUsuario" />
 
     <TextView
         android:id="@+id/editText_emailUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
         android:text="Email"
-        android:textSize="24dp"
-        android:fontFamily="sans-serif"
-        android:layout_marginHorizontal="10dp"
-        />
-
-    <TextView
-        android:id="@+id/radioGroup_sexo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sexo"
-        android:textSize="24dp"
-        android:fontFamily="sans-serif"
-        android:layout_marginHorizontal="10dp"
-        />
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/editText_cpfUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/editText_cpfUsuario" />
 
     <TextView
         android:id="@+id/spinner_escolaridadeUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Escolaridade"
-        android:textSize="24dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:layout_marginHorizontal="10dp"
-        />
+        android:text="Escolaridade"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/editText_emailUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/editText_emailUsuario" />
+
+    <TextView
+        android:id="@+id/radioGroup_sexo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:text="Sexo"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/checkBox_autorizoPublicidade"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_escolaridadeUsuario" />
 
     <TextView
         android:id="@+id/checkBox_autorizoPublicidade"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Autorização"
-        android:textSize="24dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:layout_marginHorizontal="10dp"
-        />
+        android:text="Autorização"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/spinner_escolaridadeUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_escolaridadeUsuario" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
