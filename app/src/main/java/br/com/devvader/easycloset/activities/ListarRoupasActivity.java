@@ -1,6 +1,8 @@
 package br.com.devvader.easycloset.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,24 +16,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.List;
+
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
 import br.com.devvader.easycloset.domain.adapters.RoupaAdapter;
 import br.com.devvader.easycloset.domain.utils.Utils;
-import br.com.devvader.easycloset.recursos.IRoupaRepository;
-import br.com.devvader.easycloset.recursos.RoupaRepository;
+import br.com.devvader.easycloset.recursos.RoupaDatabase;
 
 public final class ListarRoupasActivity extends AppCompatActivity {
 
     private static final String TITULO_TELA_LISTAR_ROUPAS = "EasyCloset";
-
-    private final IRoupaRepository iRoupaRepository = new RoupaRepository();
 
     private ListView enderecoDaListaDeRoupas;
     private RoupaEntity roupaEntity;
@@ -42,6 +44,13 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     // Preferências Compartilhadas
     private SharedPreferences preferenciasConfig;
     private ConstraintLayout constraintLayout;
+
+    // Persistência
+    private RoupaDatabase roupaDatabase;
+
+    // Modal para confirmar excluir item do database
+    private String mensagem;
+    private DialogInterface.OnClickListener ouvidorDoModalDeConfirmarExcluirItemDoDatabase;
 
 
     // ------------------------------ OnCreate ------------------------------
@@ -99,6 +108,9 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
 
+        // Persistência
+        pegarConexaoComDatabase();
+
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
         ativarCliqueRapidoNosItensDalistaParaEditar();
@@ -110,17 +122,22 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             setTitle(TITULO_TELA_LISTAR_ROUPAS);
         }
 
+        private void pegarConexaoComDatabase() {
+            roupaDatabase = RoupaDatabase.getInstance(this);
+        }
+
         private void mapearEnderecoDaLista() {
             enderecoDaListaDeRoupas = findViewById(R.id.listView_listaDeRoupas);
         }
 
         private void mostrarListaNaTelaComAdapterCustomizado() {
-            roupaAdapter = new RoupaAdapter(this, buscarListaNoRepository());
+            roupaAdapter = new RoupaAdapter(this, buscarListaNoDatabase());
             enderecoDaListaDeRoupas.setAdapter(roupaAdapter);
         }
 
-            private List<RoupaEntity> buscarListaNoRepository() {
-                return iRoupaRepository.listar();
+            private List<RoupaEntity> buscarListaNoDatabase() {
+                roupaDatabase.getRoupaDAO().carregarTudo();
+                return roupaDatabase.getRoupaDAO().listaDeRoupas;
             }
 
         private void limitarQuantiaDeItensSelecionadosPorCliqueNalista() {
@@ -222,26 +239,16 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             final int menuItemExcluirRoupas = R.id.menu_item_excluir_roupas;
 
             switch (item.getItemId()) {
-
                 case menuItemEditarRoupas:
                     CadastrarRoupasActivity
                             .atualizarRoupaComRetorno(ListarRoupasActivity.this, roupaEntity);
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
-
                 case menuItemExcluirRoupas:
-                    excluirItemDesatualizadoDaLista();
-                    mostrarListaNaTelaComAdapterCustomizado();
-
-                    publicarMensagemNaTela(roupaEntity.getTipo()
-                            .concat(" ")
-                            .concat(roupaEntity.getCorPrincipal())
-                            .concat(" ")
-                            .concat(getString(R.string.excluido)));
-
+                    ativarOuvidorDeConfirmarExcluirItemDoDatabase();
+                    chamarModalParaConfirmarAcaoDeExcluirItemDoDatabase();
                     mode.finish(); // Ação escolhida, então feche o CAB
                     return true;
-
                 default:
                     return false;
             }
@@ -257,8 +264,36 @@ public final class ListarRoupasActivity extends AppCompatActivity {
         }
     };
 
-    private void excluirItemDesatualizadoDaLista() {
-        iRoupaRepository.excluirRoupa(roupaEntity);
+    private void ativarOuvidorDeConfirmarExcluirItemDoDatabase() {
+        mensagem = getString(R.string.confirmar_exclusao);
+
+        ouvidorDoModalDeConfirmarExcluirItemDoDatabase = (dialog, which) -> {
+            switch(which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    roupaDatabase.getRoupaDAO().excluir(roupaEntity);
+
+                    publicarMensagemNaTela(roupaEntity.getTipo()
+                            .concat(" ")
+                            .concat(roupaEntity.getCorPrincipal())
+                            .concat(" ")
+                            .concat(getString(R.string.excluido)));
+
+                    notificarAdapterSobreModificacaoNaListView();
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        };
+    }
+
+    private void chamarModalParaConfirmarAcaoDeExcluirItemDoDatabase() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.confirmacao);
+        builder.setMessage(mensagem);
+        builder.setPositiveButton(R.string.sim, ouvidorDoModalDeConfirmarExcluirItemDoDatabase);
+        builder.setNegativeButton(R.string.nao, ouvidorDoModalDeConfirmarExcluirItemDoDatabase);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void notificarAdapterSobreModificacaoNaListView() {
@@ -276,7 +311,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
 
             if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.SALVAR) {
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
-                iRoupaRepository.salvarRoupa(roupaEntity);
+                salvarRoupaNoDatabase();
 
                 publicarMensagemNaTela(roupaEntity.getTipo()
                         .concat(" ")
@@ -285,9 +320,8 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                         .concat(getString(R.string.salvo)));
 
             } else if(bundle.getInt(CadastrarRoupasActivity.MODO) == CadastrarRoupasActivity.ATUALIZAR) {
-                excluirItemDesatualizadoDaLista();
                 roupaEntity = (RoupaEntity) bundle.getSerializable(CadastrarRoupasActivity.ROUPA);
-                iRoupaRepository.atualizarRoupa(roupaEntity);
+                atualizarRoupaNoDatabase();
 
                 publicarMensagemNaTela(roupaEntity.getTipo()
                         .concat(" ")
@@ -301,6 +335,16 @@ public final class ListarRoupasActivity extends AppCompatActivity {
             notificarAdapterSobreModificacaoNaListView();
         }
     }
+
+        private void salvarRoupaNoDatabase() {
+            pegarConexaoComDatabase();
+            roupaDatabase.getRoupaDAO().inserir(roupaEntity);
+        }
+
+        private void atualizarRoupaNoDatabase() {
+            pegarConexaoComDatabase();
+            roupaDatabase.getRoupaDAO().atualizar(roupaEntity);
+        }
 
 
     // ------------------------------ MENU DE OPÇÕES ------------------------------
