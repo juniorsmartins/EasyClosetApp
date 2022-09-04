@@ -117,5 +117,10 @@
     <string name="xg">XG</string>
     <string name="xgg">XGG</string>
 
+    <string name="confirmacao">Confirmation</string>
+    <string name="sim">Yes</string>
+    <string name="nao">No</string>
+    <string name="confirmar_exclusao">Confirm deletion?</string>
+
 </resources>
 

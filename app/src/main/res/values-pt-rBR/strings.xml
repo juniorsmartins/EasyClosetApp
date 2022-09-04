@@ -123,4 +123,9 @@
     <string name="xg">XG</string>
     <string name="xgg">XGG</string>
 
+    <string name="confirmacao">Confirmação</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="confirmar_exclusao">Confirma exclusão?</string>
+
 </resources>
