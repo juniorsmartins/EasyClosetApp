@@ -1,18 +1,38 @@
 package br.com.devvader.easycloset.domain;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
+@Entity
 public final class UsuarioEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
+    @PrimaryKey(autoGenerate = true)
     private Long idUsuario;
+
+    @NonNull
     private String nome;
+
+    @NonNull
     private String sobrenome;
+
+    @NonNull
     private String cpf;
+
+    @NonNull
     private String fone;
+
+    @NonNull
     private String email;
+
+    @NonNull
     private String escolaridade;
+
+    @NonNull
     private Boolean autorizo;
 
     public UsuarioEntity(){}

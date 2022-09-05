@@ -8,20 +8,22 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
+
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.domain.adapters.UsuarioAdapter;
-import br.com.devvader.easycloset.recursos.IUsuarioRepository;
-import br.com.devvader.easycloset.recursos.UsuarioRepository;
+import br.com.devvader.easycloset.recursos.UsuarioDatabaseRoom;
 
 public final class ListarUsuariosActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
 
-    private final IUsuarioRepository iUsuarioRepository = new UsuarioRepository();
+    private UsuarioDatabaseRoom usuarioDatabaseRoom;
 
     private ListView enderecoDaListaDeUsuarios;
     private UsuarioEntity usuarioEntity;
@@ -43,6 +45,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
 
+        criarConexaoComDatabase();
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
         ativarCliqueRapidoNosItensDalistaParaEditar();
@@ -56,6 +59,10 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
             setTitle(TITULO_DE_TELA_LISTAR_USUARIOS);
         }
 
+        private void criarConexaoComDatabase() {
+            usuarioDatabaseRoom = UsuarioDatabaseRoom.getUsuarioDatabaseRoom(this);
+        }
+
         private void mapearEnderecoDaLista() {
             enderecoDaListaDeUsuarios = findViewById(R.id.listView_listaDeUsuarios);
         }
@@ -66,7 +73,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         }
 
             private List<UsuarioEntity> buscarListaNoRepository() {
-                return iUsuarioRepository.listar();
+                return usuarioDatabaseRoom.usuarioDAORoom().queryAll();
             }
 
         private void limitarQuantiaDeItensSelecionadosPorCliqueNalista() {
@@ -131,7 +138,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
             if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.SALVAR) {
                 usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
-                iUsuarioRepository.salvarUsuario(usuarioEntity);
+                salvarUsuario();
 
                 publicarMensagemNaTela(usuarioEntity.getNome()
                         .concat(" ")
@@ -142,7 +149,8 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
             } else if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
                 excluirItemDesatualizadoDaLista();
                 usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
-                iUsuarioRepository.atualizarUsuario(usuarioEntity);
+                atualizarUsuario();
+
                 mostrarListaNaTelaComAdapterCustomizado();
 
                 publicarMensagemNaTela(usuarioEntity.getNome()
@@ -158,8 +166,16 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         }
     }
 
+        private void salvarUsuario() {
+            usuarioDatabaseRoom.usuarioDAORoom().insert(usuarioEntity);
+        }
+
+        private void atualizarUsuario() {
+            usuarioDatabaseRoom.usuarioDAORoom().update(usuarioEntity);
+        }
+
         private void excluirItemDesatualizadoDaLista() {
-            iUsuarioRepository.excluirUsuario(usuarioEntity);
+            usuarioDatabaseRoom.usuarioDAORoom().delete(usuarioEntity);
         }
 
         private void notificarAdapterSobreModificacaoNaListView() {
