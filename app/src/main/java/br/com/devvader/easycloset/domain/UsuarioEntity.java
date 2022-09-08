@@ -1,38 +1,47 @@
 package br.com.devvader.easycloset.domain;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-@Entity
+@Entity(tableName = "usuarios")
 public final class UsuarioEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id_usuario")
     private Long idUsuario;
 
     @NonNull
+    @ColumnInfo(name = "nome")
     private String nome;
 
     @NonNull
+    @ColumnInfo(name = "sobrenome")
     private String sobrenome;
 
     @NonNull
+    @ColumnInfo(name = "cpf")
     private String cpf;
 
     @NonNull
+    @ColumnInfo(name = "fone")
     private String fone;
 
     @NonNull
+    @ColumnInfo(name = "email")
     private String email;
 
     @NonNull
+    @ColumnInfo(name = "escolaridade")
     private String escolaridade;
 
     @NonNull
+    @ColumnInfo(name = "autorizo")
     private Boolean autorizo;
 
     public UsuarioEntity(){}
