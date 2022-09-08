@@ -1,13 +1,11 @@
 package br.com.devvader.easycloset.recursos;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
-
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
 import java.util.List;
-
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 
 @Dao
@@ -22,9 +20,9 @@ public interface UsuarioDAORoom {
     @Update
     void update(UsuarioEntity usuarioEntity);
 
-    @Query("SELECT * FROM UsuarioEntity WHERE idUsuario = :id")
+    @Query("SELECT * FROM usuarios WHERE id_usuario = :id")
     UsuarioEntity queryForId(long id);
 
-    @Query("SELECT * FROM UsuarioEntity ORDER BY idUsuario ASC")
+    @Query("SELECT * FROM usuarios ORDER BY id_usuario ASC")
     List<UsuarioEntity> queryAll();
 }
