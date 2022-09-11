@@ -2,6 +2,7 @@ package br.com.devvader.easycloset.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,17 +12,18 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
-import br.com.devvader.easycloset.recursos.IUsuarioRepository;
-import br.com.devvader.easycloset.recursos.UsuarioRepository;
+import br.com.devvader.easycloset.recursos.ConexaoDatabaseRoom;
 
 public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_CADASTRAR_USUARIO = "Cadastrar Usuário";
 
-    private final IUsuarioRepository usuarioRepository = new UsuarioRepository();
+    private ConexaoDatabaseRoom conexaoDatabaseRoom;
 
     private UsuarioEntity usuarioEntity;
     private Spinner enderecoEscolaridadeUsuario;
@@ -141,6 +143,20 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         ativarButtonsDoFormularioDeCadastrar();
     }
 
+        private void salvarNoBancoDeDados() {
+            criarConexaoComBancoDeDados();
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    conexaoDatabaseRoom.usuarioDAORoom().insert(usuarioEntity);
+                }
+            });
+        }
+
+            private void criarConexaoComBancoDeDados() {
+                conexaoDatabaseRoom = ConexaoDatabaseRoom.getConexaoDatabaseRoom(CadastrarUsuarioActivity.this);
+            }
+
         private void colocarTituloNaTela() {
             setTitle(TITULO_DE_TELA_CADASTRAR_USUARIO);
         }
@@ -177,12 +193,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
         }
 
         private void ativarButtonsDoFormularioDeCadastrar() {
-            ativarBotaoDeSalvarCadastrarUsuario();
+            ativarBotaoDeSalvarCadastroDeUsuario();
             ativarBotaoDeLimparFormularioDeCadastrar();
             ativarButtonVoltarCadastrar();
         }
 
-            private void ativarBotaoDeSalvarCadastrarUsuario() {
+            private void ativarBotaoDeSalvarCadastroDeUsuario() {
                 enderecoBotaoSalvarUsuario.setOnClickListener(view -> {
 
                     validarFormulario();
@@ -193,12 +209,11 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                             criarUsuario();
                             devolucaoDeResultadoParaStartActivityForResult(SALVAR);
                         } else if(tipoDeCaminho == ATUALIZAR) {
-
                             alterarUsuario();
                             devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                         } else {
                             criarUsuario();
-                            usuarioRepository.salvarUsuario(usuarioEntity);
+                            salvarNoBancoDeDados();
 
                             publicarMensagemNaTela(usuarioEntity.getNome()
                                     .concat(" ")
@@ -266,26 +281,26 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
                     finish();
                 }
 
-                    private void alterarUsuario() {
-                        usuarioEntity.setNome(enderecoNomeUsuario.getText().toString());
-                        usuarioEntity.setSobrenome(enderecoSobrenomeUsuario.getText().toString());
-                        usuarioEntity.setCpf(enderecoCpfUsuario.getText().toString());
-                        usuarioEntity.setFone(enderecoFoneUsuario.getText().toString());
-                        usuarioEntity.setEmail(enderecoEmailUsuario.getText().toString());
-                        usuarioEntity.setEscolaridade(escolaridadeUsuario);
-                        usuarioEntity.setAutorizo(enderecoAutorizoPublicidade.isChecked());
-                    }
+                private void alterarUsuario() {
+                    usuarioEntity.setNome(enderecoNomeUsuario.getText().toString());
+                    usuarioEntity.setSobrenome(enderecoSobrenomeUsuario.getText().toString());
+                    usuarioEntity.setCpf(enderecoCpfUsuario.getText().toString());
+                    usuarioEntity.setFone(enderecoFoneUsuario.getText().toString());
+                    usuarioEntity.setEmail(enderecoEmailUsuario.getText().toString());
+                    usuarioEntity.setEscolaridade(escolaridadeUsuario);
+                    usuarioEntity.setAutorizo(enderecoAutorizoPublicidade.isChecked());
+                }
 
-                    private void criarUsuario() {
-                        usuarioEntity = new UsuarioEntity(
-                                enderecoNomeUsuario.getText().toString(),
-                                enderecoSobrenomeUsuario.getText().toString(),
-                                enderecoCpfUsuario.getText().toString(),
-                                enderecoFoneUsuario.getText().toString(),
-                                enderecoEmailUsuario.getText().toString(),
-                                escolaridadeUsuario,
-                                enderecoAutorizoPublicidade.isChecked());
-                    }
+                private void criarUsuario() {
+                    usuarioEntity = new UsuarioEntity(
+                            enderecoNomeUsuario.getText().toString(),
+                            enderecoSobrenomeUsuario.getText().toString(),
+                            enderecoCpfUsuario.getText().toString(),
+                            enderecoFoneUsuario.getText().toString(),
+                            enderecoEmailUsuario.getText().toString(),
+                            escolaridadeUsuario,
+                            enderecoAutorizoPublicidade.isChecked());
+                }
 
         private void ativarBotaoDeLimparFormularioDeCadastrar() {
             enderecoBotaoLimparCamposCadastroUsuario.setOnClickListener(view -> {
