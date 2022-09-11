@@ -1,15 +1,35 @@
 package br.com.devvader.easycloset.domain;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity(tableName = "roupas")
 public final class RoupaEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id_roupa")
     private Long id;
+
+    @NonNull
+    @ColumnInfo(name = "tipo")
     private String tipo;
+
+    @NonNull
+    @ColumnInfo(name = "tecido")
     private String tecido;
+
+    @NonNull
+    @ColumnInfo(name = "cor_principal")
     private String corPrincipal;
+
+    @NonNull
+    @ColumnInfo(name = "tamanho")
     private String tamanho;
 
     public RoupaEntity() {}
@@ -21,6 +41,15 @@ public final class RoupaEntity implements Serializable {
         this.tecido = tecido;
         this.corPrincipal = corPrincipal;
         this.tamanho = tamanho;
+    }
+
+    @Override
+    public String toString() {
+        return "\n\nID = " + id +
+                "\nTipo = " + tipo +
+                "\nTecido = " + tecido +
+                "\nCor Principal = " + corPrincipal +
+                "\nTamanho = " + tamanho;
     }
 
     public Long getId() {
@@ -61,14 +90,5 @@ public final class RoupaEntity implements Serializable {
 
     public void setTecido(String tecido) {
         this.tecido = tecido;
-    }
-
-    @Override
-    public String toString() {
-        return "\n\nID = " + id +
-                "\nTipo = " + tipo +
-                "\nTecido = " + tecido +
-                "\nCor Principal = " + corPrincipal +
-                "\nTamanho = " + tamanho;
     }
 }
