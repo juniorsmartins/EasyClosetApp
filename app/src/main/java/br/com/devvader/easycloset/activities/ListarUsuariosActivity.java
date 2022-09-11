@@ -2,6 +2,7 @@ package br.com.devvader.easycloset.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,18 +18,20 @@ import java.util.List;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.UsuarioEntity;
 import br.com.devvader.easycloset.domain.adapters.UsuarioAdapter;
-import br.com.devvader.easycloset.recursos.UsuarioDatabaseRoom;
+import br.com.devvader.easycloset.recursos.ConexaoDatabaseRoom;
 
 public final class ListarUsuariosActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
 
-    private UsuarioDatabaseRoom usuarioDatabaseRoom;
+    private ConexaoDatabaseRoom conexaoDatabaseRoom;
 
     private ListView enderecoDaListaDeUsuarios;
     private UsuarioEntity usuarioEntity;
     private Button enderecoBotaoAdicionar;
     private UsuarioAdapter usuarioAdapter;
+
+    private List<UsuarioEntity> listaDeUsuarios;
 
 
     // ------------------------------ OnCreate ------------------------------
@@ -45,7 +48,6 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         super.onResume();
         colocarTituloNaTela();
 
-        criarConexaoComDatabase();
         mapearEnderecoDaLista();
         mostrarListaNaTelaComAdapterCustomizado();
         ativarCliqueRapidoNosItensDalistaParaEditar();
@@ -55,12 +57,53 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         ativarBotaoAdicionar();
     }
 
-        private void colocarTituloNaTela() {
-            setTitle(TITULO_DE_TELA_LISTAR_USUARIOS);
+        private List<UsuarioEntity> buscarTodasEntidadesDoBancoDeDadosOrdenadasPorIdDecrescente() {
+            criarConexaoComBancoDeDados();
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    listaDeUsuarios = conexaoDatabaseRoom.usuarioDAORoom().queryAll();
+                }
+            });
+            return listaDeUsuarios;
         }
 
-        private void criarConexaoComDatabase() {
-            usuarioDatabaseRoom = UsuarioDatabaseRoom.getUsuarioDatabaseRoom(this);
+            private void criarConexaoComBancoDeDados() {
+                conexaoDatabaseRoom = ConexaoDatabaseRoom.getConexaoDatabaseRoom(ListarUsuariosActivity.this);
+            }
+
+        private void salvarNoBancoDeDados() {
+            criarConexaoComBancoDeDados();
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    conexaoDatabaseRoom.usuarioDAORoom().insert(usuarioEntity);
+                }
+            });
+        }
+
+        private void atualizarNoBancoDeDados() {
+            criarConexaoComBancoDeDados();
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    conexaoDatabaseRoom.usuarioDAORoom().update(usuarioEntity);
+                }
+            });
+        }
+
+        private void excluirNoBancoDeDados() {
+            criarConexaoComBancoDeDados();
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    conexaoDatabaseRoom.usuarioDAORoom().delete(usuarioEntity);
+                }
+            });
+        }
+
+        private void colocarTituloNaTela() {
+            setTitle(TITULO_DE_TELA_LISTAR_USUARIOS);
         }
 
         private void mapearEnderecoDaLista() {
@@ -68,13 +111,9 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
         }
 
         private void mostrarListaNaTelaComAdapterCustomizado() {
-            usuarioAdapter = new UsuarioAdapter(this, buscarListaNoRepository());
+            usuarioAdapter = new UsuarioAdapter(this, buscarTodasEntidadesDoBancoDeDadosOrdenadasPorIdDecrescente());
             enderecoDaListaDeUsuarios.setAdapter(usuarioAdapter);
         }
-
-            private List<UsuarioEntity> buscarListaNoRepository() {
-                return usuarioDatabaseRoom.usuarioDAORoom().queryAll();
-            }
 
         private void limitarQuantiaDeItensSelecionadosPorCliqueNalista() {
             enderecoDaListaDeUsuarios.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -138,7 +177,7 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
 
             if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.SALVAR) {
                 usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
-                salvarUsuario();
+                salvarNoBancoDeDados();
 
                 publicarMensagemNaTela(usuarioEntity.getNome()
                         .concat(" ")
@@ -147,9 +186,9 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
                         .concat(getString(R.string.salvo)));
 
             } else if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
-                excluirItemDesatualizadoDaLista();
+                excluirNoBancoDeDados();
                 usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
-                atualizarUsuario();
+                atualizarNoBancoDeDados();
 
                 mostrarListaNaTelaComAdapterCustomizado();
 
@@ -165,18 +204,6 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
             notificarAdapterSobreModificacaoNaListView();
         }
     }
-
-        private void salvarUsuario() {
-            usuarioDatabaseRoom.usuarioDAORoom().insert(usuarioEntity);
-        }
-
-        private void atualizarUsuario() {
-            usuarioDatabaseRoom.usuarioDAORoom().update(usuarioEntity);
-        }
-
-        private void excluirItemDesatualizadoDaLista() {
-            usuarioDatabaseRoom.usuarioDAORoom().delete(usuarioEntity);
-        }
 
         private void notificarAdapterSobreModificacaoNaListView() {
             usuarioAdapter.notifyDataSetChanged();
