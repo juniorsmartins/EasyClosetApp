@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
 import br.com.devvader.easycloset.domain.RoupaEntity;
 import br.com.devvader.easycloset.domain.utils.Utils;
+import br.com.devvader.easycloset.recursos.ConexaoDatabaseRoom;
 import br.com.devvader.easycloset.recursos.RoupaDatabase;
 
 public final class CadastrarRoupasActivity extends AppCompatActivity {
@@ -50,7 +52,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
 
     // Persistência
-    private RoupaDatabase roupaDatabase;
+    private ConexaoDatabaseRoom conexaoDatabaseRoom;
 
     // Padrão estático para salvar roupas - com retorno de resultado
     public static final String MODO = "MODO";
@@ -331,6 +333,25 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
         ativarSpinnersDoFormularioDeCadastrar();
     }
 
+        private void salvarNoBancoDeDados() {
+            criarConexaoComBancoDeDados();
+            CadastrarRoupasActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    conexaoDatabaseRoom.roupaDAORoom().insert(roupaEntity);
+                }
+            });
+        }
+
+            private void criarConexaoComBancoDeDados() {
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        conexaoDatabaseRoom = ConexaoDatabaseRoom.getConexaoDatabaseRoom(CadastrarRoupasActivity.this);
+                    }
+                });
+            }
+
         private void colocarTituloNaTela() {
             setTitle(tituloDeTelaCadastrarRoupas);
         }
@@ -409,7 +430,7 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                     devolucaoDeResultadoParaStartActivityForResult(ATUALIZAR);
                 } else {
                     criarRoupa();
-                    salvarRoupaNoDatabase();
+                    salvarNoBancoDeDados();
 
                     publicarMensagemNaTela(roupaEntity.getTipo()
                             .concat(" ")
@@ -475,15 +496,6 @@ public final class CadastrarRoupasActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
-
-            private void salvarRoupaNoDatabase() {
-                pegarConexaoComDatabase();
-                roupaDatabase.getRoupaDAO().inserir(roupaEntity);
-            }
-
-                private void pegarConexaoComDatabase() {
-                    roupaDatabase = RoupaDatabase.getInstance(this);
-                }
 
             private void limparCamposDoFormularioDeCadastrarRoupas() {
                 enderecoCadastrarTipoDeRoupa.setSelection(0);
