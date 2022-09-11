@@ -23,6 +23,6 @@ public interface UsuarioDAORoom {
     @Query("SELECT * FROM usuarios WHERE id_usuario = :id")
     UsuarioEntity queryForId(long id);
 
-    @Query("SELECT * FROM usuarios ORDER BY id_usuario ASC")
+    @Query("SELECT * FROM usuarios ORDER BY id_usuario DESC")
     List<UsuarioEntity> queryAll();
 }
