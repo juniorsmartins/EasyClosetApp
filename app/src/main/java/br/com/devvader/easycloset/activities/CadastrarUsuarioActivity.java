@@ -16,14 +16,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.devvader.easycloset.R;
-import br.com.devvader.easycloset.domain.UsuarioEntity;
-import br.com.devvader.easycloset.recursos.ConexaoDatabaseRoom;
+import br.com.devvader.easycloset.domain.entities.UsuarioEntity;
+import br.com.devvader.easycloset.recursos.daos.UsuarioDAORoom;
+import br.com.devvader.easycloset.recursos.database.EasyClosetDatabaseRoom;
 
 public final class CadastrarUsuarioActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_CADASTRAR_USUARIO = "Cadastrar Usuário";
 
-    private ConexaoDatabaseRoom conexaoDatabaseRoom;
+    private UsuarioDAORoom usuarioDAORoom;
 
     private UsuarioEntity usuarioEntity;
     private Spinner enderecoEscolaridadeUsuario;
@@ -144,17 +145,12 @@ public final class CadastrarUsuarioActivity extends AppCompatActivity {
     }
 
         private void salvarNoBancoDeDados() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    conexaoDatabaseRoom.usuarioDAORoom().insert(usuarioEntity);
-                }
-            });
+            acessarBancoDeDados();
+            usuarioDAORoom.insert(usuarioEntity);
         }
 
-            private void criarConexaoComBancoDeDados() {
-                conexaoDatabaseRoom = ConexaoDatabaseRoom.getConexaoDatabaseRoom(CadastrarUsuarioActivity.this);
+            private void acessarBancoDeDados() {
+                usuarioDAORoom = EasyClosetDatabaseRoom.getConexaoDatabaseRoom(this).getUsuarioDAORoom();
             }
 
         private void colocarTituloNaTela() {

@@ -22,17 +22,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.loader.content.AsyncTaskLoader;
 
 import java.util.List;
 
 import br.com.devvader.easycloset.MainActivity;
 import br.com.devvader.easycloset.R;
-import br.com.devvader.easycloset.domain.RoupaEntity;
+import br.com.devvader.easycloset.domain.entities.RoupaEntity;
 import br.com.devvader.easycloset.domain.adapters.RoupaAdapter;
 import br.com.devvader.easycloset.domain.utils.Utils;
-import br.com.devvader.easycloset.recursos.ConexaoDatabaseRoom;
-import br.com.devvader.easycloset.recursos.RoupaDatabase;
+import br.com.devvader.easycloset.recursos.daos.RoupaDAORoom;
+import br.com.devvader.easycloset.recursos.database.EasyClosetDatabaseRoom;
 
 public final class ListarRoupasActivity extends AppCompatActivity {
 
@@ -49,7 +48,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
 
     // Persistência
-    private ConexaoDatabaseRoom conexaoDatabaseRoom;
+    private RoupaDAORoom roupaDAORoom;
 
     // Modal para confirmar excluir item do database
     private String mensagem;
@@ -121,53 +120,28 @@ public final class ListarRoupasActivity extends AppCompatActivity {
     }
 
         private List<RoupaEntity> buscarTodasEntidadesDoBancoDeDadosOrdenadasPorIdDecrescente() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    listaDeRoupas = conexaoDatabaseRoom.roupaDAORoom().queryAll();
-                }
-            });
+            acessarBancoDeDados();
+            listaDeRoupas = roupaDAORoom.queryAll();
             return listaDeRoupas;
         }
 
-            private void criarConexaoComBancoDeDados() {
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        conexaoDatabaseRoom = ConexaoDatabaseRoom.getConexaoDatabaseRoom(ListarRoupasActivity.this);
-                    }
-                });
+            private void acessarBancoDeDados() {
+                roupaDAORoom = EasyClosetDatabaseRoom.getConexaoDatabaseRoom(this).getRoupaDAORoom();
             }
 
         private void salvarNoBancoDeDados() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    conexaoDatabaseRoom.roupaDAORoom().insert(roupaEntity);
-                }
-            });
+            acessarBancoDeDados();
+            roupaDAORoom.insert(roupaEntity);
         }
 
         private void atualizarNoBancoDeDados() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    conexaoDatabaseRoom.roupaDAORoom().update(roupaEntity);
-                }
-            });
+            acessarBancoDeDados();
+            roupaDAORoom.update(roupaEntity);
         }
 
         private void excluirNoBancoDeDados() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    conexaoDatabaseRoom.roupaDAORoom().delete(roupaEntity);
-                }
-            });
+            acessarBancoDeDados();
+            roupaDAORoom.delete(roupaEntity);
         }
 
         private void colocarTituloNaTela() {
@@ -321,7 +295,7 @@ public final class ListarRoupasActivity extends AppCompatActivity {
                             .concat(" ")
                             .concat(getString(R.string.excluido)));
 
-                    notificarAdapterSobreModificacaoNaListView();
+                    mostrarListaNaTelaComAdapterCustomizado();
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
                     break;

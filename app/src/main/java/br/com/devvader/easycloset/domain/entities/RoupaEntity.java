@@ -1,8 +1,9 @@
-package br.com.devvader.easycloset.domain;
+package br.com.devvader.easycloset.domain.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -33,6 +34,8 @@ public final class RoupaEntity implements Serializable {
     private String tamanho;
 
     public RoupaEntity() {}
+
+    @Ignore
     public RoupaEntity(String tipo,
                        String tecido,
                        String corPrincipal,

@@ -1,4 +1,4 @@
-package br.com.devvader.easycloset.recursos;
+package br.com.devvader.easycloset.recursos.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,13 +8,13 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import br.com.devvader.easycloset.domain.RoupaEntity;
+import br.com.devvader.easycloset.domain.entities.RoupaEntity;
 
 @Dao
 public interface RoupaDAORoom {
 
     @Insert
-    long insert(RoupaEntity roupaEntity);
+    void insert(RoupaEntity roupaEntity);
 
     @Delete
     void delete(RoupaEntity roupaEntity);

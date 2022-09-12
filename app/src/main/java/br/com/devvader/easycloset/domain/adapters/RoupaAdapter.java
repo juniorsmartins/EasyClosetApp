@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import java.util.List;
 import br.com.devvader.easycloset.R;
-import br.com.devvader.easycloset.domain.RoupaEntity;
+import br.com.devvader.easycloset.domain.entities.RoupaEntity;
 import br.com.devvader.easycloset.domain.utils.Utils;
 
 public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
@@ -60,6 +60,9 @@ public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
 
     @Override
     public int getCount() {
+        if(listaDeRoupas == null) {
+            return 0;
+        }
         return listaDeRoupas.size();
     }
 

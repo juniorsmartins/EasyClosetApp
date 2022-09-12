@@ -16,15 +16,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 import br.com.devvader.easycloset.R;
-import br.com.devvader.easycloset.domain.UsuarioEntity;
+import br.com.devvader.easycloset.domain.entities.UsuarioEntity;
 import br.com.devvader.easycloset.domain.adapters.UsuarioAdapter;
-import br.com.devvader.easycloset.recursos.ConexaoDatabaseRoom;
+import br.com.devvader.easycloset.recursos.daos.UsuarioDAORoom;
+import br.com.devvader.easycloset.recursos.database.EasyClosetDatabaseRoom;
 
 public final class ListarUsuariosActivity extends AppCompatActivity {
 
     private static final String TITULO_DE_TELA_LISTAR_USUARIOS = "Listar Usuários";
 
-    private ConexaoDatabaseRoom conexaoDatabaseRoom;
+    private UsuarioDAORoom usuarioDAORoom;
 
     private ListView enderecoDaListaDeUsuarios;
     private UsuarioEntity usuarioEntity;
@@ -58,46 +59,31 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
     }
 
         private List<UsuarioEntity> buscarTodasEntidadesDoBancoDeDadosOrdenadasPorIdDecrescente() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    listaDeUsuarios = conexaoDatabaseRoom.usuarioDAORoom().queryAll();
-                }
-            });
+            acessarBancoDeDados();
+            listaDeUsuarios = usuarioDAORoom.queryAll();
             return listaDeUsuarios;
         }
 
-            private void criarConexaoComBancoDeDados() {
-                conexaoDatabaseRoom = ConexaoDatabaseRoom.getConexaoDatabaseRoom(ListarUsuariosActivity.this);
+            private void acessarBancoDeDados() {
+                usuarioDAORoom = EasyClosetDatabaseRoom.getConexaoDatabaseRoom(this).getUsuarioDAORoom();
             }
 
         private void salvarNoBancoDeDados() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    conexaoDatabaseRoom.usuarioDAORoom().insert(usuarioEntity);
-                }
-            });
+            acessarBancoDeDados();
+            usuarioDAORoom.insert(usuarioEntity);
         }
 
         private void atualizarNoBancoDeDados() {
-            criarConexaoComBancoDeDados();
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    conexaoDatabaseRoom.usuarioDAORoom().update(usuarioEntity);
-                }
-            });
+            acessarBancoDeDados();
+            usuarioDAORoom.update(usuarioEntity);
         }
 
         private void excluirNoBancoDeDados() {
-            criarConexaoComBancoDeDados();
+            acessarBancoDeDados();
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                    conexaoDatabaseRoom.usuarioDAORoom().delete(usuarioEntity);
+                    usuarioDAORoom.delete(usuarioEntity);
                 }
             });
         }
@@ -186,11 +172,11 @@ public final class ListarUsuariosActivity extends AppCompatActivity {
                         .concat(getString(R.string.salvo)));
 
             } else if(bundle.getInt(CadastrarUsuarioActivity.MODO) == CadastrarUsuarioActivity.ATUALIZAR) {
-                excluirNoBancoDeDados();
+//                excluirNoBancoDeDados();
                 usuarioEntity = (UsuarioEntity) bundle.getSerializable(CadastrarUsuarioActivity.USUARIO);
                 atualizarNoBancoDeDados();
 
-                mostrarListaNaTelaComAdapterCustomizado();
+//                mostrarListaNaTelaComAdapterCustomizado();
 
                 publicarMensagemNaTela(usuarioEntity.getNome()
                         .concat(" ")

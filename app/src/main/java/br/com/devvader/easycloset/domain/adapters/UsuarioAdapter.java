@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import java.util.List;
 import br.com.devvader.easycloset.R;
-import br.com.devvader.easycloset.domain.UsuarioEntity;
+import br.com.devvader.easycloset.domain.entities.UsuarioEntity;
 
 public class UsuarioAdapter extends ArrayAdapter<UsuarioEntity> {
 
@@ -62,6 +62,9 @@ public class UsuarioAdapter extends ArrayAdapter<UsuarioEntity> {
 
     @Override
     public int getCount() {
+        if(listaDeUsuarios == null) {
+            return 0;
+        }
         return listaDeUsuarios.size();
     }
 

@@ -1,8 +1,9 @@
-package br.com.devvader.easycloset.domain;
+package br.com.devvader.easycloset.domain.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
@@ -44,6 +45,8 @@ public final class UsuarioEntity implements Serializable {
     private Boolean autorizo;
 
     public UsuarioEntity(){}
+
+    @Ignore
     public UsuarioEntity(String nomeUsuario, String sobrenomeUsuario, String cpfUsuario,
                          String foneUsuario, String emailUsuario,
                          String escolaridade, Boolean autorizoPublicidade) {
