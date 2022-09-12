@@ -59,9 +59,8 @@
     <string name="atualizado">Atualizado</string>
     <string name="erro_retorno_incompativel">ERRO - Retorno Incompatível!</string>
 
-    <string name="instrucoes_entrega4">"Recado ao professor: \n
-        - Os requisitos de entrega da atividade 5 são cumpridos pelas activitys de MAIN, INFO e ROUPAS; \n
-        - Descartar as activitys de USUARIOS, pois estão no padrão de atividades anteriores."</string>
+    <string name="instrucoes_entrega4">"EasyCloset \n
+        - Aplicativo criado com a intenção de gerenciar o armário de roupas."</string>
 
 
     <string name="sexo_masculino">Masculino</string>

@@ -53,9 +53,8 @@
     <string name="atualizado">Updated</string>
     <string name="erro_retorno_incompativel">ERROR - Incompatible Return!</string>
 
-    <string name="instrucoes_entrega4">"Message to the teacher: \n
-        - Activity 5 delivery requirements are met by the MAIN, INFO and CLOTHING activities; \n
-        - Discard USER activities, as they are in the pattern of previous activities."</string>
+    <string name="instrucoes_entrega4">"EasyCloset \n
+        - Application created with the intention of managing the clothes closet."</string>
 
 
     <string name="sexo_masculino">Masculine</string>
