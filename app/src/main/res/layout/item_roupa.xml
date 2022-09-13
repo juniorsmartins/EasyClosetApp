@@ -45,4 +45,13 @@
         android:text="Tamanho"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/data_de_cadastro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="sans-serif"
+        android:text="Data de Cadastro"
+        android:textSize="24sp" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -23,6 +23,7 @@ public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
     private TextView tecido;
     private TextView corPrincipal;
     private TextView tamanho;
+    private TextView dataCadastro;
 
     // Preferências Compartilhadas
     private SharedPreferences preferenciasConfig;
@@ -43,11 +44,13 @@ public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
         tecido = rowView.findViewById(R.id.tecido_da_roupa);
         corPrincipal = rowView.findViewById(R.id.cor_principal_da_roupa);
         tamanho = rowView.findViewById(R.id.tamanho_de_roupa);
+        dataCadastro = rowView.findViewById(R.id.data_de_cadastro);
 
         tipo.setText(listaDeRoupas.get(position).getTipo());
         tecido.setText(listaDeRoupas.get(position).getTecido());
         corPrincipal.setText(listaDeRoupas.get(position).getCorPrincipal());
         tamanho.setText(listaDeRoupas.get(position).getTamanho());
+        dataCadastro.setText(listaDeRoupas.get(position).getDataCadastroFormatada());
 
         verificarPreferenciasPreConfiguradas();
 
@@ -112,5 +115,6 @@ public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
                 tecido.setTextColor(context.getResources().getColor(cor));
                 corPrincipal.setTextColor(context.getResources().getColor(cor));
                 tamanho.setTextColor(context.getResources().getColor(cor));
+                dataCadastro.setTextColor(context.getResources().getColor(cor));
             }
 }

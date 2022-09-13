@@ -7,6 +7,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Entity(tableName = "roupas")
 public final class RoupaEntity implements Serializable {
@@ -33,7 +35,12 @@ public final class RoupaEntity implements Serializable {
     @ColumnInfo(name = "tamanho")
     private String tamanho;
 
-    public RoupaEntity() {}
+    @ColumnInfo(name = "data_cadastro")
+    private Calendar dataCadastro;
+
+    public RoupaEntity() {
+        this.dataCadastro = Calendar.getInstance();
+    }
 
     @Ignore
     public RoupaEntity(String tipo,
@@ -44,6 +51,7 @@ public final class RoupaEntity implements Serializable {
         this.tecido = tecido;
         this.corPrincipal = corPrincipal;
         this.tamanho = tamanho;
+        this.dataCadastro = Calendar.getInstance();
     }
 
     @Override
@@ -52,7 +60,13 @@ public final class RoupaEntity implements Serializable {
                 "\nTipo = " + tipo +
                 "\nTecido = " + tecido +
                 "\nCor Principal = " + corPrincipal +
-                "\nTamanho = " + tamanho;
+                "\nTamanho = " + tamanho +
+                "\nData de Cadastro: " + getDataCadastroFormatada();
+    }
+
+    public String getDataCadastroFormatada() {
+        SimpleDateFormat formatadorDeDatas = new SimpleDateFormat("dd/MM/yyyy");
+        return formatadorDeDatas.format(dataCadastro.getTime());
     }
 
     public Long getId() {
@@ -93,5 +107,13 @@ public final class RoupaEntity implements Serializable {
 
     public void setTecido(String tecido) {
         this.tecido = tecido;
+    }
+
+    public Calendar getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Calendar dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }

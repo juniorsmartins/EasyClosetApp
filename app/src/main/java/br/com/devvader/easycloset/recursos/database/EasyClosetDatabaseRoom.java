@@ -1,16 +1,20 @@
 package br.com.devvader.easycloset.recursos.database;
 
 import android.content.Context;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import br.com.devvader.easycloset.domain.converters.ConversorCalendar;
 import br.com.devvader.easycloset.domain.entities.RoupaEntity;
 import br.com.devvader.easycloset.domain.entities.UsuarioEntity;
 import br.com.devvader.easycloset.recursos.daos.RoupaDAORoom;
 import br.com.devvader.easycloset.recursos.daos.UsuarioDAORoom;
 
-@Database(entities = {UsuarioEntity.class, RoupaEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {UsuarioEntity.class, RoupaEntity.class}, version = 2, exportSchema = false)
+@TypeConverters({ConversorCalendar.class})
 public abstract class EasyClosetDatabaseRoom extends RoomDatabase {
 
     private static final String NOME_BANCO_DE_DADOS = "easyclosetdatabaseroom.db";
