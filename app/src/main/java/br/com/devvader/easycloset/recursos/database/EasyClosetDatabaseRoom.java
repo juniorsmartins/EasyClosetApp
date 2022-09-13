@@ -21,7 +21,7 @@ public abstract class EasyClosetDatabaseRoom extends RoomDatabase {
         conexaoDatabaseRoom = Room
                 .databaseBuilder(context, EasyClosetDatabaseRoom.class, NOME_BANCO_DE_DADOS)
                 .allowMainThreadQueries() // permite a execução do room na thread principal - não é recomendado fazer
-                .fallbackToDestructiveMigration() // destroi versão anterior do database - perde dados
+                .fallbackToDestructiveMigration() // destroi versão anterior do database - perde dados - não é recomendado - uso apenas em desenvolvimento
                 .build();
         return conexaoDatabaseRoom;
     }
