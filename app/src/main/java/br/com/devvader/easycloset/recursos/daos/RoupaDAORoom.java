@@ -22,9 +22,12 @@ public interface RoupaDAORoom {
     @Update
     void update(RoupaEntity roupaEntity);
 
-    @Query("SELECT * FROM roupas WHERE id_roupa = :id")
-    RoupaEntity queryForId(long id);
+    @Query("SELECT * FROM roupas WHERE roupa_id = :id")
+    RoupaEntity queryForId(Long id);
 
-    @Query("SELECT * FROM roupas ORDER BY id_roupa DESC")
+    @Query("SELECT * FROM roupas ORDER BY roupa_id DESC")
     List<RoupaEntity> queryAll();
+
+    @Query("SELECT count(*) FROM roupas")
+    long total();
 }

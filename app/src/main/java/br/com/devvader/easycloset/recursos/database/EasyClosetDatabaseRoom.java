@@ -8,12 +8,14 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import br.com.devvader.easycloset.domain.converters.ConversorCalendar;
+import br.com.devvader.easycloset.domain.entities.CompraEntity;
 import br.com.devvader.easycloset.domain.entities.RoupaEntity;
 import br.com.devvader.easycloset.domain.entities.UsuarioEntity;
+import br.com.devvader.easycloset.recursos.daos.CompraDAORoom;
 import br.com.devvader.easycloset.recursos.daos.RoupaDAORoom;
 import br.com.devvader.easycloset.recursos.daos.UsuarioDAORoom;
 
-@Database(entities = {UsuarioEntity.class, RoupaEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {UsuarioEntity.class, RoupaEntity.class, CompraEntity.class}, version = 3, exportSchema = false)
 @TypeConverters({ConversorCalendar.class})
 public abstract class EasyClosetDatabaseRoom extends RoomDatabase {
 
@@ -32,4 +34,5 @@ public abstract class EasyClosetDatabaseRoom extends RoomDatabase {
 
     public abstract UsuarioDAORoom getUsuarioDAORoom();
     public abstract RoupaDAORoom getRoupaDAORoom();
+    public abstract CompraDAORoom getCompraDAORoom();
 }

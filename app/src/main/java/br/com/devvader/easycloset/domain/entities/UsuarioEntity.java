@@ -4,10 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
-@Entity(tableName = "usuarios")
+@Entity(tableName = "usuarios", indices = @Index(value = {"cpf"}, unique = true))
 public final class UsuarioEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;

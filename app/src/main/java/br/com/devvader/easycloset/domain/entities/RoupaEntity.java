@@ -16,8 +16,8 @@ public final class RoupaEntity implements Serializable {
     public static final Long serialVersionUID = 1L;
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_roupa")
-    private Long id;
+    @ColumnInfo(name = "roupa_id")
+    private Long roupaId;
 
     @NonNull
     @ColumnInfo(name = "tipo")
@@ -34,6 +34,9 @@ public final class RoupaEntity implements Serializable {
     @NonNull
     @ColumnInfo(name = "tamanho")
     private String tamanho;
+
+    @ColumnInfo(name = "descricao")
+    private String descricao;
 
     @ColumnInfo(name = "data_cadastro")
     private Calendar dataCadastro;
@@ -56,11 +59,12 @@ public final class RoupaEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "\n\nID = " + id +
+        return "\n\nID = " + roupaId +
                 "\nTipo = " + tipo +
                 "\nTecido = " + tecido +
                 "\nCor Principal = " + corPrincipal +
                 "\nTamanho = " + tamanho +
+                "\nDescricao = " + descricao +
                 "\nData de Cadastro: " + getDataCadastroFormatada();
     }
 
@@ -69,12 +73,12 @@ public final class RoupaEntity implements Serializable {
         return formatadorDeDatas.format(dataCadastro.getTime());
     }
 
-    public Long getId() {
-        return id;
+    public Long getRoupaId() {
+        return roupaId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRoupaId(Long roupaId) {
+        this.roupaId = roupaId;
     }
 
     @NonNull
@@ -111,6 +115,14 @@ public final class RoupaEntity implements Serializable {
 
     public void setTamanho(@NonNull String tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Calendar getDataCadastro() {

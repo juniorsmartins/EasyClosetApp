@@ -77,7 +77,7 @@ public class RoupaAdapter extends ArrayAdapter<RoupaEntity> {
 
     @Override
     public long getItemId(int position) {
-        return listaDeRoupas.get(position).getId();
+        return listaDeRoupas.get(position).getRoupaId();
     }
 
     private void verificarPreferenciasPreConfiguradas() {

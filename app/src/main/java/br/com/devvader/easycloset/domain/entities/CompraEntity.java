@@ -3,19 +3,25 @@ package br.com.devvader.easycloset.domain.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
+
 import br.com.devvader.easycloset.domain.entities.enuns.EnumFormaPgto;
 
-@Entity(tableName = "compras")
+@Entity(tableName = "compras",
+        foreignKeys = {@ForeignKey(entity = RoupaEntity.class,
+                parentColumns = "roupa_id", childColumns = "id_roupa", onDelete = ForeignKey.CASCADE)}
+)
 public final class CompraEntity implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_compra")
-    private Long id;
+    @ColumnInfo(name = "compra_id")
+    private Long compraId;
 
     @NonNull
     @ColumnInfo(name = "valor")
@@ -27,14 +33,19 @@ public final class CompraEntity implements Serializable {
 
     @NonNull
     @ColumnInfo(name = "data_compra")
-    private Date dataCompra;
+    private Calendar dataCompra;
 
-    public Long getId() {
-        return id;
+    @NonNull
+    @ColumnInfo(name = "id_roupa", index = true)
+    private Long idRoupa;
+
+
+    public Long getCompraId() {
+        return compraId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCompraId(Long compraId) {
+        this.compraId = compraId;
     }
 
     @NonNull
@@ -56,11 +67,20 @@ public final class CompraEntity implements Serializable {
     }
 
     @NonNull
-    public Date getDataCompra() {
+    public Calendar getDataCompra() {
         return dataCompra;
     }
 
-    public void setDataCompra(@NonNull Date dataCompra) {
+    public void setDataCompra(@NonNull Calendar dataCompra) {
         this.dataCompra = dataCompra;
+    }
+
+    @NonNull
+    public Long getIdRoupa() {
+        return idRoupa;
+    }
+
+    public void setIdRoupa(@NonNull Long idRoupa) {
+        this.idRoupa = idRoupa;
     }
 }
