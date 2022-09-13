@@ -77,36 +77,40 @@ public final class RoupaEntity implements Serializable {
         this.id = id;
     }
 
+    @NonNull
     public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(@NonNull String tipo) {
         this.tipo = tipo;
     }
 
-    public String getTamanho() {
-        return tamanho;
-    }
-
-    public void setTamanho(String tamanho) {
-        this.tamanho = tamanho;
-    }
-
-    public String getCorPrincipal() {
-        return corPrincipal;
-    }
-
-    public void setCorPrincipal(String corPrincipal) {
-        this.corPrincipal = corPrincipal;
-    }
-
+    @NonNull
     public String getTecido() {
         return tecido;
     }
 
-    public void setTecido(String tecido) {
+    public void setTecido(@NonNull String tecido) {
         this.tecido = tecido;
+    }
+
+    @NonNull
+    public String getCorPrincipal() {
+        return corPrincipal;
+    }
+
+    public void setCorPrincipal(@NonNull String corPrincipal) {
+        this.corPrincipal = corPrincipal;
+    }
+
+    @NonNull
+    public String getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(@NonNull String tamanho) {
+        this.tamanho = tamanho;
     }
 
     public Calendar getDataCadastro() {
