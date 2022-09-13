@@ -18,16 +18,11 @@ public abstract class EasyClosetDatabaseRoom extends RoomDatabase {
     private static EasyClosetDatabaseRoom conexaoDatabaseRoom;
 
     public static EasyClosetDatabaseRoom getConexaoDatabaseRoom(Context context) {
-//        if(conexaoDatabaseRoom == null) {
-//            synchronized (EasyClosetDatabaseRoom.class) {
-//                if(conexaoDatabaseRoom == null) {
-                    conexaoDatabaseRoom = Room
-                            .databaseBuilder(context, EasyClosetDatabaseRoom.class, NOME_BANCO_DE_DADOS)
-                            .allowMainThreadQueries() // permite a execução do room na thread principal - não é recomendado fazer
-                            .build();
-//                }
-//            }
-//        }
+        conexaoDatabaseRoom = Room
+                .databaseBuilder(context, EasyClosetDatabaseRoom.class, NOME_BANCO_DE_DADOS)
+                .allowMainThreadQueries() // permite a execução do room na thread principal - não é recomendado fazer
+                .fallbackToDestructiveMigration() // destroi versão anterior do database - perde dados
+                .build();
         return conexaoDatabaseRoom;
     }
 
