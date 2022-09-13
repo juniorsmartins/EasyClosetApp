@@ -8,6 +8,8 @@ public class ConversorCalendar {
 
     @TypeConverter
     public Long converterDataParaMilesegundosEmLong(Calendar data) {
+        if(data == null)
+            return null;
         return data.getTimeInMillis();
     }
 
