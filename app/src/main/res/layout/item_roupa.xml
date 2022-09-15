@@ -46,6 +46,33 @@
         android:textSize="24sp" />
 
     <TextView
+        android:id="@+id/descricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="sans-serif"
+        android:text="Descrição"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/valor_pago"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="sans-serif"
+        android:text="Valor Pago"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/forma_pagamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="sans-serif"
+        android:text="Forma pagamento"
+        android:textSize="24sp" />
+
+    <TextView
         android:id="@+id/data_de_cadastro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
