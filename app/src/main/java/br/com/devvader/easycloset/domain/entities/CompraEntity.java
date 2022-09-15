@@ -9,78 +9,80 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import br.com.devvader.easycloset.domain.entities.enuns.EnumFormaPgto;
-
-@Entity(tableName = "compras",
-        foreignKeys = {@ForeignKey(entity = RoupaEntity.class,
-                parentColumns = "roupa_id", childColumns = "id_roupa", onDelete = ForeignKey.CASCADE)}
-)
+@Entity(tableName = "compras", foreignKeys = {@ForeignKey(entity = RoupaEntity.class,
+        parentColumns = "id", childColumns = "roupa_id", onUpdate = ForeignKey.CASCADE,
+        onDelete = ForeignKey.CASCADE)})
 public final class CompraEntity implements Serializable {
 
-    public static final long serialVersionUID = 1L;
+    // -------------------- ATRIBUTOS DE CLASSE -------------------- //
+    private static final long serialVersionUID = 1L;
 
+    // -------------------- ATRIBUTOS DE INSTÂNCIA -------------------- //
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "compra_id")
-    private Long compraId;
+    @ColumnInfo(name = "id")
+    private Long id;
 
     @NonNull
-    @ColumnInfo(name = "valor")
-    private Double valor;
+    @ColumnInfo(name = "valor_pago")
+    private Double valorPago;
 
     @NonNull
-    @ColumnInfo(name = "forma_pgto")
-    private EnumFormaPgto formaPgto;
+    @ColumnInfo(name = "forma_pagamento")
+    private String formaPagamento;
 
-    @NonNull
+    //    @NonNull
     @ColumnInfo(name = "data_compra")
     private Calendar dataCompra;
 
-    @NonNull
-    @ColumnInfo(name = "id_roupa", index = true)
-    private Long idRoupa;
+    @ColumnInfo(name = "roupa_id", index = true)
+    private Long roupaId;
 
 
-    public Long getCompraId() {
-        return compraId;
+    // -------------------- CONSTRUTORES -------------------- //
+    public CompraEntity() {
     }
 
-    public void setCompraId(Long compraId) {
-        this.compraId = compraId;
+
+    // -------------------- GETTERS E SETTERS -------------------- //
+    public Long getId() {
+        return id;
     }
 
-    @NonNull
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(@NonNull Double valor) {
-        this.valor = valor;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @NonNull
-    public EnumFormaPgto getFormaPgto() {
-        return formaPgto;
+    public Double getValorPago() {
+        return valorPago;
     }
 
-    public void setFormaPgto(@NonNull EnumFormaPgto formaPgto) {
-        this.formaPgto = formaPgto;
+    public void setValorPago(@NonNull Double valorPago) {
+        this.valorPago = valorPago;
     }
 
     @NonNull
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(@NonNull String formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
     public Calendar getDataCompra() {
         return dataCompra;
     }
 
-    public void setDataCompra(@NonNull Calendar dataCompra) {
+    public void setDataCompra(Calendar dataCompra) {
         this.dataCompra = dataCompra;
     }
 
-    @NonNull
-    public Long getIdRoupa() {
-        return idRoupa;
+    public Long getRoupaId() {
+        return roupaId;
     }
 
-    public void setIdRoupa(@NonNull Long idRoupa) {
-        this.idRoupa = idRoupa;
+    public void setRoupaId(Long roupaId) {
+        this.roupaId = roupaId;
     }
 }
