@@ -3,7 +3,6 @@ package br.com.devvader.easycloset.domain.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -13,11 +12,13 @@ import java.util.Calendar;
 @Entity(tableName = "roupas")
 public final class RoupaEntity implements Serializable {
 
-    public static final Long serialVersionUID = 1L;
+    // -------------------- ATRIBUTOS DE CLASSE -------------------- //
+    private static final Long serialVersionUID = 1L;
 
+    // -------------------- ATRIBUTOS DE INSTÂNCIA -------------------- //
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "roupa_id")
-    private Long roupaId;
+    @ColumnInfo(name = "id")
+    private Long id;
 
     @NonNull
     @ColumnInfo(name = "tipo")
@@ -41,25 +42,17 @@ public final class RoupaEntity implements Serializable {
     @ColumnInfo(name = "data_cadastro")
     private Calendar dataCadastro;
 
+
+    // -------------------- CONSTRUTORES -------------------- //
     public RoupaEntity() {
         this.dataCadastro = Calendar.getInstance();
     }
 
-    @Ignore
-    public RoupaEntity(String tipo,
-                       String tecido,
-                       String corPrincipal,
-                       String tamanho) {
-        this.tipo = tipo;
-        this.tecido = tecido;
-        this.corPrincipal = corPrincipal;
-        this.tamanho = tamanho;
-        this.dataCadastro = Calendar.getInstance();
-    }
 
+    // -------------------- COMPORTAMENTO -------------------- //
     @Override
     public String toString() {
-        return "\n\nID = " + roupaId +
+        return "\n\nID = " + id +
                 "\nTipo = " + tipo +
                 "\nTecido = " + tecido +
                 "\nCor Principal = " + corPrincipal +
@@ -73,12 +66,14 @@ public final class RoupaEntity implements Serializable {
         return formatadorDeDatas.format(dataCadastro.getTime());
     }
 
-    public Long getRoupaId() {
-        return roupaId;
+
+    // -------------------- GETTERS E SETTERS -------------------- //
+    public Long getId() {
+        return id;
     }
 
-    public void setRoupaId(Long roupaId) {
-        this.roupaId = roupaId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @NonNull
