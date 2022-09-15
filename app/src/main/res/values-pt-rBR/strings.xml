@@ -66,6 +66,14 @@
     <string name="sexo_masculino">Masculino</string>
     <string name="sexo_feminino">Feminino</string>
 
+    <string name="tipo_de_roupa">Tipo de roupa:</string>
+    <string name="tecido">Tecido:</string>
+    <string name="cor_principal">Cor principal:</string>
+    <string name="tamanho">Tamanho:</string>
+    <string name="descricao">Descrição:</string>
+    <string name="valor_pago">Valor pago:</string>
+    <string name="forma_pagamento">Forma de pagamento:</string>
+
     <string name="selecionar">Selecionar</string>
     <string name="doutorado">Doutorado</string>
     <string name="mestrado">Mestrado</string>
@@ -75,11 +83,6 @@
     <string name="ensino_medio">Ensino Médio</string>
     <string name="ensino_fundamental">Ensino Fundamental</string>
     <string name="ensino_fundamental_incompleto">Ensino Fundamental Incompleto</string>
-
-    <string name="tipo_de_roupa">Tipo de roupa:</string>
-    <string name="tecido">Tecido:</string>
-    <string name="cor_principal">Cor principal:</string>
-    <string name="tamanho">Tamanho:</string>
 
     <string name="chapeu">Chapéu</string>
     <string name="bone">Boné</string>
@@ -121,6 +124,9 @@
     <string name="gg">GG</string>
     <string name="xg">XG</string>
     <string name="xgg">XGG</string>
+
+    <string name="a_vista">à vista</string>
+    <string name="a_prazo">a prazo</string>
 
     <string name="confirmacao">Confirmação</string>
     <string name="sim">Sim</string>

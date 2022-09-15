@@ -60,6 +60,14 @@
     <string name="sexo_masculino">Masculine</string>
     <string name="sexo_feminino">Feminine</string>
 
+    <string name="tipo_de_roupa">Type of Clothing:</string>
+    <string name="tecido">Tissue:</string>
+    <string name="cor_principal">Main Color:</string>
+    <string name="tamanho">Size:</string>
+    <string name="descricao">Description:</string>
+    <string name="valor_pago">Amount paid:</string>
+    <string name="forma_pagamento">Form of payment:</string>
+
     <string name="selecionar">Select</string>
     <string name="doutorado">Doctorate degree</string>
     <string name="mestrado">Master´s degree</string>
@@ -69,11 +77,6 @@
     <string name="ensino_medio">High School</string>
     <string name="ensino_fundamental">Elementary School</string>
     <string name="ensino_fundamental_incompleto">Incomplete Elementary School</string>
-
-    <string name="tipo_de_roupa">Type of Clothing:</string>
-    <string name="tecido">Tissue:</string>
-    <string name="cor_principal">Main Color:</string>
-    <string name="tamanho">Size:</string>
 
     <string name="chapeu">Hat</string>
     <string name="bone">Cap</string>
@@ -115,6 +118,9 @@
     <string name="gg">GG</string>
     <string name="xg">XG</string>
     <string name="xgg">XGG</string>
+
+    <string name="a_vista">in cash</string>
+    <string name="a_prazo">on term</string>
 
     <string name="confirmacao">Confirmation</string>
     <string name="sim">Yes</string>

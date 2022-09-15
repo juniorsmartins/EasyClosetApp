@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="cadastrarUsuario_spinnerEscolaridade">
         <item>@string/selecionar</item>
         <item>@string/doutorado</item>
@@ -65,6 +66,11 @@
         <item>@string/xgg</item>
     </string-array>
 
+    <string-array name="listaDeFormasDePagamento">
+        <item>@string/selecionar</item>
+        <item>@string/a_vista</item>
+        <item>@string/a_prazo</item>
+    </string-array>
 
 
 </resources>
