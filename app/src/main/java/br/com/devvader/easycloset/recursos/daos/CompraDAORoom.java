@@ -22,9 +22,25 @@ public interface CompraDAORoom {
     @Update
     void update(CompraEntity compraEntity);
 
-    @Query("SELECT * FROM compras WHERE compra_id = :id")
+    @Query("SELECT * FROM compras " +
+            "WHERE id = :id")
     CompraEntity queryForId(Long id);
 
-    @Query("SELECT * FROM compras ORDER BY compra_id DESC")
+    @Query("SELECT * FROM compras " +
+            "ORDER BY id DESC")
     List<CompraEntity> queryAll();
+
+    @Query("SELECT * FROM compras " +
+            "ORDER BY roupa_id DESC")
+    List<CompraEntity> buscarComprasOrdenadoDecrescentePorFkDeRoupas();
+
+    @Query("SELECT * FROM compras " +
+            "WHERE roupa_id = :id")
+    CompraEntity queryForIdRoupa(Long id);
+
+    @Query("SELECT c.* FROM compras AS c " +
+            "JOIN roupas AS r " +
+            "ON c.roupa_id = r.id " +
+            "WHERE c.roupa_id = :roupaId")
+    CompraEntity buscarComprasComRoupasPorIdDeRoupa(Long roupaId);
 }
