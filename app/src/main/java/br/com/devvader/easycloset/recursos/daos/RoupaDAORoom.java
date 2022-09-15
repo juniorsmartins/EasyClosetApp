@@ -14,7 +14,7 @@ import br.com.devvader.easycloset.domain.entities.RoupaEntity;
 public interface RoupaDAORoom {
 
     @Insert
-    void insert(RoupaEntity roupaEntity);
+    Long insert(RoupaEntity roupaEntity);
 
     @Delete
     void delete(RoupaEntity roupaEntity);
@@ -22,11 +22,12 @@ public interface RoupaDAORoom {
     @Update
     void update(RoupaEntity roupaEntity);
 
-    @Query("SELECT * FROM roupas WHERE roupa_id = :id")
+    @Query("SELECT * FROM roupas WHERE id = :id")
     RoupaEntity queryForId(Long id);
 
-    @Query("SELECT * FROM roupas ORDER BY roupa_id DESC")
-    List<RoupaEntity> queryAll();
+    @Query("SELECT * FROM roupas " +
+            "ORDER BY id DESC")
+    List<RoupaEntity> buscarRoupasOrdenadoDecrescentePorIdRoupas();
 
     @Query("SELECT count(*) FROM roupas")
     long total();
